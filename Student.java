@@ -1,12 +1,12 @@
-import java.io.Serializable;
-
-public class Student implements Serializable {
+// File: Student.java
+public class Student {
+    // 1. Thuộc tính (Encapsulation - Đóng gói: dùng private để bảo vệ dữ liệu)
     private String id;
     private String name;
     private int age;
     private double gpa;
 
-    // Constructor
+    // 2. Constructor (Hàm khởi tạo: chạy ngay khi tạo đối tượng mới)
     public Student(String id, String name, int age, double gpa) {
         this.id = id;
         this.name = name;
@@ -14,27 +14,42 @@ public class Student implements Serializable {
         this.gpa = gpa;
     }
 
-    // Getters and Setters
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
+    // 3. Getters và Setters (Để bên ngoài có thể xem hoặc sửa dữ liệu an toàn)
+    public String getId() {
+        return id;
+    }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-    public int getAge() { return age; }
-    public void setAge(int age) { this.age = age; }
+    public String getName() {
+        return name;
+    }
 
-    public double getGpa() { return gpa; }
-    public void setGpa(double gpa) { this.gpa = gpa; }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    // Hiển thị thông tin dạng chuỗi đẹp mắt
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public double getGpa() {
+        return gpa;
+    }
+
+    public void setGpa(double gpa) {
+        this.gpa = gpa;
+    }
+
+    // 4. toString (Để in thông tin sinh viên ra màn hình cho đẹp)
     @Override
     public String toString() {
-        return String.format("| %-10s | %-20s | %-5d | %-5.2f |", id, name, age, gpa);
-    }
-    
-    // Định dạng để lưu vào file (CSV format)
-    public String toFileString() {
-        return id + "," + name + "," + age + "," + gpa;
+        return "ID: " + id + " | Tên: " + name + " | Tuổi: " + age + " | Điểm TB: " + gpa;
     }
 }
