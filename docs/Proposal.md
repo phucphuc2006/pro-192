@@ -1,19 +1,19 @@
-1.Quản lý thông tin sinh viên: Lưu trữ thông tin cá nhân, điểm số, và lịch sử học tập.
+1.Student Information Management: Store personal information, grades, and academic history.
 
-2.Quản lý lớp học và khóa học: Tạo và quản lý lớp học, môn học, thời khóa biểu.
+2.Class and Course Management: Create and manage classes, subjects, and timetables.
 
-3.Quản lý điểm số: Nhập và theo dõi điểm số, tính điểm trung bình.
+3.Grade Management: Enter and track grades, calculate GPA.
 
-4.Quản lý tài chính: Theo dõi học phí, học bổng, hỗ trợ tài chính.
+4.Financial Management: Track tuition fees, scholarships, and financial aid.
 
-5.Quản lý vắng mặt và khen thưởng: Lưu trữ tình trạng vắng mặt, khen thưởng, kỷ luật.
+5.Attendance and Rewards Management: Record attendance, rewards, and disciplinary actions.
 
-6.Báo cáo và tìm kiếm: Tìm kiếm thông tin sinh viên, tạo báo cáo tổng hợp.
+6.Reporting and Search: Search student information, generate summary reports.
 
-7.Thông báo: Gửi thông báo và nhắc nhở qua email/tin nhắn.
+7.Notifications: Send notifications and reminders via email/text message.
 
-8.Quản lý tài liệu học tập:Lưu trữ các tài liệu học tập, cung cấp khả năng tải.
+8.Study Material Management: Store learning materials and provide download options.
 
-9.Bảo mật và phân quyền: Phân quyền cho người dùng, bảo mật dữ liệu.
+9.Security and Access Control: Assign user roles, secure data.
 
-10.Đa nền tảng: đa ngôn ngữ.
+10.Multi-platform: Multi-language support.
