@@ -1,6 +1,6 @@
 
 
-về phần proposal tôi muốn bạn liệt nhiều lớp nhất mà bạn có thể làm
+về phần proposal tôi muốn bạn liệt kê nhiều lớp nhất mà bạn có thể làm
 
 Dưới đây là bản dự thảo Proposal.md được thiết kế để tối đa hóa số lượng lớp (classes) một cách hợp lý, nhằm mục đích "khoe" kỹ năng OOP (Kế thừa, Đa hình, Trừu tượng, Interface) và đáp ứng yêu cầu xử lý dữ liệu phức tạp của môn PRO192.
 
@@ -112,4 +112,5 @@ Bước tiếp theo (Tuần 1 & 2):
 Để hiện thực hóa bản Proposal "khủng" này, bạn cần đi từng bước chắc chắn. Tôi đề xuất bước tiếp theo:
 
 Bạn có muốn tôi viết mẫu code cho class ValidationUtils (dùng static) và class cha Person ngay bây giờ để bạn đưa vào dự án làm nền móng không?
+
 
