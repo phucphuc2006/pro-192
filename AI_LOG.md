@@ -1,66 +1,4 @@
-tôi chọn đề tài quản lý sinh viên
 
-Tuyệt vời. Bạn đã chọn Hệ thống Quản lý Sinh viên/Khóa học, một đề tài cổ điển nhưng rất phù hợp để thể hiện trọn vẹn các yêu cầu về Lập trình hướng đối tượng (OOP).
-
-Dựa trên Kế hoạch triển khai môn học bạn cung cấp, dưới đây là những việc bạn cần làm ngay trong Tuần 1 (M1: Setup & Proposal) để không bị mất điểm oan.
-
-1. Thiết lập Cấu trúc GitHub (Bắt buộc)
-Giảng viên yêu cầu cấu trúc thư mục rất nghiêm ngặt, sai sẽ bị trừ điểm trình bày. Bạn cần tạo Repository với tên theo định dạng TenDuAn_NhomXX và cấu trúc như sau:
-
-TenDuAn_NhomXX/
-
-.gitignore (Cấu hình loại bỏ file rác NetBeans như build/, nbproject/private/...)
-
-README.md (Giới thiệu dự án, thành viên)
-
-
-AI_LOG.md (Nhật ký làm việc với AI - Rất quan trọng, nếu AI code mà không ghi log hoặc không giải thích được sẽ bị 0 điểm )
-
-src/ (Chứa Source code Java theo package)
-
-data/ (Để chứa file dữ liệu .txt/.dat sau này)
-
-docs/
-
-Flowcharts/ (Chứa ảnh lưu đồ thuật toán)
-
-ClassDiagrams/ (Chứa ảnh sơ đồ lớp)
-
-Proposal.md (Bản mô tả tính năng)
-
-dist/ (Chứa file chạy .jar)
-
-2. Soạn thảo Proposal (Đề xuất tính năng)
-Trong file docs/Proposal.md, bạn cần liệt kê các tính năng dự kiến. Với đề tài Quản lý Sinh viên, để đáp ứng yêu cầu xử lý >100 dòng dữ liệu và Sort/Search, bạn nên đưa vào các tính năng sau:
-
-Quản lý (CRUD): Thêm mới, Cập nhật thông tin, Xóa sinh viên, Hiển thị danh sách.
-
-Tìm kiếm (Search): Tìm theo ID hoặc Tên (gần đúng).
-
-Sắp xếp (Sort): Sắp xếp theo Điểm trung bình (GPA) hoặc Tên.
-
-
-Validate: Kiểm tra dữ liệu đầu vào (ví dụ: ID không trùng, điểm từ 0-10) sử dụng hàm static.
-
-Báo cáo: In ra danh sách sinh viên đạt học bổng (ví dụ: GPA > 8.0).
-
-3. Vẽ Flowchart sơ bộ
-Tuần 1 yêu cầu Flowchart cho Luồng hoạt động chính (Menu).
-
-Bạn có thể dùng Draw.io hoặc Mermaidjs.
-
-Nội dung: Bắt đầu -> Hiển thị Menu -> Người dùng chọn -> Gọi chức năng tương ứng -> Quay lại Menu hoặc Thoát.
-
-Bước tiếp theo tôi có thể hỗ trợ bạn:
-Để giúp bạn khởi động nhanh chóng, bạn muốn tôi thực hiện việc nào trước?
-
-Tạo nội dung file Proposal.md chi tiết cho đề tài Quản lý Sinh viên (bao gồm các thực thể dự kiến như Student, Course).
-
-Viết nội dung file README.md và mẫu AI_LOG.md chuẩn để bạn copy vào GitHub.
-
-Hướng dẫn tạo Flowchart cho Menu bằng mã Mermaidjs (để bạn dán vào file markdown xem được ngay).
-
-Bạn chọn số mấy?
 
 về phần proposal tôi muốn bạn liệt nhiều lớp nhất mà bạn có thể làm
 
@@ -174,3 +112,4 @@ Bước tiếp theo (Tuần 1 & 2):
 Để hiện thực hóa bản Proposal "khủng" này, bạn cần đi từng bước chắc chắn. Tôi đề xuất bước tiếp theo:
 
 Bạn có muốn tôi viết mẫu code cho class ValidationUtils (dùng static) và class cha Person ngay bây giờ để bạn đưa vào dự án làm nền móng không?
+
