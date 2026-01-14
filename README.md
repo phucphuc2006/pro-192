@@ -32,6 +32,7 @@ Thành viên 1: Trương Gia Huy - QE190139
 
 · Vai trò:
 
-Thành viên 2:
+Thành viên 2: Trần Văn Phúc - QE200141
 
 - Vai trò:
+
