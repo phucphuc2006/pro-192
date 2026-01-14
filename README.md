@@ -11,7 +11,7 @@ Thực tiễn Xây dựng hệ thống có tính ứng dụng thực tế trong 
 Cộng tác Rèn luyện kỹ năng làm việc nhóm với Git/GitHub
 Mở rộng Thiết kế module hóa, dễ dàng mở rộng tính năng
 
-🔷 1. Tính năng
+1. Tính năng
 
 · Hệ thống điểm đa thành phần: Bài tập, Giữa kỳ, Cuối kỳ
 · Thống kê thông minh: Phân phối điểm, dự đoán học lực
@@ -28,20 +28,10 @@ Mở rộng Thiết kế module hóa, dễ dàng mở rộng tính năng
 
 Chúng tôi là một nhóm hai thành viên
 
-Thành viên 1: Trương Gia Huy
+Thành viên 1: Trương Gia Huy - QE190139
 
-· Vai trò: Project Manager & Core Developer
-· Trách nhiệm:
-  · Thiết kế hệ thống & quản lý dự án
-  · Phát triển module Quản lý sinh viên
-  · Xử lý file & validate dữ liệu
-  · Viết tài liệu & báo cáo
+· Vai trò:
 
 Thành viên 2:
 
-· Vai trò: Technical Advisor & Code Partner
-· Trách nhiệm:
-  · Thiết kế kiến trúc & review code
-  · Phát triển module Điểm số & Thống kê
-  · Tối ưu thuật toán & xử lý nghiệp vụ
-  · Hỗ trợ debug & giải quyết vấn đề kỹ thuật
+- Vai trò:
