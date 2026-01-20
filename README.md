@@ -29,10 +29,7 @@ Mở rộng Thiết kế module hóa, dễ dàng mở rộng tính năng
 Chúng tôi là một nhóm hai thành viên
 
 Thành viên 1: Trương Gia Huy - QE190139
-
-· Vai trò:
-
 Thành viên 2: Trần Văn Phúc - QE200141
 
-- Vai trò:
+
 
