@@ -177,4 +177,117 @@ Bạn có muốn tôi viết mẫu code cho class ValidationUtils (dùng static)
 
 tôi đang làm phần mềm quản lý sinh viên cho tôi 10 lớp và ý nghĩa
 làm bảng
+1. Student (Sinh viên)
+
+studentID: Mã sinh viên
+
+fullName: Họ và tên
+
+dob: Ngày sinh
+
+gender: Giới tính
+
+email: Địa chỉ email
+
+phone: Số điện thoại
+
+classID: Mã lớp học
+
+2. Course (Môn học)
+
+courseID: Mã môn học
+
+courseName: Tên môn học
+
+credits: Số tín chỉ
+
+semester: Học kỳ giảng dạy
+
+teacherID: Mã giảng viên
+
+3. Teacher (Giảng viên)
+
+teacherID: Mã giảng viên
+
+fullName: Họ và tên
+
+department: Khoa
+
+email: Địa chỉ email
+
+phone: Số điện thoại
+
+4. ClassRoom (Lớp học)
+
+classID: Mã lớp học
+
+className: Tên lớp học
+
+teacherID: Mã giảng viên giảng dạy lớp
+
+courseID: Mã môn học
+
+5. Enrollment (Đăng ký môn học)
+
+enrollmentID: Mã đăng ký
+
+studentID: Mã sinh viên
+
+courseID: Mã môn học
+
+semester: Học kỳ đăng ký
+
+6. Grade (Điểm số)
+
+gradeID: Mã điểm
+
+studentID: Mã sinh viên
+
+courseID: Mã môn học
+
+midterm: Điểm giữa kỳ
+
+final: Điểm cuối kỳ
+
+total: Tổng điểm
+
+7. Attendance (Điểm danh)
+
+attendanceID: Mã điểm danh
+
+studentID: Mã sinh viên
+
+classID: Mã lớp học
+
+date: Ngày điểm danh
+
+status: Trạng thái (Có mặt, Vắng, Có phép)
+
+8. Department (Khoa)
+
+departmentID: Mã khoa
+
+departmentName: Tên khoa
+
+facultyCount: Số lượng giảng viên trong khoa
+
+9. Semester (Học kỳ)
+
+semesterID: Mã học kỳ
+
+semesterName: Tên học kỳ (Ví dụ: HK1, HK2)
+
+startDate: Ngày bắt đầu học kỳ
+
+endDate: Ngày kết thúc học kỳ
+
+10. UserAccount (Tài khoản người dùng)
+
+userID: Mã tài khoản
+
+username: Tên đăng nhập
+
+password: Mật khẩu
+
+role: Vai trò người dùng (admin, sinh viên, giảng viên)
 mỗi lớp gồm những thuộc tính nào và ý nghĩa mỗi thuộc tính
