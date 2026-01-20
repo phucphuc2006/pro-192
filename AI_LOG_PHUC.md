@@ -174,3 +174,7 @@ Bước tiếp theo (Tuần 1 & 2):
 Để hiện thực hóa bản Proposal "khủng" này, bạn cần đi từng bước chắc chắn. Tôi đề xuất bước tiếp theo:
 
 Bạn có muốn tôi viết mẫu code cho class ValidationUtils (dùng static) và class cha Person ngay bây giờ để bạn đưa vào dự án làm nền móng không?
+
+tôi đang làm phần mềm quản lý sinh viên cho tôi 10 lớp và ý nghĩa
+làm bảng
+mỗi lớp gồm những thuộc tính nào và ý nghĩa mỗi thuộc tính
