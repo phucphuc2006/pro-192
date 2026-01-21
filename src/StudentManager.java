@@ -3,7 +3,7 @@ import java.util.*;
 
 public class StudentManager {
     private ArrayList<Student> students = new ArrayList<>();
-    private final String FILE_NAME = "student.txt";
+    private final String FILE_NAME = "data/student.txt";
 
     // 1. Thêm sinh viên
     public void addStudent(Student s) {

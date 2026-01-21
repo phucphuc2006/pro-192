@@ -47,6 +47,11 @@ public class Student {
         this.gpa = gpa;
     }
 
+    // Xuất dữ liệu dạng dòng để lưu file
+    public String toFileString() {
+        return id + "," + name + "," + age + "," + gpa;
+    }
+
     // 4. toString (Để in thông tin sinh viên ra màn hình cho đẹp)
     @Override
     public String toString() {
