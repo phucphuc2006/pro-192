@@ -2,6 +2,7 @@ import java.util.Scanner;
 import java.io.PrintStream;
 import models.*;
 import managers.*;
+import utils.*;
 
 public class Main {
     // Khai bao cac manager
@@ -83,6 +84,12 @@ public class Main {
                     changePasswordMenu();
                     break;
                 case 12:
+                    statisticsMenu();
+                    break;
+                case 13:
+                    reportMenu();
+                    break;
+                case 14:
                     // Dang xuat
                     System.out.println("-> Da dang xuat!");
                     currentUser = null;
@@ -209,9 +216,91 @@ public class Main {
         System.out.println("|  9. Quan ly hoc ky                          |");
         System.out.println("|  10. Quan ly tai khoan                      |");
         System.out.println("|  11. Doi mat khau                           |");
-        System.out.println("|  12. Dang xuat                              |");
+        System.out.println("|  12. Thong ke                               |");
+        System.out.println("|  13. Xuat bao cao CSV                       |");
+        System.out.println("|  14. Dang xuat                              |");
         System.out.println("|  0. Luu va thoat                            |");
         System.out.println("+=============================================+");
+    }
+
+    // ==================== THONG KE ====================
+    private static void statisticsMenu() {
+        while (true) {
+            System.out.println("\n--- THONG KE ---");
+            System.out.println("1. Thong ke sinh vien theo lop");
+            System.out.println("2. Thong ke diem so");
+            System.out.println("3. Thong ke diem danh");
+            System.out.println("0. Quay lai");
+
+            int choice = getIntInput("Chon: ");
+            switch (choice) {
+                case 1:
+                    StatisticsUtils.displayStudentsByClass(studentManager.getAll());
+                    break;
+                case 2:
+                    StatisticsUtils.displayGradeStatistics(gradeManager.getAll());
+                    break;
+                case 3:
+                    StatisticsUtils.displayAttendanceStatistics(attendanceManager.getAll());
+                    break;
+                case 0:
+                    return;
+                default:
+                    System.out.println("Lua chon khong hop le!");
+            }
+        }
+    }
+
+    // ==================== XUAT BAO CAO ====================
+    private static void reportMenu() {
+        while (true) {
+            System.out.println("\n--- XUAT BAO CAO CSV ---");
+            System.out.println("1. Xuat danh sach sinh vien");
+            System.out.println("2. Xuat bang diem");
+            System.out.println("3. Xuat diem danh");
+            System.out.println("4. Xuat bao cao tong hop");
+            System.out.println("0. Quay lai");
+
+            int choice = getIntInput("Chon: ");
+            switch (choice) {
+                case 1:
+                    System.out.print("Nhap ten file (khong can .csv): ");
+                    String filename1 = scanner.nextLine();
+                    if (filename1.isEmpty())
+                        filename1 = "students_report";
+                    ReportUtils.exportStudentsToCSV(studentManager.getAll(), filename1);
+                    break;
+                case 2:
+                    System.out.print("Nhap ten file (khong can .csv): ");
+                    String filename2 = scanner.nextLine();
+                    if (filename2.isEmpty())
+                        filename2 = "grades_report";
+                    ReportUtils.exportGradesToCSV(gradeManager.getAll(), filename2);
+                    break;
+                case 3:
+                    System.out.print("Nhap ten file (khong can .csv): ");
+                    String filename3 = scanner.nextLine();
+                    if (filename3.isEmpty())
+                        filename3 = "attendance_report";
+                    ReportUtils.exportAttendanceToCSV(attendanceManager.getAll(), filename3);
+                    break;
+                case 4:
+                    System.out.print("Nhap ten file (khong can .csv): ");
+                    String filename4 = scanner.nextLine();
+                    if (filename4.isEmpty())
+                        filename4 = "summary_report";
+                    ReportUtils.exportSummaryReport(
+                            studentManager.getAll(),
+                            gradeManager.getAll(),
+                            attendanceManager.getAll(),
+                            filename4);
+                    break;
+                case 0:
+                    return;
+                default:
+                    System.out.println("Lua chon khong hop le!");
+            }
+        }
     }
 
     // ==================== QUAN LY SINH VIEN ====================

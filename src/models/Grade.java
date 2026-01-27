@@ -1,7 +1,12 @@
 package models;
 
 /**
- * Lớp Grade đại diện cho điểm số của sinh viên
+ * Lop Grade dai dien cho diem so cua sinh vien.
+ * Chua diem giua ky, cuoi ky va tu dong tinh tong diem theo cong thuc 40%-60%.
+ * 
+ * @author StudentManagement Team
+ * @version 1.0
+ * @since 2024
  */
 public class Grade {
     private String gradeID; // Mã điểm

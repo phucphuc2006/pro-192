@@ -1,35 +1,110 @@
-HỆ THỐNG QUẢN LÝ SINH VIÊN 
-(Advanced Student Management SystemGiới thiệu chung
+# HỆ THỐNG QUẢN LÝ SINH VIÊN
+**Advanced Student Management System**
 
-Hệ thống Quản lý Sinh viên Nâng cao là một ứng dụng desktop được phát triển bằng Java thuần, áp dụng triệt để các nguyên lý Lập trình Hướng Đối tượng (OOP). Hệ thống không chỉ dừng lại ở việc quản lý thông tin sinh viên cơ bản, mà còn tích hợp hệ thống điểm số chi tiết, tính năng thống kê thông minh, và phân tích học tập để hỗ trợ công tác giảng dạy và học tập.
+## Giới Thiệu
 
-Mục tiêu dự án
+Hệ thống Quản lý Sinh viên là ứng dụng console được phát triển bằng Java, áp dụng các nguyên lý Lập trình Hướng Đối tượng (OOP). Hệ thống hỗ trợ quản lý toàn diện thông tin sinh viên, giảng viên, môn học, điểm số và nhiều tính năng khác.
 
-Mục tiêu Mô tả
-Học thuật Thực hành sâu OOP, Design Patterns, Clean Architecture
-Thực tiễn Xây dựng hệ thống có tính ứng dụng thực tế trong giáo dục
-Cộng tác Rèn luyện kỹ năng làm việc nhóm với Git/GitHub
-Mở rộng Thiết kế module hóa, dễ dàng mở rộng tính năng
+## Tính Năng Chính
 
-1. Tính năng
+### Quản Lý Dữ Liệu
+- **Sinh viên**: Thêm, sửa, xóa, tìm kiếm, sắp xếp
+- **Giảng viên**: Quản lý thông tin giảng viên theo khoa
+- **Môn học**: Quản lý môn học theo học kỳ
+- **Lớp học**: Quản lý lớp và phân công giảng viên
+- **Đăng ký môn**: Quản lý đăng ký môn học của sinh viên
+- **Điểm số**: Nhập điểm giữa kỳ, cuối kỳ, tự động tính tổng
+- **Điểm danh**: Theo dõi chuyên cần sinh viên
+- **Khoa/Học kỳ**: Quản lý cấu trúc tổ chức
 
-· Hệ thống điểm đa thành phần: Bài tập, Giữa kỳ, Cuối kỳ
-· Thống kê thông minh: Phân phối điểm, dự đoán học lực
-· Tìm kiếm nâng cao: Theo điểm, học lực, xu hướng
-· Xuất báo cáo: CSV, PDF với biểu đồ trực quan
+### Bảo Mật
+- Mật khẩu hash SHA-256 với salt
+- Yêu cầu mật khẩu mạnh (8+ ký tự, chữ hoa/thường/số/đặc biệt)
+- Khóa tài khoản sau 5 lần đăng nhập sai
+- Lưu lịch sử 3 mật khẩu gần nhất
 
-2. Thiết kế mở rộng
+### Thống Kê & Báo Cáo
+- Thống kê sinh viên theo lớp, khoa
+- Thống kê điểm trung bình
+- Tỷ lệ chuyên cần
+- Xuất báo cáo CSV
 
-· Module hóa: Dễ dàng thêm tính năng mới
-· CSDL linh hoạt: Hỗ trợ cả file-based và database
-· GUI-ready: Cấu trúc sẵn sàng cho JavaFX/Swing
+## Cấu Trúc Project
 
-3. Về đội phát triển
+```
+StudentManagement_NhomXX/
+├── src/
+│   ├── Main.java              # Điểm bắt đầu chương trình
+│   ├── models/                # Các lớp đối tượng
+│   │   ├── Student.java
+│   │   ├── Teacher.java
+│   │   ├── Course.java
+│   │   ├── ClassRoom.java
+│   │   ├── Enrollment.java
+│   │   ├── Grade.java
+│   │   ├── Attendance.java
+│   │   ├── Department.java
+│   │   ├── Semester.java
+│   │   └── UserAccount.java
+│   ├── managers/              # Các lớp quản lý
+│   │   ├── StudentManager.java
+│   │   ├── TeacherManager.java
+│   │   ├── CourseManager.java
+│   │   ├── ClassRoomManager.java
+│   │   ├── EnrollmentManager.java
+│   │   ├── GradeManager.java
+│   │   ├── AttendanceManager.java
+│   │   ├── DepartmentManager.java
+│   │   ├── SemesterManager.java
+│   │   └── UserAccountManager.java
+│   └── utils/                 # Tiện ích
+│       ├── PasswordUtils.java
+│       └── ValidationUtils.java
+├── data/                      # Dữ liệu (tự động tạo)
+│   ├── students.txt
+│   ├── teachers.txt
+│   ├── courses.txt
+│   └── ...
+└── docs/                      # Tài liệu
+```
 
-Chúng tôi là một nhóm hai thành viên
+## Hướng Dẫn Cài Đặt & Chạy
 
-Thành viên 1: Trương Gia Huy - QE190139
-Thành viên 2: Trần Văn Phúc - QE200141
+### Yêu Cầu
+- Java JDK 8 trở lên
+- Terminal/Command Prompt
 
+### Biên Dịch
+```bash
+cd src
+javac -encoding UTF-8 utils/*.java models/*.java managers/*.java Main.java
+```
 
+### Chạy Chương Trình
+```bash
+java Main
+```
 
+### Sử Dụng Lần Đầu
+1. Chọn **"2. Đăng ký tài khoản mới"**
+2. Nhập username, email và mật khẩu (theo yêu cầu bảo mật)
+3. Đăng nhập với tài khoản vừa tạo
+4. Sử dụng các chức năng trong menu
+
+## Đội Phát Triển
+
+| Thành viên | MSSV | Vai trò |
+|------------|------|---------|
+| Trương Gia Huy | QE190139 | Developer |
+| Trần Văn Phúc | QE200141 | Developer |
+
+## Công Nghệ Sử Dụng
+
+- **Ngôn ngữ**: Java (JDK 8+)
+- **Lưu trữ**: File-based (text files)
+- **Bảo mật**: SHA-256 + Salt
+- **Kiến trúc**: MVC Pattern
+
+## License
+
+Dự án này được phát triển cho mục đích học tập.

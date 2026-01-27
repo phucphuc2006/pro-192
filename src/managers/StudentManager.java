@@ -86,6 +86,48 @@ public class StudentManager {
         return null;
     }
 
+    /**
+     * Lay danh sach tat ca sinh vien.
+     * 
+     * @return ArrayList sinh vien
+     */
+    public ArrayList<Student> getAll() {
+        return new ArrayList<>(students);
+    }
+
+    /**
+     * Lay so luong sinh vien.
+     * 
+     * @return So luong
+     */
+    public int getCount() {
+        return students.size();
+    }
+
+    /**
+     * Sap xep theo ten (A-Z).
+     */
+    public void sortByName() {
+        students.sort((s1, s2) -> s1.getFullName().compareToIgnoreCase(s2.getFullName()));
+        System.out.println("-> Da sap xep theo ten!");
+    }
+
+    /**
+     * Sap xep theo ma sinh vien.
+     */
+    public void sortById() {
+        students.sort((s1, s2) -> s1.getStudentID().compareToIgnoreCase(s2.getStudentID()));
+        System.out.println("-> Da sap xep theo ma SV!");
+    }
+
+    /**
+     * Sap xep theo lop.
+     */
+    public void sortByClass() {
+        students.sort((s1, s2) -> s1.getClassID().compareToIgnoreCase(s2.getClassID()));
+        System.out.println("-> Da sap xep theo lop!");
+    }
+
     // Luu file
     public void saveToFile() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME))) {

@@ -89,7 +89,25 @@ public class AttendanceManager {
         return null;
     }
 
-    // Lưu file
+    /**
+     * Lay danh sach tat ca diem danh.
+     * 
+     * @return ArrayList diem danh
+     */
+    public ArrayList<Attendance> getAll() {
+        return new ArrayList<>(attendances);
+    }
+
+    /**
+     * Lay so luong diem danh.
+     * 
+     * @return So luong
+     */
+    public int getCount() {
+        return attendances.size();
+    }
+
+    // Luu file
     public void saveToFile() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME))) {
             for (Attendance a : attendances) {

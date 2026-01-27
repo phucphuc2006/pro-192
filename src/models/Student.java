@@ -1,7 +1,12 @@
 package models;
 
 /**
- * Lớp Student đại diện cho một sinh viên trong hệ thống
+ * Lop Student dai dien cho mot sinh vien trong he thong quan ly.
+ * Chua cac thong tin co ban ve sinh vien nhu ma, ten, ngay sinh, lop.
+ * 
+ * @author StudentManagement Team
+ * @version 1.0
+ * @since 2024
  */
 public class Student {
     private String studentID; // Mã sinh viên

@@ -81,7 +81,49 @@ public class GradeManager {
         return null;
     }
 
-    // Lưu file
+    /**
+     * Lay danh sach tat ca diem.
+     * 
+     * @return ArrayList diem
+     */
+    public ArrayList<Grade> getAll() {
+        return new ArrayList<>(grades);
+    }
+
+    /**
+     * Lay so luong diem.
+     * 
+     * @return So luong
+     */
+    public int getCount() {
+        return grades.size();
+    }
+
+    /**
+     * Sap xep theo diem tong (cao den thap).
+     */
+    public void sortByTotalDesc() {
+        grades.sort((g1, g2) -> Double.compare(g2.getTotal(), g1.getTotal()));
+        System.out.println("-> Da sap xep theo diem (cao -> thap)!");
+    }
+
+    /**
+     * Sap xep theo diem tong (thap den cao).
+     */
+    public void sortByTotalAsc() {
+        grades.sort((g1, g2) -> Double.compare(g1.getTotal(), g2.getTotal()));
+        System.out.println("-> Da sap xep theo diem (thap -> cao)!");
+    }
+
+    /**
+     * Sap xep theo ma sinh vien.
+     */
+    public void sortByStudentId() {
+        grades.sort((g1, g2) -> g1.getStudentID().compareToIgnoreCase(g2.getStudentID()));
+        System.out.println("-> Da sap xep theo ma SV!");
+    }
+
+    // Luu file
     public void saveToFile() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME))) {
             for (Grade g : grades) {
