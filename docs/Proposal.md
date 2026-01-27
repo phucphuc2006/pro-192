@@ -1,80 +1,159 @@
-# PROPOSAL: HỆ THỐNG QUẢN LÝ ĐÀO TẠO (ACADEMIC MANAGEMENT SYSTEM)
-
-## 1. Giới thiệu (Introduction)
-Hệ thống được xây dựng để quản lý toàn diện quy trình đào tạo, bao gồm quản lý thông tin con người (Sinh viên, Giảng viên), quản lý khóa học và quản lý điểm số/đăng ký học phần. Dự án áp dụng triệt để các nguyên lý Lập trình hướng đối tượng (OOP).
-
-## 2. Kiến trúc Hệ thống & Danh sách Class (System Architecture)
-
-Dự kiến hệ thống sẽ bao gồm khoảng **15-18 Classes/Interfaces**, chia làm các gói (packages) như sau:
-
-### A. Package `model` (Các thực thể dữ liệu)
-Đây là nơi thể hiện rõ nhất tính chất Kế thừa và Đóng gói.
-
-1.  **`Person` (Abstract Class):** Lớp cha trừu tượng.
-    * *Thuộc tính:* `id`, `fullName`, `email`, `phoneNumber`, `gender`.
-    * *Phương thức:* `toString()`, `showProfile()` (abstract).
-2.  **`Student` (extends Person):**
-    * *Thuộc tính riêng:* `studentID`, `major` (Chuyên ngành), `gpa`, `enrollmentYear`.
-    * *Phương thức:* Override `showProfile()`, `calculateScholarship()`.
-3.  **`Lecturer` (extends Person):** (Thêm lớp này để thể hiện Đa hình với Student)
-    * *Thuộc tính riêng:* `staffID`, `department`, `salary`.
-    * *Phương thức:* Override `showProfile()`.
-4.  **`Course`:** Lớp quản lý môn học.
-    * *Thuộc tính:* `courseCode`, `courseName`, `credits` (số tín chỉ).
-5.  **`Enrollment`:** Lớp liên kết giữa Student và Course (Bảng điểm chi tiết).
-    * *Thuộc tính:* `studentID`, `courseCode`, `semester`, `score`.
-    * *Phương thức:* `getGradeLetter()` (chuyển điểm số sang A, B, C...).
-
-### B. Package `enums` (Định nghĩa hằng số)
-Dùng để chuẩn hóa dữ liệu, tránh nhập sai string.
-
-6.  **`Major` (Enum):** SE, IA, GD, IB...
-7.  **`Semester` (Enum):** SPRING_2025, SUMMER_2025...
-8.  **`Rank` (Enum):** EXCELLENT, GOOD, AVERAGE, WEAK (Xếp loại dựa trên GPA).
-
-### C. Package `service` (Xử lý nghiệp vụ & Logic)
-Áp dụng Interface để tách biệt định nghĩa và cài đặt (Loose Coupling).
-
-9.  **`IStudentService` (Interface):** Định nghĩa các hàm CRUD cho sinh viên.
-10. **`StudentManager` (implements IStudentService):** Code chi tiết thêm/sửa/xóa/tìm kiếm sinh viên.
-11. **`CourseManager`:** Quản lý danh sách môn học.
-12. **`EnrollmentManager`:** Quản lý việc đăng ký môn và nhập điểm cho sinh viên.
-
-### D. Package `utils` (Tiện ích dùng chung - Bắt buộc Static)
-Đáp ứng yêu cầu về Utility Classes và xử lý dữ liệu.
-
-13. **`ValidationUtils`:** Chứa các hàm `static` để kiểm tra đầu vào (Check ID format, Check email, Check range điểm 0-10).
-14. **`DataSeeder`:** Chứa hàm `static` để tự động sinh 100+ dòng dữ liệu giả (Seed Data) khi chương trình khởi chạy.
-15. **`FileUtils`:** Chứa hàm `static` để đọc/ghi file text hoặc object (Serialization).
-
-### E. Package `view` (Giao diện Console)
-16. **`Menu`:** Class quản lý việc hiển thị menu và nhận lựa chọn từ người dùng.
-
-### F. Package `main`
-17. **`Main`:** Chứa hàm `public static void main(String[] args)` để chạy chương trình.
+# PROPOSAL: HỆ THỐNG QUẢN LÝ SINH VIÊN
+## (Student Management System)
 
 ---
 
-## 3. Các tính năng chính (Key Features)
+## 1. Giới Thiệu (Introduction)
 
-1.  **Quản lý Sinh viên & Giảng viên:**
-    * Thêm mới (Validate dữ liệu chặt chẽ).
-    * Cập nhật thông tin.
-    * Xóa (Kiểm tra ràng buộc: Sinh viên đã có điểm thì không được xóa).
-2.  **Quản lý Khóa học & Điểm số:**
-    * Đăng ký môn học cho sinh viên.
-    * Nhập điểm/Sửa điểm.
-3.  **Xử lý dữ liệu (Advanced):**
-    * **Sorting:** Sắp xếp sinh viên theo Tên hoặc theo GPA.
-    * **Searching:** Tìm kiếm sinh viên theo khoảng điểm (ví dụ: tìm các bạn từ 8.0 - 9.0).
-    * **Reporting:** In danh sách sinh viên đủ điều kiện học bổng.
-4.  **Lưu trữ:**
-    * Lưu toàn bộ dữ liệu xuống file `students.dat`, `courses.dat` khi thoát.
-    * Load lại dữ liệu khi mở chương trình.
+Hệ thống Quản lý Sinh viên là ứng dụng console được phát triển bằng Java, hỗ trợ quản lý toàn diện các hoạt động đào tạo bao gồm: quản lý sinh viên, giảng viên, môn học, điểm số, điểm danh và bảo mật người dùng.
 
-## 4. Áp dụng kỹ thuật (Technical Requirements)
-* **Encapsulation:** Mọi thuộc tính là `private`, truy xuất qua Getter/Setter.
-* **Inheritance:** `Student` và `Lecturer` kế thừa `Person`.
-* **Polymorphism:** Dùng `List<Person>` để quản lý chung cả sinh viên và giảng viên; Override `toString()`.
-* **Abstraction:** Class `Person` là abstract; Interface `IStudentService`.
-* **Static:** Class `ValidationUtils` chỉ chứa static methods.
+Dự án được xây dựng áp dụng các nguyên lý Lập trình Hướng Đối tượng (OOP) và kiến trúc phân tầng rõ ràng.
+
+---
+
+## 2. Kiến Trúc Hệ Thống (System Architecture)
+
+Hệ thống bao gồm **25 Classes** được tổ chức thành 4 packages:
+
+### A. Package `models` (10 Classes - Thực thể dữ liệu)
+
+| Class | Mô tả | Thuộc tính chính |
+|-------|-------|------------------|
+| Student | Sinh viên | studentID, fullName, dob, gender, email, phone, classID |
+| Teacher | Giảng viên | teacherID, fullName, department, email, phone |
+| Course | Môn học | courseID, courseName, credits, semester, teacherID |
+| ClassRoom | Lớp học | classID, className, teacherID, courseID |
+| Enrollment | Đăng ký môn | enrollmentID, studentID, courseID, semester |
+| Grade | Điểm số | gradeID, studentID, courseID, midterm, finalExam, total |
+| Attendance | Điểm danh | attendanceID, studentID, classID, date, status |
+| Department | Khoa | departmentID, departmentName, numberOfTeachers |
+| Semester | Học kỳ | semesterID, semesterName, startDate, endDate |
+| UserAccount | Tài khoản | userID, username, email, salt, hashedPassword, passwordHistory, loginAttempts, isLocked |
+
+### B. Package `managers` (10 Classes - Xử lý nghiệp vụ)
+
+**Chức năng chung của tất cả Managers:**
+- Thêm mới (add)
+- Cập nhật (update)
+- Xóa (delete)
+- Tìm kiếm theo ID (findById)
+- Tìm kiếm theo tên/từ khóa (search)
+- Hiển thị danh sách (displayAll)
+- Lưu file (saveToFile)
+- Đọc file (loadFromFile)
+
+| Class | Quản lý | Chức năng bổ sung |
+|-------|---------|-------------------|
+| StudentManager | Sinh viên | getAll(), sortByName(), sortById(), sortByClass(), getCount() |
+| TeacherManager | Giảng viên | Chức năng cơ bản |
+| CourseManager | Môn học | Chức năng cơ bản |
+| ClassRoomManager | Lớp học | Chức năng cơ bản |
+| EnrollmentManager | Đăng ký môn | Chức năng cơ bản |
+| GradeManager | Điểm số | getAll(), sortByTotalDesc(), sortByTotalAsc(), sortByStudentId(), getCount() |
+| AttendanceManager | Điểm danh | getAll(), getCount() |
+| DepartmentManager | Khoa | Chức năng cơ bản |
+| SemesterManager | Học kỳ | Chức năng cơ bản |
+| UserAccountManager | Tài khoản | register(), login(), changePassword(), unlockAccount() |
+
+
+### C. Package `utils` (4 Classes - Tiện ích)
+
+| Class | Mô tả | Phương thức static |
+|-------|-------|-------------------|
+| PasswordUtils | Bảo mật mật khẩu | generateSalt(), hashPassword(), verifyPassword(), isStrongPassword() |
+| ValidationUtils | Kiểm tra dữ liệu | isValidEmail(), isValidPhone(), isValidDate(), isValidScore() |
+| StatisticsUtils | Thống kê | calculateAverageGrade(), calculateAttendanceRate(), classifyGrade() |
+| ReportUtils | Xuất báo cáo | exportStudentsToCSV(), exportGradesToCSV(), exportSummaryReport() |
+
+### D. Main Class (1 Class - Điểm khởi đầu)
+
+| Class | Mô tả |
+|-------|-------|
+| Main | Chứa hàm main(), quản lý menu và điều phối chương trình |
+
+---
+
+## 3. Các Tính Năng Chính (Key Features)
+
+### 3.1. Quản lý Đối tượng (CRUD)
+- Sinh viên, Giảng viên, Môn học, Lớp học
+- Đăng ký môn, Điểm số, Điểm danh
+- Khoa, Học kỳ, Tài khoản người dùng
+
+### 3.2. Bảo mật Hệ thống
+- Mật khẩu hash SHA-256 với salt
+- Yêu cầu mật khẩu mạnh (8+ ký tự, chữ hoa/thường/số/đặc biệt)
+- Khóa tài khoản sau 5 lần đăng nhập sai
+- Lưu lịch sử 3 mật khẩu gần nhất
+
+### 3.3. Xử lý Dữ liệu Nâng cao
+- **Sắp xếp:** Theo tên, mã, điểm, lớp
+- **Tìm kiếm:** Theo từ khóa, ID
+- **Thống kê:** Điểm trung bình, tỷ lệ chuyên cần, phân loại học lực
+- **Xuất báo cáo:** File CSV
+
+### 3.4. Lưu trữ Dữ liệu
+- Lưu toàn bộ dữ liệu xuống file .txt khi thoát
+- Tự động load dữ liệu khi khởi động
+- Thư mục: `data/`
+
+---
+
+## 4. Áp Dụng Kỹ Thuật OOP (Technical Requirements)
+
+| Nguyên lý | Áp dụng trong project |
+|-----------|----------------------|
+| **Encapsulation** | Mọi thuộc tính là `private`, truy xuất qua Getter/Setter |
+| **Modularity** | Phân chia rõ ràng: models, managers, utils |
+| **Single Responsibility** | Mỗi class chỉ làm một nhiệm vụ cụ thể |
+| **Static Methods** | PasswordUtils, ValidationUtils, StatisticsUtils, ReportUtils |
+| **File I/O** | BufferedReader/BufferedWriter cho persistence |
+| **Security** | SHA-256 hashing, salt, login attempts limit |
+
+---
+
+## 5. Cấu Trúc Thư Mục (Directory Structure)
+
+```
+StudentManagement_NhomXX/
+├── src/
+│   ├── Main.java
+│   ├── models/          (10 files)
+│   ├── managers/        (10 files)
+│   └── utils/           (4 files)
+├── data/                (9 files .txt)
+├── reports/             (Thư mục xuất CSV)
+└── docs/                (Tài liệu)
+```
+
+---
+
+## 6. Công Nghệ Sử Dụng (Technologies)
+
+| Công nghệ | Phiên bản |
+|-----------|-----------|
+| Ngôn ngữ | Java JDK 8+ |
+| Lưu trữ | File-based (text files) |
+| Bảo mật | SHA-256 + Salt |
+| Encoding | UTF-8 |
+
+---
+
+## 7. Đội Phát Triển (Development Team)
+
+| Thành viên | MSSV | Email |
+|------------|------|-------|
+| Trương Gia Huy | QE190139 | - |
+| Trần Văn Phúc | QE200141 | - |
+
+---
+
+## 8. Kết Luận (Conclusion)
+
+Hệ thống Quản lý Sinh viên đã được xây dựng hoàn chỉnh với:
+- ✅ 25 classes phân chia rõ ràng
+- ✅ Đầy đủ chức năng CRUD cho 10 loại đối tượng
+- ✅ Bảo mật mạnh mẽ với SHA-256
+- ✅ Thống kê và xuất báo cáo CSV
+- ✅ 900 dòng dữ liệu mẫu
+- ✅ Tài liệu chi tiết
