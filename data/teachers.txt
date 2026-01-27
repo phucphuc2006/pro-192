@@ -1,0 +1,100 @@
+GV001,Nguyen Van Hoa,Khoa CNTT,hoa.nv@uni.edu.vn,0912345001
+GV002,Tran Thi Lan,Khoa CNTT,lan.tt@uni.edu.vn,0912345002
+GV003,Le Van Minh,Khoa CNTT,minh.lv@uni.edu.vn,0912345003
+GV004,Pham Thi Nga,Khoa CNTT,nga.pt@uni.edu.vn,0912345004
+GV005,Hoang Van Phong,Khoa CNTT,phong.hv@uni.edu.vn,0912345005
+GV006,Vo Thi Quy,Khoa Kinh Te,quy.vt@uni.edu.vn,0912345006
+GV007,Dang Van Sang,Khoa Kinh Te,sang.dv@uni.edu.vn,0912345007
+GV008,Bui Thi Thao,Khoa Kinh Te,thao.bt@uni.edu.vn,0912345008
+GV009,Nguyen Van Tung,Khoa Kinh Te,tung.nv@uni.edu.vn,0912345009
+GV010,Tran Thi Uyen,Khoa Kinh Te,uyen.tt@uni.edu.vn,0912345010
+GV011,Le Van Vinh,Khoa Ngoai Ngu,vinh.lv@uni.edu.vn,0912345011
+GV012,Pham Thi Xuan,Khoa Ngoai Ngu,xuan.pt@uni.edu.vn,0912345012
+GV013,Hoang Van Anh,Khoa Ngoai Ngu,anh.hv@uni.edu.vn,0912345013
+GV014,Vo Thi Binh,Khoa Ngoai Ngu,binh.vt@uni.edu.vn,0912345014
+GV015,Dang Van Cuong,Khoa Ngoai Ngu,cuong.dv@uni.edu.vn,0912345015
+GV016,Bui Thi Dung,Khoa Luat,dung.bt@uni.edu.vn,0912345016
+GV017,Nguyen Van Em,Khoa Luat,em.nv@uni.edu.vn,0912345017
+GV018,Tran Thi Giang,Khoa Luat,giang.tt@uni.edu.vn,0912345018
+GV019,Le Van Hai,Khoa Luat,hai.lv@uni.edu.vn,0912345019
+GV020,Pham Thi Huong,Khoa Luat,huong.pt@uni.edu.vn,0912345020
+GV021,Hoang Van Ich,Khoa Co Khi,ich.hv@uni.edu.vn,0912345021
+GV022,Vo Thi Kim,Khoa Co Khi,kim.vt@uni.edu.vn,0912345022
+GV023,Dang Van Long,Khoa Co Khi,long.dv@uni.edu.vn,0912345023
+GV024,Bui Thi Mai,Khoa Co Khi,mai.bt@uni.edu.vn,0912345024
+GV025,Nguyen Van Nam,Khoa Co Khi,nam.nv@uni.edu.vn,0912345025
+GV026,Tran Thi Oanh,Khoa Dien Tu,oanh.tt@uni.edu.vn,0912345026
+GV027,Le Van Phuc,Khoa Dien Tu,phuc.lv@uni.edu.vn,0912345027
+GV028,Pham Thi Quyen,Khoa Dien Tu,quyen.pt@uni.edu.vn,0912345028
+GV029,Hoang Van Rong,Khoa Dien Tu,rong.hv@uni.edu.vn,0912345029
+GV030,Vo Thi Sen,Khoa Dien Tu,sen.vt@uni.edu.vn,0912345030
+GV031,Dang Van Tuan,Khoa CNTT,tuan.dv@uni.edu.vn,0912345031
+GV032,Bui Thi Uyen,Khoa CNTT,uyen.bt@uni.edu.vn,0912345032
+GV033,Nguyen Van Vinh,Khoa CNTT,vinh.nv@uni.edu.vn,0912345033
+GV034,Tran Thi Xuan,Khoa CNTT,xuan.tt@uni.edu.vn,0912345034
+GV035,Le Van Yen,Khoa CNTT,yen.lv@uni.edu.vn,0912345035
+GV036,Pham Thi Anh,Khoa Kinh Te,anh.pt@uni.edu.vn,0912345036
+GV037,Hoang Van Bang,Khoa Kinh Te,bang.hv@uni.edu.vn,0912345037
+GV038,Vo Thi Cam,Khoa Kinh Te,cam.vt@uni.edu.vn,0912345038
+GV039,Dang Van Duc,Khoa Kinh Te,duc.dv@uni.edu.vn,0912345039
+GV040,Bui Thi Gam,Khoa Kinh Te,gam.bt@uni.edu.vn,0912345040
+GV041,Nguyen Van Hai,Khoa Ngoai Ngu,hai.nv@uni.edu.vn,0912345041
+GV042,Tran Thi Hue,Khoa Ngoai Ngu,hue.tt@uni.edu.vn,0912345042
+GV043,Le Van Khai,Khoa Ngoai Ngu,khai.lv@uni.edu.vn,0912345043
+GV044,Pham Thi Lan,Khoa Ngoai Ngu,lan.pt@uni.edu.vn,0912345044
+GV045,Hoang Van Minh,Khoa Ngoai Ngu,minh.hv@uni.edu.vn,0912345045
+GV046,Vo Thi Ngoc,Khoa Luat,ngoc.vt@uni.edu.vn,0912345046
+GV047,Dang Van Phu,Khoa Luat,phu.dv@uni.edu.vn,0912345047
+GV048,Bui Thi Quyen,Khoa Luat,quyen.bt@uni.edu.vn,0912345048
+GV049,Nguyen Van Son,Khoa Luat,son.nv@uni.edu.vn,0912345049
+GV050,Tran Thi Thao,Khoa Luat,thao.tt@uni.edu.vn,0912345050
+GV051,Le Van Uy,Khoa Co Khi,uy.lv@uni.edu.vn,0912345051
+GV052,Pham Thi Van,Khoa Co Khi,van.pt@uni.edu.vn,0912345052
+GV053,Hoang Van Xuan,Khoa Co Khi,xuan.hv@uni.edu.vn,0912345053
+GV054,Vo Thi Yen,Khoa Co Khi,yen.vt@uni.edu.vn,0912345054
+GV055,Dang Van Anh,Khoa Co Khi,anh.dv@uni.edu.vn,0912345055
+GV056,Bui Thi Bach,Khoa Dien Tu,bach.bt@uni.edu.vn,0912345056
+GV057,Nguyen Van Chinh,Khoa Dien Tu,chinh.nv@uni.edu.vn,0912345057
+GV058,Tran Thi Dan,Khoa Dien Tu,dan.tt@uni.edu.vn,0912345058
+GV059,Le Van Gia,Khoa Dien Tu,gia.lv@uni.edu.vn,0912345059
+GV060,Pham Thi Hong,Khoa Dien Tu,hong.pt@uni.edu.vn,0912345060
+GV061,Hoang Van Khang,Khoa CNTT,khang.hv@uni.edu.vn,0912345061
+GV062,Vo Thi Linh,Khoa CNTT,linh.vt@uni.edu.vn,0912345062
+GV063,Dang Van Man,Khoa CNTT,man.dv@uni.edu.vn,0912345063
+GV064,Bui Thi Nhan,Khoa CNTT,nhan.bt@uni.edu.vn,0912345064
+GV065,Nguyen Van Phong,Khoa CNTT,phong.nv@uni.edu.vn,0912345065
+GV066,Tran Thi Quynh,Khoa Kinh Te,quynh.tt@uni.edu.vn,0912345066
+GV067,Le Van Sang,Khoa Kinh Te,sang.lv@uni.edu.vn,0912345067
+GV068,Pham Thi Tam,Khoa Kinh Te,tam.pt@uni.edu.vn,0912345068
+GV069,Hoang Van Trung,Khoa Kinh Te,trung.hv@uni.edu.vn,0912345069
+GV070,Vo Thi Uyen,Khoa Kinh Te,uyen.vt@uni.edu.vn,0912345070
+GV071,Dang Van Vinh,Khoa Ngoai Ngu,vinh.dv@uni.edu.vn,0912345071
+GV072,Bui Thi Xanh,Khoa Ngoai Ngu,xanh.bt@uni.edu.vn,0912345072
+GV073,Nguyen Van Anh,Khoa Ngoai Ngu,anh2.nv@uni.edu.vn,0912345073
+GV074,Tran Thi Bang,Khoa Ngoai Ngu,bang.tt@uni.edu.vn,0912345074
+GV075,Le Van Cong,Khoa Ngoai Ngu,cong.lv@uni.edu.vn,0912345075
+GV076,Pham Thi Dao,Khoa Luat,dao.pt@uni.edu.vn,0912345076
+GV077,Hoang Van Hai,Khoa Luat,hai.hv@uni.edu.vn,0912345077
+GV078,Vo Thi Hanh,Khoa Luat,hanh.vt@uni.edu.vn,0912345078
+GV079,Dang Van Hung,Khoa Luat,hung.dv@uni.edu.vn,0912345079
+GV080,Bui Thi Huyen,Khoa Luat,huyen.bt@uni.edu.vn,0912345080
+GV081,Nguyen Van Khoa,Khoa Co Khi,khoa.nv@uni.edu.vn,0912345081
+GV082,Tran Thi Loan,Khoa Co Khi,loan.tt@uni.edu.vn,0912345082
+GV083,Le Van Manh,Khoa Co Khi,manh.lv@uni.edu.vn,0912345083
+GV084,Pham Thi Nhung,Khoa Co Khi,nhung.pt@uni.edu.vn,0912345084
+GV085,Hoang Van Phuc,Khoa Co Khi,phuc.hv@uni.edu.vn,0912345085
+GV086,Vo Thi Quyen,Khoa Dien Tu,quyen2.vt@uni.edu.vn,0912345086
+GV087,Dang Van Son,Khoa Dien Tu,son.dv@uni.edu.vn,0912345087
+GV088,Bui Thi Thuy,Khoa Dien Tu,thuy.bt@uni.edu.vn,0912345088
+GV089,Nguyen Van Tung,Khoa Dien Tu,tung2.nv@uni.edu.vn,0912345089
+GV090,Tran Thi Uyen,Khoa Dien Tu,uyen2.tt@uni.edu.vn,0912345090
+GV091,Le Van Vu,Khoa CNTT,vu.lv@uni.edu.vn,0912345091
+GV092,Pham Thi Xuan,Khoa CNTT,xuan2.pt@uni.edu.vn,0912345092
+GV093,Hoang Van Bao,Khoa CNTT,bao.hv@uni.edu.vn,0912345093
+GV094,Vo Thi Chi,Khoa CNTT,chi.vt@uni.edu.vn,0912345094
+GV095,Dang Van Dat,Khoa CNTT,dat.dv@uni.edu.vn,0912345095
+GV096,Bui Thi Giang,Khoa Kinh Te,giang.bt@uni.edu.vn,0912345096
+GV097,Nguyen Van Hieu,Khoa Kinh Te,hieu.nv@uni.edu.vn,0912345097
+GV098,Tran Thi Khanh,Khoa Kinh Te,khanh.tt@uni.edu.vn,0912345098
+GV099,Le Van Loc,Khoa Kinh Te,loc.lv@uni.edu.vn,0912345099
+GV100,Pham Thi My,Khoa Kinh Te,my.pt@uni.edu.vn,0912345100

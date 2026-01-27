@@ -1,0 +1,100 @@
+K001,Khoa Cong nghe Thong tin,35
+K002,Khoa Kinh te,28
+K003,Khoa Ngoai ngu,20
+K004,Khoa Luat,18
+K005,Khoa Co khi,22
+K006,Khoa Dien tu,19
+K007,Khoa Xay dung,16
+K008,Khoa Kien truc,12
+K009,Khoa Moi truong,14
+K010,Khoa Y duoc,25
+K011,Khoa Nong nghiep,11
+K012,Khoa Thuy san,9
+K013,Khoa Du lich,15
+K014,Khoa Truyen thong,13
+K015,Khoa My thuat,8
+K016,Khoa Am nhac,7
+K017,Khoa The duc The thao,10
+K018,Khoa Su pham,24
+K019,Khoa Tam ly,17
+K020,Khoa Xa hoi hoc,12
+K021,Khoa Triet hoc,6
+K022,Khoa Lich su,8
+K023,Khoa Dia ly,9
+K024,Khoa Vat ly,15
+K025,Khoa Hoa hoc,14
+K026,Khoa Sinh hoc,13
+K027,Khoa Toan hoc,16
+K028,Khoa Thong ke,11
+K029,Khoa Quan tri kinh doanh,22
+K030,Khoa Tai chinh Ngan hang,19
+K031,Khoa Ke toan,18
+K032,Khoa Marketing,14
+K033,Khoa Logistics,10
+K034,Khoa Thuong mai dien tu,12
+K035,Khoa Quan he quoc te,9
+K036,Khoa Bao chi,11
+K037,Khoa Quang cao,8
+K038,Khoa Thiet ke do hoa,10
+K039,Khoa Thoi trang,7
+K040,Khoa Am thuc,6
+K041,Khoa Khach san,9
+K042,Khoa Huong dan vien,8
+K043,Khoa An ninh,12
+K044,Khoa Phong chay chua chay,7
+K045,Khoa Giao thong van tai,11
+K046,Khoa Hang khong,8
+K047,Khoa Hang hai,6
+K048,Khoa Dau khi,10
+K049,Khoa Nang luong,9
+K050,Khoa Dien cong nghiep,14
+K051,Khoa Tu dong hoa,13
+K052,Khoa Dieu khien,11
+K053,Khoa Robot,8
+K054,Khoa AI va Machine Learning,15
+K055,Khoa An toan thong tin,12
+K056,Khoa Mang may tinh,11
+K057,Khoa Phan mem,18
+K058,Khoa He thong thong tin,14
+K059,Khoa Khoa hoc du lieu,10
+K060,Khoa Game,7
+K061,Khoa Thuc te ao,5
+K062,Khoa Blockchain,6
+K063,Khoa Fintech,8
+K064,Khoa Insurtech,4
+K065,Khoa Healthtech,5
+K066,Khoa Edtech,6
+K067,Khoa Agritech,4
+K068,Khoa Biotech,7
+K069,Khoa Nanotech,3
+K070,Khoa Khoa hoc vat lieu,8
+K071,Khoa Co dien tu,12
+K072,Khoa Ky thuat oto,15
+K073,Khoa Ky thuat may bay,6
+K074,Khoa Ky thuat tau thuy,5
+K075,Khoa Cong trinh bien,4
+K076,Khoa Thuy loi,7
+K077,Khoa Cau duong,9
+K078,Khoa Quy hoach do thi,6
+K079,Khoa Quan ly dat dai,8
+K080,Khoa Dia chinh,5
+K081,Khoa Trac dia,4
+K082,Khoa Ban do,3
+K083,Khoa Vien tham,5
+K084,Khoa GIS,7
+K085,Khoa Khi tuong,4
+K086,Khoa Thuy van,3
+K087,Khoa Hai duong hoc,4
+K088,Khoa Dia chat,6
+K089,Khoa Khoang san,5
+K090,Khoa Lam nghiep,7
+K091,Khoa Chan nuoi,6
+K092,Khoa Thu y,8
+K093,Khoa Trong trot,5
+K094,Khoa Bao ve thuc vat,4
+K095,Khoa Che bien thuc pham,9
+K096,Khoa Dinh duong,7
+K097,Khoa Y te cong cong,11
+K098,Khoa Dieu duong,13
+K099,Khoa Duoc,15
+K100,Khoa Rang Ham Mat,8

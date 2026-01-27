@@ -1,0 +1,100 @@
+MH001,Lap trinh C,3,HK1-2024,GV001
+MH002,Lap trinh Java,4,HK1-2024,GV002
+MH003,Cau truc du lieu va giai thuat,3,HK1-2024,GV003
+MH004,Co so du lieu,4,HK1-2024,GV004
+MH005,Mang may tinh,3,HK1-2024,GV005
+MH006,Lap trinh Web,4,HK2-2024,GV031
+MH007,Lap trinh di dong,4,HK2-2024,GV032
+MH008,Tri tue nhan tao,3,HK2-2024,GV033
+MH009,Hoc may,4,HK2-2024,GV034
+MH010,An toan thong tin,3,HK2-2024,GV035
+MH011,Kinh te vi mo,3,HK1-2024,GV006
+MH012,Kinh te vi mo,3,HK1-2024,GV007
+MH013,Quan tri hoc,4,HK1-2024,GV008
+MH014,Marketing can ban,3,HK1-2024,GV009
+MH015,Ke toan tai chinh,4,HK1-2024,GV010
+MH016,Quan tri nhan su,3,HK2-2024,GV036
+MH017,Tai chinh doanh nghiep,4,HK2-2024,GV037
+MH018,Thuong mai dien tu,3,HK2-2024,GV038
+MH019,Phan tich kinh doanh,4,HK2-2024,GV039
+MH020,Khoi nghiep kinh doanh,3,HK2-2024,GV040
+MH021,Tieng Anh co ban,3,HK1-2024,GV011
+MH022,Tieng Anh giao tiep,3,HK1-2024,GV012
+MH023,Tieng Anh thuong mai,4,HK1-2024,GV013
+MH024,Tieng Phap 1,3,HK1-2024,GV014
+MH025,Tieng Nhat 1,3,HK1-2024,GV015
+MH026,Tieng Anh nang cao,4,HK2-2024,GV041
+MH027,Bien phien dich,4,HK2-2024,GV042
+MH028,Tieng Trung 1,3,HK2-2024,GV043
+MH029,Tieng Han 1,3,HK2-2024,GV044
+MH030,Van hoa Anh My,3,HK2-2024,GV045
+MH031,Phap luat dai cuong,3,HK1-2024,GV016
+MH032,Luat dan su,4,HK1-2024,GV017
+MH033,Luat hinh su,4,HK1-2024,GV018
+MH034,Luat thuong mai,3,HK1-2024,GV019
+MH035,Luat lao dong,3,HK1-2024,GV020
+MH036,Luat hanh chinh,4,HK2-2024,GV046
+MH037,Luat quoc te,3,HK2-2024,GV047
+MH038,Luat so huu tri tue,3,HK2-2024,GV048
+MH039,To tung dan su,4,HK2-2024,GV049
+MH040,To tung hinh su,4,HK2-2024,GV050
+MH041,Co hoc ky thuat,4,HK1-2024,GV021
+MH042,Suc ben vat lieu,4,HK1-2024,GV022
+MH043,Nguyen ly may,3,HK1-2024,GV023
+MH044,Chi tiet may,4,HK1-2024,GV024
+MH045,Ve ky thuat,3,HK1-2024,GV025
+MH046,Ky thuat che tao,4,HK2-2024,GV051
+MH047,CAD/CAM,4,HK2-2024,GV052
+MH048,Robot cong nghiep,3,HK2-2024,GV053
+MH049,He thong co dien tu,4,HK2-2024,GV054
+MH050,Tu dong hoa,3,HK2-2024,GV055
+MH051,Dien tu co ban,3,HK1-2024,GV026
+MH052,Ky thuat so,4,HK1-2024,GV027
+MH053,Vi xu ly,4,HK1-2024,GV028
+MH054,Dien tu cong suat,3,HK1-2024,GV029
+MH055,Truyen thong so,3,HK1-2024,GV030
+MH056,Thiet ke mach dien tu,4,HK2-2024,GV056
+MH057,He thong nhung,4,HK2-2024,GV057
+MH058,IoT va ung dung,3,HK2-2024,GV058
+MH059,Xu ly tin hieu so,4,HK2-2024,GV059
+MH060,Dien tu y sinh,3,HK2-2024,GV060
+MH061,Lap trinh Python,3,HK1-2025,GV061
+MH062,Phat trien phan mem,4,HK1-2025,GV062
+MH063,Kiem thu phan mem,3,HK1-2025,GV063
+MH064,Quan ly du an CNTT,4,HK1-2025,GV064
+MH065,Cloud Computing,3,HK1-2025,GV065
+MH066,Big Data,4,HK2-2025,GV001
+MH067,Blockchain,3,HK2-2025,GV002
+MH068,DevOps,3,HK2-2025,GV003
+MH069,Microservices,4,HK2-2025,GV004
+MH070,Thuc te ao VR/AR,3,HK2-2025,GV005
+MH071,Quan tri chien luoc,4,HK1-2025,GV066
+MH072,Quan tri chat luong,3,HK1-2025,GV067
+MH073,Logistics,3,HK1-2025,GV068
+MH074,Quan tri chuoi cung ung,4,HK1-2025,GV069
+MH075,Phan tich tai chinh,4,HK1-2025,GV070
+MH076,Dau tu tai chinh,3,HK2-2025,GV006
+MH077,Bao hiem,3,HK2-2025,GV007
+MH078,Ngan hang,4,HK2-2025,GV008
+MH079,Quan tri rui ro,3,HK2-2025,GV009
+MH080,Ke toan quan tri,4,HK2-2025,GV010
+MH081,IELTS Preparation,4,HK1-2025,GV071
+MH082,TOEIC Preparation,3,HK1-2025,GV072
+MH083,Academic Writing,3,HK1-2025,GV073
+MH084,Public Speaking,3,HK1-2025,GV074
+MH085,Cross-cultural Communication,3,HK1-2025,GV075
+MH086,Tieng Phap 2,3,HK2-2025,GV011
+MH087,Tieng Nhat 2,3,HK2-2025,GV012
+MH088,Tieng Trung 2,3,HK2-2025,GV013
+MH089,Tieng Han 2,3,HK2-2025,GV014
+MH090,Van hoc Anh,3,HK2-2025,GV015
+MH091,Luat moi truong,3,HK1-2025,GV076
+MH092,Luat dat dai,3,HK1-2025,GV077
+MH093,Luat nha o,3,HK1-2025,GV078
+MH094,Luat thue,4,HK1-2025,GV079
+MH095,Luat canh tranh,3,HK1-2025,GV080
+MH096,Trong tai thuong mai,3,HK2-2025,GV016
+MH097,Luat doanh nghiep,4,HK2-2025,GV017
+MH098,Luat ngoai thuong,3,HK2-2025,GV018
+MH099,Ky nang dam phan,3,HK2-2025,GV019
+MH100,Thuc tap nghe nghiep,6,HK2-2025,GV020
