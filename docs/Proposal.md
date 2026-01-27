@@ -8,23 +8,108 @@ Hệ thống được xây dựng để quản lý toàn diện quy trình đào
 Dự kiến hệ thống sẽ bao gồm khoảng **15-18 Classes/Interfaces**, chia làm các gói (packages) như sau:
 
 ### A. Package `model` (Các thực thể dữ liệu)
-Đây là nơi thể hiện rõ nhất tính chất Kế thừa và Đóng gói.
 
-1.  **`Person` (Abstract Class):** Lớp cha trừu tượng.
-    * *Thuộc tính:* `id`, `fullName`, `email`, `phoneNumber`, `gender`.
-    * *Phương thức:* `toString()`, `showProfile()` (abstract).
-2.  **`Student` (extends Person):**
-    * *Thuộc tính riêng:* `studentID`, `major` (Chuyên ngành), `gpa`, `enrollmentYear`.
-    * *Phương thức:* Override `showProfile()`, `calculateScholarship()`.
-3.  **`Lecturer` (extends Person):** (Thêm lớp này để thể hiện Đa hình với Student)
-    * *Thuộc tính riêng:* `staffID`, `department`, `salary`.
-    * *Phương thức:* Override `showProfile()`.
-4.  **`Course`:** Lớp quản lý môn học.
-    * *Thuộc tính:* `courseCode`, `courseName`, `credits` (số tín chỉ).
-5.  **`Enrollment`:** Lớp liên kết giữa Student và Course (Bảng điểm chi tiết).
-    * *Thuộc tính:* `studentID`, `courseCode`, `semester`, `score`.
-    * *Phương thức:* `getGradeLetter()` (chuyển điểm số sang A, B, C...).
+Student (Sinh viên)
+studentID: Mã sinh viên
 
+fullName: Họ và tên
+
+dob: Ngày sinh
+
+gender: Giới tính
+
+email: Địa chỉ email
+
+phone: Số điện thoại
+
+classID: Mã lớp học
+
+Course (Môn học)
+courseID: Mã môn học
+
+courseName: Tên môn học
+
+credits: Số tín chỉ
+
+semester: Học kỳ giảng dạy
+
+teacherID: Mã giảng viên
+
+Teacher (Giảng viên)
+teacherID: Mã giảng viên
+
+fullName: Họ và tên
+
+department: Khoa
+
+email: Địa chỉ email
+
+phone: Số điện thoại
+
+ClassRoom (Lớp học)
+classID: Mã lớp học
+
+className: Tên lớp học
+
+teacherID: Mã giảng viên giảng dạy lớp
+
+courseID: Mã môn học
+
+Enrollment (Đăng ký môn học)
+enrollmentID: Mã đăng ký
+
+studentID: Mã sinh viên
+
+courseID: Mã môn học
+
+semester: Học kỳ đăng ký
+
+Grade (Điểm số)
+gradeID: Mã điểm
+
+studentID: Mã sinh viên
+
+courseID: Mã môn học
+
+midterm: Điểm giữa kỳ
+
+final: Điểm cuối kỳ
+
+total: Tổng điểm
+
+Attendance (Điểm danh)
+attendanceID: Mã điểm danh
+
+studentID: Mã sinh viên
+
+classID: Mã lớp học
+
+date: Ngày điểm danh
+
+status: Trạng thái (Có mặt, Vắng, Có phép)
+
+Department (Khoa)
+departmentID: Mã khoa
+
+departmentName: Tên khoa
+
+facultyCount: Số lượng giảng viên trong khoa
+
+Semester (Học kỳ)
+semesterID: Mã học kỳ
+
+semesterName: Tên học kỳ (Ví dụ: HK1, HK2)
+
+startDate: Ngày bắt đầu học kỳ
+
+endDate: Ngày kết thúc học kỳ
+
+UserAccount (Tài khoản người dùng)
+userID: Mã tài khoản
+
+username: Tên đăng nhập
+
+password: Mật khẩu
 ### B. Package `enums` (Định nghĩa hằng số)
 Dùng để chuẩn hóa dữ liệu, tránh nhập sai string.
 
