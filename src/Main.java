@@ -465,9 +465,9 @@ public class Main {
                     }
                     System.out.print("Nhap ten mon: ");
                     String cname = scanner.nextLine();
-                    int credits = getIntInput("Nhap so tin chi : ");
+                    int credits = getIntInput("Nhap so tin chi (0-10): ");
                     if (!ValidationUtils.isValidCredits(credits)) {
-                        System.out.println("Loi: So tin chi khong hop le");
+                        System.out.println("Loi: So tin chi phai tu 0 den 10!");
                         break;
                     }
                     System.out.print("Nhap hoc ky: ");
@@ -485,9 +485,9 @@ public class Main {
                     }
                     System.out.print("Nhap ten moi: ");
                     String newCname = scanner.nextLine();
-                    int newCredits = getIntInput("Nhap so tin chi moi (1-10): ");
+                    int newCredits = getIntInput("Nhap so tin chi moi (0-10): ");
                     if (!ValidationUtils.isValidCredits(newCredits)) {
-                        System.out.println("Loi: So tin chi phai tu 1 den 10!");
+                        System.out.println("Loi: So tin chi phai tu 0 den 10!");
                         break;
                     }
                     System.out.print("Nhap hoc ky moi: ");

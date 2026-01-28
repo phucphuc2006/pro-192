@@ -220,7 +220,7 @@ flowchart TD
 flowchart TD
     A([MENU QUẢN LÝ MÔN HỌC]) --> B[/"1.Thêm môn 2.Sửa môn<br/>3.Xóa môn 4.Tìm kiếm<br/>5.Hiển thị 0.Quay lại"/]
     B --> C[/Nhập: Mã môn, Tên môn,<br/>Số tín chỉ, Học kỳ, Mã GV/]
-    C --> D{Tín chỉ 1-10?}
+    C --> D{Tín chỉ 0-10?}
     D -->|Không| E[/Báo lỗi tín chỉ không hợp lệ/]
     E --> C
     D -->|Có| F[Thực hiện CRUD]

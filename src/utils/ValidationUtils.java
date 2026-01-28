@@ -126,13 +126,13 @@ public class ValidationUtils {
     }
 
     /**
-     * Kiem tra so tin chi hop le (1-10).
+     * Kiem tra so tin chi hop le (0-10).
      * 
      * @param credits So tin chi can kiem tra
-     * @return true neu trong khoang 1-10, false neu khong
+     * @return true neu trong khoang 0-10, false neu khong
      */
     public static boolean isValidCredits(int credits) {
-        return credits >= 1 && credits <= 10;
+        return credits >= 0 && credits <= 10;
     }
 
     /**
