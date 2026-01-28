@@ -29,57 +29,56 @@ Hệ thống gồm **25 classes** được tổ chức theo mô hình **MVC** (M
 │                         ENTITY CLASSES                              │
 └─────────────────────────────────────────────────────────────────────┘
 
-┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
-│    Student      │     │    Teacher      │     │    Course       │
-├─────────────────┤     ├─────────────────┤     ├─────────────────┤
-│ -studentID      │     │ -teacherID      │     │ -courseID       │
-│ -fullName       │     │ -fullName       │     │ -courseName     │
-│ -dob            │     │ -department     │     │ -credits        │
-│ -gender         │     │ -email          │     │ -semester       │
-│ -email          │     │ -phone          │     │ -teacherID      │
-│ -phone          │     ├─────────────────┤     ├─────────────────┤
-│ -classID        │     │ +getters()      │     │ +getters()      │
-├─────────────────┤     │ +setters()      │     │ +setters()      │
-│ +getters()      │     │ +toString()     │     │ +toString()     │
-│ +setters()      │     └─────────────────┘     └─────────────────┘
-│ +toString()     │
-└─────────────────┘
+┌─────────────────────────────────┐     ┌─────────────────────────────────┐     ┌─────────────────────────────────┐
+│             Student             │     │             Teacher             │     │             Course              │
+├─────────────────────────────────┤     ├─────────────────────────────────┤     ├─────────────────────────────────┤
+│ -studentID : String             │     │ -teacherID : String             │     │ -courseID : String              │
+│ -fullName : String              │     │ -fullName : String              │     │ -courseName : String            │
+│ -dob : String                   │     │ -department : String            │     │ -credits : int                  │
+│ -gender : String                │     │ -email : String                 │     │ -semester : String              │
+│ -email : String                 │     │ -phone : String                 │     │ -teacherID : String             │
+│ -phone : String                 │     ├─────────────────────────────────┤     ├─────────────────────────────────┤
+│ -classID : String               │     │ +getters()                      │     │ +getters()                      │
+├─────────────────────────────────┤     │ +setters()                      │     │ +setters()                      │
+│ +getters()                      │     │ +toString() : String            │     │ +toString() : String            │
+│ +setters()                      │     └─────────────────────────────────┘     └─────────────────────────────────┘
+│ +toString() : String            │
+└─────────────────────────────────┘
 
-┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
-│   ClassRoom     │     │   Enrollment    │     │     Grade       │
-├─────────────────┤     ├─────────────────┤     ├─────────────────┤
-│ -classID        │     │ -enrollmentID   │     │ -gradeID        │
-│ -className      │     │ -studentID      │     │ -studentID      │
-│ -teacherID      │     │ -courseID       │     │ -courseID       │
-│ -courseID       │     │ -semester       │     │ -midterm        │
-├─────────────────┤     ├─────────────────┤     │ -finalExam      │
-│ +getters()      │     │ +getters()      │     │ -total          │
-│ +setters()      │     │ +setters()      │     ├─────────────────┤
-│ +toString()     │     │ +toString()     │     │ +calculateTotal()│
-└─────────────────┘     └─────────────────┘     │ +getters()      │
-                                                 │ +setters()      │
-                                                 └─────────────────┘
+┌─────────────────────────────────┐     ┌─────────────────────────────────┐     ┌─────────────────────────────────┐
+│           ClassRoom             │     │           Enrollment            │     │              Grade              │
+├─────────────────────────────────┤     ├─────────────────────────────────┤     ├─────────────────────────────────┤
+│ -classID : String               │     │ -enrollmentID : String          │     │ -gradeID : String               │
+│ -className : String             │     │ -studentID : String             │     │ -studentID : String             │
+│ -teacherID : String             │     │ -courseID : String              │     │ -courseID : String              │
+│ -courseID : String              │     │ -semester : String              │     │ -midterm : double               │
+├─────────────────────────────────┤     ├─────────────────────────────────┤     │ -finalExam : double             │
+│ +getters()                      │     │ +getters()                      │     │ -total : double                 │
+│ +setters()                      │     │ +setters()                      │     ├─────────────────────────────────┤
+│ +toString() : String            │     │ +toString() : String            │     │ +calculateTotal() : double      │
+└─────────────────────────────────┘     └─────────────────────────────────┘     │ +getters()                      │
+                                                                                │ +setters()                      │
+                                                                                └─────────────────────────────────┘
 
-┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
-│   Attendance    │     │   Department    │     │    Semester     │
-├─────────────────┤     ├─────────────────┤     ├─────────────────┤
-│ -attendanceID   │     │ -departmentID   │     │ -semesterID     │
-│ -studentID      │     │ -departmentName │     │ -semesterName   │
-│ -classID        │     │ -numberOfTeachers│    │ -startDate      │
-│ -date           │     ├─────────────────┤     │ -endDate        │
-│ -status         │     │ +getters()      │     ├─────────────────┤
-├─────────────────┤     │ +setters()      │     │ +getters()      │
-│ +isPresent()    │     │ +toString()     │     │ +setters()      │
-│ +isAbsent()     │     └─────────────────┘     │ +toString()     │
-│ +isExcused()    │                             └─────────────────┘
-│ +getters()      │
-│ +setters()      │
-└─────────────────┘
+┌─────────────────────────────────┐     ┌─────────────────────────────────┐     ┌─────────────────────────────────┐
+│           Attendance            │     │           Department            │     │            Semester             │
+├─────────────────────────────────┤     ├─────────────────────────────────┤     ├─────────────────────────────────┤
+│ -attendanceID : String          │     │ -departmentID : String          │     │ -semesterID : String            │
+│ -studentID : String             │     │ -departmentName : String        │     │ -semesterName : String          │
+│ -classID : String               │     │ -facultyCount : int             │     │ -startDate : String             │
+│ -date : String                  │     ├─────────────────────────────────┤     │ -endDate : String               │
+│ -status : String                │     │ +getters()                      │     ├─────────────────────────────────┤
+├─────────────────────────────────┤     │ +setters()                      │     │ +getters()                      │
+│ +isPresent() : boolean          │     │ +toString() : String            │     │ +setters()                      │
+│ +isAbsent() : boolean           │     └─────────────────────────────────┘     │ +toString() : String            │
+│ +isExcused() : boolean          │                                           └─────────────────────────────────┘
+│ +getters()                      │
+│ +setters()                      │
+└─────────────────────────────────┘
 
 ┌─────────────────────────────────────────┐
 │              UserAccount                │
 ├─────────────────────────────────────────┤
-│ -userID                                 │
 │ -username                               │
 │ -email                                  │
 │ -salt                                   │
@@ -114,51 +113,52 @@ Hệ thống gồm **25 classes** được tổ chức theo mô hình **MVC** (M
 │  +displayAll(), +saveToFile(), +loadFromFile()                    │
 └───────────────────────────────────────────────────────────────────┘
 
-┌─────────────────────┐     ┌─────────────────────┐
-│   StudentManager    │     │   TeacherManager    │
-├─────────────────────┤     ├─────────────────────┤
-│ -students:ArrayList │     │ -teachers:ArrayList │
-│ -FILE_NAME:String   │     │ -FILE_NAME:String   │
-├─────────────────────┤     ├─────────────────────┤
-│ +getAll()           │     │ +common methods     │
-│ +getCount()         │     └─────────────────────┘
-│ +sortByName()       │
-│ +sortById()         │     ┌─────────────────────┐
-│ +sortByClass()      │     │   CourseManager     │
-│ +common methods     │     ├─────────────────────┤
-└─────────────────────┘     │ -courses:ArrayList  │
-                            │ -FILE_NAME:String   │
-┌─────────────────────┐     ├─────────────────────┤
-│  ClassRoomManager   │     │ +common methods     │
-├─────────────────────┤     └─────────────────────┘
-│ -classRooms:ArrayList│
-│ -FILE_NAME:String   │     ┌─────────────────────┐
-├─────────────────────┤     │  EnrollmentManager  │
-│ +common methods     │     ├─────────────────────┤
-└─────────────────────┘     │ -enrollments:ArrayList│
-                            │ -FILE_NAME:String    │
-┌─────────────────────┐     ├─────────────────────┤
-│    GradeManager     │     │ +common methods     │
-├─────────────────────┤     └─────────────────────┘
-│ -grades:ArrayList   │
-│ -FILE_NAME:String   │     ┌─────────────────────┐
-├─────────────────────┤     │  AttendanceManager  │
-│ +getAll()           │     ├─────────────────────┤
-│ +getCount()         │     │ -attendances:ArrayList│
-│ +sortByTotalDesc()  │     │ -FILE_NAME:String    │
-│ +sortByTotalAsc()   │     ├─────────────────────┤
-│ +sortByStudentId()  │     │ +getAll()            │
-│ +common methods     │     │ +getCount()          │
-└─────────────────────┘     │ +common methods      │
-                            └─────────────────────┘
-┌─────────────────────┐     ┌─────────────────────┐
-│  DepartmentManager  │     │   SemesterManager   │
-├─────────────────────┤     ├─────────────────────┤
-│ -departments:ArrayList│   │ -semesters:ArrayList│
-│ -FILE_NAME:String   │     │ -FILE_NAME:String   │
-├─────────────────────┤     ├─────────────────────┤
-│ +common methods     │     │ +common methods     │
-└─────────────────────┘     └─────────────────────┘
+┌──────────────────────────────┐     ┌──────────────────────────────┐
+│        StudentManager        │     │        TeacherManager        │
+├──────────────────────────────┤     ├──────────────────────────────┤
+│ -students : List<Student>    │     │ -teachers : List<Teacher>    │
+│ -FILE_NAME : String          │     │ -FILE_NAME : String          │
+├──────────────────────────────┤     ├──────────────────────────────┤
+│ +getAll()                    │     │ +common methods              │
+│ +getCount()                  │     └──────────────────────────────┘
+│ +sortByName()                │
+│ +sortById()                  │     ┌──────────────────────────────┐
+│ +sortByClass()               │     │        CourseManager         │
+│ +common methods              │     ├──────────────────────────────┤
+│                              │     │ -courses : List<Course>      │
+└──────────────────────────────┘     │ -FILE_NAME : String          │
+                                     ├──────────────────────────────┤
+┌──────────────────────────────┐     │ +common methods              │
+│       ClassRoomManager       │     └──────────────────────────────┘
+├──────────────────────────────┤
+│ -classRooms:List<ClassRoom>  │     ┌──────────────────────────────┐
+│ -FILE_NAME : String          │     │      EnrollmentManager       │
+├──────────────────────────────┤     ├──────────────────────────────┤
+│ +common methods              │     │ -enrollments:List<Enrollment>│
+└──────────────────────────────┘     │ -FILE_NAME : String          │
+                                     ├──────────────────────────────┤
+┌──────────────────────────────┐     │ +common methods              │
+│         GradeManager         │     └──────────────────────────────┘
+├──────────────────────────────┤
+│ -grades : List<Grade>        │     ┌──────────────────────────────┐
+│ -FILE_NAME : String          │     │      AttendanceManager       │
+├──────────────────────────────┤     ├──────────────────────────────┤
+│ +getAll()                    │     │ -attendances:List<Attendance>│
+│ +getCount()                  │     │ -FILE_NAME : String          │
+│ +sortByTotalDesc()           │     ├──────────────────────────────┤
+│ +sortByTotalAsc()            │     │ +getAll()                    │
+│ +sortByStudentId()           │     │ +getCount()                  │
+│ +common methods              │     │ +common methods              │
+└──────────────────────────────┘     └──────────────────────────────┘
+
+┌──────────────────────────────┐     ┌──────────────────────────────┐
+│      DepartmentManager       │     │       SemesterManager        │
+├──────────────────────────────┤     ├──────────────────────────────┤
+│ -departments:List<Department>│     │ -semesters:List<Semester>    │
+│ -FILE_NAME : String          │     │ -FILE_NAME : String          │
+├──────────────────────────────┤     ├──────────────────────────────┤
+│ +common methods              │     │ +common methods              │
+└──────────────────────────────┘     └──────────────────────────────┘
 
 ┌───────────────────────────────────────────────────────────────────┐
 │                     UserAccountManager                            │
