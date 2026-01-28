@@ -11,7 +11,6 @@
 ## 1. Flowchart Tổng Quan Hệ Thống
 
 ```mermaid
-flowchart TD
     A([KHỞI ĐỘNG CHƯƠNG TRÌNH]) --> B[Load dữ liệu từ file]
     B --> C[/Hiển thị Menu Đăng nhập/Đăng ký/]
     C --> D{Đăng nhập thành công?}
