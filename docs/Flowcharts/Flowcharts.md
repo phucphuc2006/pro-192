@@ -1,823 +1,358 @@
 # Flowcharts - Sơ Đồ Luồng Hệ Thống
 
+> **Chú thích các hình dạng chuẩn:**
+> - `([...])` = Hình bầu dục → Bắt đầu/Kết thúc
+> - `[...]` = Hình chữ nhật → Xử lý/Thao tác
+> - `[/.../ ]` = Hình bình hành → Nhập/Xuất dữ liệu
+> - `{...}` = Hình thoi → Điều kiện rẽ nhánh
+
+---
+
 ## 1. Flowchart Tổng Quan Hệ Thống
 
-```
-┌─────────────────┐
-│   KHỞI ĐỘNG    │
-│   CHƯƠNG TRÌNH  │
-└────────┬────────┘
-         ▼
-┌─────────────────┐
-│  Load dữ liệu   │
-│   từ file       │
-└────────┬────────┘
-         ▼
-┌─────────────────┐
-│   MENU ĐĂNG     │
-│   NHẬP/ĐĂNG KÝ  │
-└────────┬────────┘
-         ▼
-    ◇────────────◇
-   / Đăng nhập   \
-  /   thành công? \
-  ────────┬────────
-     Yes  │   No
-          ▼    ▼
-┌──────────┐  (Thử lại hoặc đăng ký)
-│MENU CHÍNH│
-└────┬─────┘
-     ▼
-┌─────────────────┐
-│  Chọn chức năng │
-│   (1-14)        │
-└────────┬────────┘
-     ▼
-┌─────────────────┐
-│   Xử lý và      │
-│   hiển thị      │
-└────────┬────────┘
-     ▼
-    ◇────────────◇
-   /   Thoát?     \
-  /    (option 0)  \
-  ────────┬────────
-     No   │   Yes
-     ▼         ▼
-  (Quay lại) ┌─────────────┐
-             │ Lưu dữ liệu │
-             │   xuống file │
-             └──────┬──────┘
-                    ▼
-             ┌─────────────┐
-             │  KẾT THÚC   │
-             └─────────────┘
+```mermaid
+flowchart TD
+    A([KHỞI ĐỘNG CHƯƠNG TRÌNH]) --> B[Load dữ liệu từ file]
+    B --> C[/Hiển thị Menu Đăng nhập/Đăng ký/]
+    C --> D{Đăng nhập thành công?}
+    D -->|Không| E[Thử lại hoặc đăng ký]
+    E --> C
+    D -->|Có| F[/Hiển thị MENU CHÍNH/]
+    F --> G[/Chọn chức năng 1-14/]
+    G --> H[Xử lý và hiển thị kết quả]
+    H --> I{Thoát? - option 0}
+    I -->|Không| F
+    I -->|Có| J[Lưu dữ liệu xuống file]
+    J --> K([KẾT THÚC])
 ```
 
 ---
 
 ## 2. Flowchart Đăng Nhập
 
-```
-┌─────────────┐
-│  BẮT ĐẦU    │
-└──────┬──────┘
-       ▼
-┌─────────────────┐
-│ Nhập username   │
-│ và password     │
-└────────┬────────┘
-       ▼
-┌─────────────────┐
-│ Tìm user trong  │
-│ danh sách       │
-└────────┬────────┘
-       ▼
-  ◇──────────────◇
- / Tìm thấy user? \
- ────────┬────────
-    No   │   Yes
-    ▼         ▼
-┌────────┐  ◇────────────◇
-│Báo lỗi │ /  Tài khoản   \
-│sai user│/   bị khóa?     \
-└───┬────┘────────┬────────
-    │        No   │   Yes
-    ▼         ▼         ▼
-(Quay lại) ┌─────────┐ ┌────────┐
-           │Verify   │ │Báo lỗi │
-           │password │ │TK khóa │
-           └────┬────┘ └───┬────┘
-                ▼          │
-           ◇────────◇      ▼
-          / Đúng?   \   (Quay lại)
-          ─────┬─────
-          Yes  │  No
-               ▼    ▼
-         ┌─────────┐ ┌─────────────┐
-         │Reset    │ │loginAttempts│
-         │attempts │ │    += 1     │
-         │= 0      │ └──────┬──────┘
-         └────┬────┘        ▼
-              │        ◇────────◇
-              ▼       / >= 5?   \
-         ┌─────────┐  ─────┬─────
-         │ ĐĂNG    │  Yes  │  No
-         │ NHẬP    │   ▼        ▼
-         │ THÀNH   │ ┌──────┐ ┌──────┐
-         │ CÔNG    │ │Khóa  │ │Báo   │
-         └─────────┘ │TK    │ │lỗi   │
-                     └──────┘ └──────┘
+```mermaid
+flowchart TD
+    A([BẮT ĐẦU]) --> B[/Nhập username và password/]
+    B --> C[Tìm user trong danh sách]
+    C --> D{Tìm thấy user?}
+    D -->|Không| E[/Báo lỗi: sai username/]
+    E --> B
+    D -->|Có| F{Tài khoản bị khóa?}
+    F -->|Có| G[/Báo lỗi: TK bị khóa/]
+    G --> B
+    F -->|Không| H[Verify password]
+    H --> I{Password đúng?}
+    I -->|Có| J[Reset loginAttempts = 0]
+    J --> K([ĐĂNG NHẬP THÀNH CÔNG])
+    I -->|Không| L[loginAttempts += 1]
+    L --> M{loginAttempts >= 5?}
+    M -->|Có| N[Khóa tài khoản]
+    N --> B
+    M -->|Không| O[/Báo lỗi: sai mật khẩu/]
+    O --> B
 ```
 
 ---
 
 ## 3. Flowchart Đăng Ký Tài Khoản
 
-```
-┌─────────────┐
-│  BẮT ĐẦU    │
-└──────┬──────┘
-       ▼
-┌─────────────────┐
-│ Nhập username,  │
-│ email, password │
-└────────┬────────┘
-       ▼
-  ◇──────────────────◇
- / Username hợp lệ?   \
-/ (chữ, số, gạch dưới)\
- ────────┬────────────
-    No   │   Yes
-    ▼         ▼
-┌────────┐  ◇────────────────◇
-│Báo lỗi │ / Username đã tồn  \
-│format  │/  tại?              \
-└───┬────┘────────┬────────────
-    │        Yes  │   No
-    ▼         ▼         ▼
-(Quay lại) ┌────────┐ ◇────────────◇
-           │Báo lỗi │/ Email đã     \
-           │trùng   │\ tồn tại?      /
-           └───┬────┘ ────────┬─────
-               │         Yes  │  No
-               ▼          ▼        ▼
-           (Quay lại) ┌────────┐ ◇──────────◇
-                      │Báo lỗi │/ Password   \
-                      │trùng   │\ đủ mạnh?   /
-                      └───┬────┘ ────┬──────
-                          │     No   │  Yes
-                          ▼      ▼        ▼
-                      (Quay lại)┌────┐ ┌───────────┐
-                                │Báo │ │Tạo salt,  │
-                                │lỗi │ │hash pass  │
-                                └────┘ └─────┬─────┘
-                                             ▼
-                                       ┌───────────┐
-                                       │ Thêm vào  │
-                                       │ danh sách │
-                                       └─────┬─────┘
-                                             ▼
-                                       ┌───────────┐
-                                       │ ĐĂNG KÝ   │
-                                       │ THÀNH CÔNG│
-                                       └───────────┘
+```mermaid
+flowchart TD
+    A([BẮT ĐẦU]) --> B[/Nhập username, email, password/]
+    B --> C{Username hợp lệ?<br/>chữ, số, gạch dưới}
+    C -->|Không| D[/Báo lỗi format/]
+    D --> B
+    C -->|Có| E{Username đã tồn tại?}
+    E -->|Có| F[/Báo lỗi trùng username/]
+    F --> B
+    E -->|Không| G{Email đã tồn tại?}
+    G -->|Có| H[/Báo lỗi trùng email/]
+    H --> B
+    G -->|Không| I{Password đủ mạnh?}
+    I -->|Không| J[/Báo lỗi mật khẩu yếu/]
+    J --> B
+    I -->|Có| K[Tạo salt, hash password]
+    K --> L[Thêm vào danh sách]
+    L --> M([ĐĂNG KÝ THÀNH CÔNG])
 ```
 
 ---
 
-## 4. Flowchart CRUD (Thêm/Sửa/Xóa/Tìm)
+## 4. Flowchart CRUD
 
 ### 4.1 Thêm mới (Add)
 
-```
-┌─────────────┐
-│  BẮT ĐẦU    │
-└──────┬──────┘
-       ▼
-┌─────────────────┐
-│ Nhập thông tin  │
-│ đối tượng mới   │
-└────────┬────────┘
-       ▼
-  ◇──────────────◇
- / Dữ liệu hợp lệ?\
- ────────┬────────
-    No   │   Yes
-    ▼         ▼
-┌────────┐ ┌─────────────┐
-│Báo lỗi │ │ Thêm vào    │
-│        │ │ ArrayList   │
-└───┬────┘ └──────┬──────┘
-    │             ▼
-    ▼       ┌─────────────┐
-(Quay lại)  │ THÊM THÀNH  │
-            │ CÔNG        │
-            └─────────────┘
+```mermaid
+flowchart TD
+    A([BẮT ĐẦU]) --> B[/Nhập thông tin đối tượng mới/]
+    B --> C{Dữ liệu hợp lệ?}
+    C -->|Không| D[/Báo lỗi/]
+    D --> B
+    C -->|Có| E[Thêm vào ArrayList]
+    E --> F([THÊM THÀNH CÔNG])
 ```
 
 ### 4.2 Sửa (Update)
 
-```
-┌─────────────┐
-│  BẮT ĐẦU    │
-└──────┬──────┘
-       ▼
-┌─────────────────┐
-│  Nhập ID cần    │
-│  sửa            │
-└────────┬────────┘
-       ▼
-  ◇──────────────◇
- / Tìm thấy ID?   \
- ────────┬────────
-    No   │   Yes
-    ▼         ▼
-┌────────────┐ ┌─────────────┐
-│Báo không   │ │ Nhập thông  │
-│tìm thấy    │ │ tin mới     │
-└──────┬─────┘ └──────┬──────┘
-       │              ▼
-       ▼        ┌─────────────┐
-   (Quay lại)   │ Cập nhật    │
-                │ đối tượng   │
-                └──────┬──────┘
-                       ▼
-                ┌─────────────┐
-                │ SỬA THÀNH   │
-                │ CÔNG        │
-                └─────────────┘
+```mermaid
+flowchart TD
+    A([BẮT ĐẦU]) --> B[/Nhập ID cần sửa/]
+    B --> C{Tìm thấy ID?}
+    C -->|Không| D[/Báo không tìm thấy/]
+    D --> E([QUAY LẠI])
+    C -->|Có| F[/Nhập thông tin mới/]
+    F --> G[Cập nhật đối tượng]
+    G --> H([SỬA THÀNH CÔNG])
 ```
 
 ### 4.3 Xóa (Delete)
 
-```
-┌─────────────┐
-│  BẮT ĐẦU    │
-└──────┬──────┘
-       ▼
-┌─────────────────┐
-│  Nhập ID cần    │
-│  xóa            │
-└────────┬────────┘
-       ▼
-  ◇──────────────◇
- / Tìm thấy ID?   \
- ────────┬────────
-    No   │   Yes
-    ▼         ▼
-┌────────────┐ ┌─────────────┐
-│Báo không   │ │ Xóa khỏi    │
-│tìm thấy    │ │ ArrayList   │
-└──────┬─────┘ └──────┬──────┘
-       │              ▼
-       ▼        ┌─────────────┐
-   (Quay lại)   │ XÓA THÀNH   │
-                │ CÔNG        │
-                └─────────────┘
+```mermaid
+flowchart TD
+    A([BẮT ĐẦU]) --> B[/Nhập ID cần xóa/]
+    B --> C{Tìm thấy ID?}
+    C -->|Không| D[/Báo không tìm thấy/]
+    D --> E([QUAY LẠI])
+    C -->|Có| F[Xóa khỏi ArrayList]
+    F --> G([XÓA THÀNH CÔNG])
 ```
 
 ---
 
 ## 5. Flowchart Đổi Mật Khẩu
 
-```
-┌─────────────┐
-│  BẮT ĐẦU    │
-└──────┬──────┘
-       ▼
-┌─────────────────┐
-│ Nhập mật khẩu   │
-│ cũ              │
-└────────┬────────┘
-       ▼
-  ◇──────────────◇
- / Mật khẩu cũ    \
-/  đúng?           \
- ────────┬────────
-    No   │   Yes
-    ▼         ▼
-┌────────┐ ┌─────────────────┐
-│Báo lỗi │ │ Nhập mật khẩu   │
-│sai MK  │ │ mới             │
-└───┬────┘ └────────┬────────┘
-    │               ▼
-    ▼         ◇──────────────◇
-(Quay lại)   / MK mới đủ mạnh?\
-             ────────┬────────
-                No   │   Yes
-                ▼         ▼
-           ┌────────┐ ◇──────────────◇
-           │Báo lỗi │/ Trùng MK cũ   \
-           │yếu     │\ hoặc history? /
-           └───┬────┘ ────────┬─────
-               │         Yes  │  No
-               ▼          ▼        ▼
-           (Quay lại) ┌────────┐ ┌───────────┐
-                      │Báo lỗi │ │Hash MK mới│
-                      │trùng   │ │Lưu history│
-                      └───┬────┘ └─────┬─────┘
-                          │            ▼
-                          ▼      ┌───────────┐
-                      (Quay lại) │ ĐỔI MK    │
-                                 │ THÀNH CÔNG│
-                                 └───────────┘
+```mermaid
+flowchart TD
+    A([BẮT ĐẦU]) --> B[/Nhập mật khẩu cũ/]
+    B --> C{Mật khẩu cũ đúng?}
+    C -->|Không| D[/Báo lỗi sai MK/]
+    D --> B
+    C -->|Có| E[/Nhập mật khẩu mới/]
+    E --> F{MK mới đủ mạnh?}
+    F -->|Không| G[/Báo lỗi MK yếu/]
+    G --> E
+    F -->|Có| H{Trùng MK cũ hoặc history?}
+    H -->|Có| I[/Báo lỗi trùng/]
+    I --> E
+    H -->|Không| J[Hash MK mới, Lưu history]
+    J --> K([ĐỔI MK THÀNH CÔNG])
 ```
 
 ---
 
 ## 6. Flowchart Xuất Báo Cáo CSV
 
-```
-┌─────────────┐
-│  BẮT ĐẦU    │
-└──────┬──────┘
-       ▼
-┌─────────────────┐
-│ Chọn loại báo   │
-│ cáo (1-4)       │
-└────────┬────────┘
-       ▼
-┌─────────────────┐
-│ Nhập tên file   │
-│ (không cần .csv)│
-└────────┬────────┘
-       ▼
-┌─────────────────┐
-│ Tạo thư mục     │
-│ reports/ nếu    │
-│ chưa có         │
-└────────┬────────┘
-       ▼
-┌─────────────────┐
-│ Ghi header CSV  │
-└────────┬────────┘
-       ▼
-┌─────────────────┐
-│ Duyệt ArrayList │
-│ ghi từng dòng   │
-└────────┬────────┘
-       ▼
-┌─────────────────┐
-│ Đóng file       │
-└────────┬────────┘
-       ▼
-┌─────────────────┐
-│ XUẤT THÀNH CÔNG │
-│ reports/xxx.csv │
-└─────────────────┘
+```mermaid
+flowchart TD
+    A([BẮT ĐẦU]) --> B[/Chọn loại báo cáo 1-4/]
+    B --> C[/Nhập tên file/]
+    C --> D[Tạo thư mục reports/ nếu chưa có]
+    D --> E[Ghi header CSV]
+    E --> F[Duyệt ArrayList ghi từng dòng]
+    F --> G[Đóng file]
+    G --> H([XUẤT THÀNH CÔNG<br/>reports/xxx.csv])
 ```
 
 ---
 
 ## 7. Flowchart Tính Điểm Tổng
 
+```mermaid
+flowchart TD
+    A([BẮT ĐẦU]) --> B[/Nhập điểm giữa kỳ GK/]
+    B --> C{0 <= GK <= 10?}
+    C -->|Không| D[/Báo lỗi điểm không hợp lệ/]
+    D --> B
+    C -->|Có| E[/Nhập điểm cuối kỳ CK/]
+    E --> F{0 <= CK <= 10?}
+    F -->|Không| G[/Báo lỗi điểm không hợp lệ/]
+    G --> E
+    F -->|Có| H["Tính tổng: GK*0.4 + CK*0.6"]
+    H --> I([LƯU ĐIỂM THÀNH CÔNG])
 ```
-┌─────────────┐
-│  BẮT ĐẦU    │
-└──────┬──────┘
-       ▼
-┌─────────────────┐
-│ Nhập điểm       │
-│ giữa kỳ (GK)    │
-└────────┬────────┘
-       ▼
-  ◇──────────────◇
- / 0 <= GK <= 10? \
- ────────┬────────
-    No   │   Yes
-    ▼         ▼
-┌────────┐ ┌─────────────────┐
-│Báo lỗi │ │ Nhập điểm       │
-│        │ │ cuối kỳ (CK)    │
-└───┬────┘ └────────┬────────┘
-    │               ▼
-    ▼         ◇──────────────◇
-(Quay lại)   / 0 <= CK <= 10? \
-             ────────┬────────
-                No   │   Yes
-                ▼         ▼
-           ┌────────┐ ┌───────────────┐
-           │Báo lỗi │ │ Tính tổng:    │
-           │        │ │ GK*0.4 + CK*0.6│
-           └───┬────┘ └───────┬───────┘
-               │              ▼
-               ▼        ┌─────────────┐
-           (Quay lại)   │ LƯU ĐIỂM    │
-                        └─────────────┘
-```
-
----
-
-## Chú Thích Ký Hiệu
-
-| Ký hiệu | Ý nghĩa |
-|---------|---------|
-| ┌───┐ (Hình chữ nhật bo góc) | Bắt đầu / Kết thúc |
-| ┌───┐ (Hình chữ nhật) | Xử lý / Thao tác |
-| ◇───◇ (Hình thoi) | Điều kiện rẽ nhánh |
-| ▼ → | Hướng đi tiếp theo |
 
 ---
 
 ## 8. Flowchart Quản Lý Sinh Viên
 
-```
-┌─────────────┐
-│  MENU QUẢN  │
-│  LÝ SINH VIÊN│
-└──────┬──────┘
-       ▼
-┌─────────────────┐
-│ Hiển thị menu:  │
-│ 1.Thêm 2.Sửa    │
-│ 3.Xóa 4.Tìm     │
-│ 5.Hiển thị      │
-│ 0.Quay lại      │
-└────────┬────────┘
-       ▼
-  ◇──────────────◇
- / Chọn option?   \
- ────────┬────────
-    1    2    3    4    5    0
-    ▼    ▼    ▼    ▼    ▼    ▼
-  ┌───┐┌───┐┌───┐┌───┐┌───┐ EXIT
-  │ADD││UPD││DEL││SEA││DIS│
-  └─┬─┘└─┬─┘└─┬─┘└─┬─┘└─┬─┘
-
-    │    │    │    │    │
-    ▼    ▼    ▼    ▼    ▼
-┌──────────────────────────────┐
-│  Nhập dữ liệu theo yêu cầu   │
-│  - ID, Tên, Ngày sinh        │
-│  - Giới tính, Email, SĐT     │
-│  - Mã lớp                    │
-└──────────────┬───────────────┘
-               ▼
-         ◇──────────◇
-        / Validate   \
-       /  dữ liệu?    \
-       ────────┬──────
-          No   │  Yes
-          ▼         ▼
-      ┌────────┐ ┌─────────────┐
-      │ Báo lỗi│ │ Thực hiện   │
-      │ cụ thể │ │ thao tác    │
-      └───┬────┘ └──────┬──────┘
-          │             ▼
-          ▼       ┌─────────────┐
-      (Nhập lại)  │ THÀNH CÔNG  │
-                  └──────┬──────┘
-                         ▼
-                   (Quay lại menu)
+```mermaid
+flowchart TD
+    A([MENU QUẢN LÝ SINH VIÊN]) --> B[/"Hiển thị menu:<br/>1.Thêm 2.Sửa 3.Xóa<br/>4.Tìm 5.Hiển thị 0.Quay lại"/]
+    B --> C{Chọn option?}
+    C -->|1| D[/Nhập ID, Tên, DOB, Giới tính, Email, SĐT, Mã lớp/]
+    C -->|2| E[/Nhập ID cần sửa + thông tin mới/]
+    C -->|3| F[/Nhập ID cần xóa/]
+    C -->|4| G[/Nhập tên cần tìm/]
+    C -->|5| H[Hiển thị danh sách]
+    C -->|0| I([QUAY LẠI MENU CHÍNH])
+    D --> J{Validate dữ liệu?}
+    E --> J
+    F --> J
+    G --> J
+    H --> B
+    J -->|Không| K[/Báo lỗi cụ thể/]
+    K --> B
+    J -->|Có| L[Thực hiện thao tác]
+    L --> M[/THÀNH CÔNG/]
+    M --> B
 ```
 
 ---
 
 ## 9. Flowchart Quản Lý Giảng Viên
 
-```
-┌─────────────┐
-│  MENU QUẢN  │
-│  LÝ GIẢNG VIÊN│
-└──────┬──────┘
-       ▼
-┌─────────────────┐
-│ 1. Thêm GV      │
-│ 2. Sửa GV       │
-│ 3. Xóa GV       │
-│ 4. Tìm kiếm     │
-│ 5. Hiển thị DS  │
-│ 0. Quay lại     │
-└────────┬────────┘
-       ▼
-  ◇──────────────◇
- /    Option?     \
- ────────┬────────
-      1-5│    0
-         ▼    ▼
-   ┌───────────┐ EXIT
-   │ Nhập dữ   │
-   │ liệu GV:  │
-   │ - ID      │
-   │ - Tên     │
-   │ - Khoa    │
-   │ - Email   │
-   │ - SĐT     │
-   └─────┬─────┘
-         ▼
-   ┌───────────┐
-   │ Xử lý     │
-   │ theo option│
-   └─────┬─────┘
-         ▼
-   ┌───────────┐
-   │ Thông báo │
-   │ kết quả   │
-   └───────────┘
+```mermaid
+flowchart TD
+    A([MENU QUẢN LÝ GIẢNG VIÊN]) --> B[/"1.Thêm GV 2.Sửa GV<br/>3.Xóa GV 4.Tìm kiếm<br/>5.Hiển thị DS 0.Quay lại"/]
+    B --> C{Option?}
+    C -->|1-5| D[/Nhập dữ liệu GV:<br/>ID, Tên, Khoa, Email, SĐT/]
+    C -->|0| E([QUAY LẠI])
+    D --> F[Xử lý theo option]
+    F --> G[/Thông báo kết quả/]
+    G --> B
 ```
 
 ---
 
 ## 10. Flowchart Quản Lý Môn Học
 
-```
-┌─────────────┐
-│  MENU QUẢN  │
-│  LÝ MÔN HỌC │
-└──────┬──────┘
-       ▼
-┌─────────────────┐
-│ 1. Thêm môn     │
-│ 2. Sửa môn      │
-│ 3. Xóa môn      │
-│ 4. Tìm kiếm     │
-│ 5. Hiển thị     │
-│ 0. Quay lại     │
-└────────┬────────┘
-       ▼
-┌─────────────────┐
-│ Nhập thông tin: │
-│ - Mã môn        │
-│ - Tên môn       │
-│ - Số tín chỉ    │
-│ - Học kỳ        │
-│ - Mã GV         │
-└────────┬────────┘
-       ▼
-  ◇──────────────◇
- / Tín chỉ 1-10?  \
- ────────┬────────
-    No   │   Yes
-    ▼         ▼
-┌────────┐ ┌─────────────┐
-│Báo lỗi │ │ Thực hiện   │
-│tín chỉ │ │ CRUD        │
-└───┬────┘ └──────┬──────┘
-    │             ▼
-    ▼       ┌─────────────┐
-(Nhập lại)  │ HOÀN THÀNH  │
-            └─────────────┘
+```mermaid
+flowchart TD
+    A([MENU QUẢN LÝ MÔN HỌC]) --> B[/"1.Thêm môn 2.Sửa môn<br/>3.Xóa môn 4.Tìm kiếm<br/>5.Hiển thị 0.Quay lại"/]
+    B --> C[/Nhập: Mã môn, Tên môn,<br/>Số tín chỉ, Học kỳ, Mã GV/]
+    C --> D{Tín chỉ 1-10?}
+    D -->|Không| E[/Báo lỗi tín chỉ không hợp lệ/]
+    E --> C
+    D -->|Có| F[Thực hiện CRUD]
+    F --> G([HOÀN THÀNH])
 ```
 
 ---
 
 ## 11. Flowchart Quản Lý Lớp Học
 
-```
-┌─────────────┐
-│  MENU QUẢN  │
-│  LÝ LỚP HỌC │
-└──────┬──────┘
-       ▼
-┌─────────────────┐
-│ Nhập thông tin: │
-│ - Mã lớp        │
-│ - Tên lớp       │
-│ - Mã GV chủ nhiệm│
-│ - Mã môn chính  │
-└────────┬────────┘
-       ▼
-┌─────────────────┐
-│ Thực hiện CRUD  │
-└────────┬────────┘
-       ▼
-┌─────────────────┐
-│ Hiển thị kết quả│
-└─────────────────┘
+```mermaid
+flowchart TD
+    A([MENU QUẢN LÝ LỚP HỌC]) --> B[/Nhập: Mã lớp, Tên lớp,<br/>Mã GV chủ nhiệm, Mã môn chính/]
+    B --> C[Thực hiện CRUD]
+    C --> D[/Hiển thị kết quả/]
+    D --> E([HOÀN THÀNH])
 ```
 
 ---
 
 ## 12. Flowchart Quản Lý Đăng Ký Môn
 
-```
-┌─────────────┐
-│  MENU ĐĂNG  │
-│  KÝ MÔN HỌC │
-└──────┬──────┘
-       ▼
-┌─────────────────┐
-│ Nhập thông tin: │
-│ - Mã đăng ký    │
-│ - Mã sinh viên  │
-│ - Mã môn học    │
-│ - Học kỳ        │
-└────────┬────────┘
-       ▼
-  ◇──────────────◇
- / SV tồn tại?    \
- ────────┬────────
-    No   │   Yes
-    ▼         ▼
-┌────────┐  ◇────────────◇
-│Báo lỗi │ / Môn tồn tại? \
-│SV      │ ────────┬──────
-└───┬────┘    No   │  Yes
-    │         ▼         ▼
-    ▼     ┌────────┐ ┌─────────┐
-(Quay lại)│Báo lỗi │ │ Tạo     │
-          │môn     │ │ đăng ký │
-          └───┬────┘ └────┬────┘
-              │           ▼
-              ▼     ┌─────────┐
-          (Quay lại)│ THÀNH   │
-                    │ CÔNG    │
-                    └─────────┘
+```mermaid
+flowchart TD
+    A([MENU ĐĂNG KÝ MÔN HỌC]) --> B[/Nhập: Mã đăng ký, Mã SV,<br/>Mã môn học, Học kỳ/]
+    B --> C{SV tồn tại?}
+    C -->|Không| D[/Báo lỗi SV không tồn tại/]
+    D --> B
+    C -->|Có| E{Môn tồn tại?}
+    E -->|Không| F[/Báo lỗi môn không tồn tại/]
+    F --> B
+    E -->|Có| G[Tạo đăng ký]
+    G --> H([THÀNH CÔNG])
 ```
 
 ---
 
 ## 13. Flowchart Quản Lý Điểm Danh
 
-```
-┌─────────────┐
-│  MENU ĐIỂM  │
-│    DANH     │
-└──────┬──────┘
-       ▼
-┌─────────────────┐
-│ Nhập thông tin: │
-│ - Mã điểm danh  │
-│ - Mã sinh viên  │
-│ - Mã lớp        │
-│ - Ngày          │
-│ - Trạng thái    │
-└────────┬────────┘
-       ▼
-  ◇──────────────────◇
- / Trạng thái hợp lệ? \
-/  (Co mat/Vang/Co phep)\
- ────────┬────────────
-    No   │   Yes
-    ▼         ▼
-┌────────┐ ┌─────────────┐
-│Báo lỗi │ │Lưu điểm danh│
-│trạng   │ └──────┬──────┘
-│thái    │        ▼
-└───┬────┘ ┌─────────────┐
-    │      │ THÀNH CÔNG  │
-    ▼      └─────────────┘
-(Nhập lại)
+```mermaid
+flowchart TD
+    A([MENU ĐIỂM DANH]) --> B[/Nhập: Mã điểm danh, Mã SV,<br/>Mã lớp, Ngày, Trạng thái/]
+    B --> C{Trạng thái hợp lệ?<br/>Co mat/Vang/Co phep}
+    C -->|Không| D[/Báo lỗi trạng thái/]
+    D --> B
+    C -->|Có| E[Lưu điểm danh]
+    E --> F([THÀNH CÔNG])
 ```
 
 ---
 
 ## 14. Flowchart Quản Lý Khoa
 
-```
-┌─────────────┐
-│  MENU QUẢN  │
-│   LÝ KHOA   │
-└──────┬──────┘
-       ▼
-┌─────────────────┐
-│ Nhập thông tin: │
-│ - Mã khoa       │
-│ - Tên khoa      │
-│ - Số GV         │
-└────────┬────────┘
-       ▼
-  ◇──────────────◇
- / Số GV >= 0?    \
- ────────┬────────
-    No   │   Yes
-    ▼         ▼
-┌────────┐ ┌─────────────┐
-│Báo lỗi │ │ Thực hiện   │
-│        │ │ CRUD        │
-└───┬────┘ └──────┬──────┘
-    │             ▼
-    ▼       ┌─────────────┐
-(Nhập lại)  │ HOÀN THÀNH  │
-            └─────────────┘
+```mermaid
+flowchart TD
+    A([MENU QUẢN LÝ KHOA]) --> B[/Nhập: Mã khoa, Tên khoa, Số GV/]
+    B --> C{Số GV >= 0?}
+    C -->|Không| D[/Báo lỗi số GV không hợp lệ/]
+    D --> B
+    C -->|Có| E[Thực hiện CRUD]
+    E --> F([HOÀN THÀNH])
 ```
 
 ---
 
 ## 15. Flowchart Quản Lý Học Kỳ
 
-```
-┌─────────────┐
-│  MENU QUẢN  │
-│  LÝ HỌC KỲ  │
-└──────┬──────┘
-       ▼
-┌─────────────────┐
-│ Nhập thông tin: │
-│ - Mã học kỳ     │
-│ - Tên học kỳ    │
-│ - Ngày bắt đầu  │
-│ - Ngày kết thúc │
-└────────┬────────┘
-       ▼
-  ◇──────────────────◇
- / Ngày hợp lệ?       \
-/  (bắt đầu < kết thúc)\
- ────────┬────────────
-    No   │   Yes
-    ▼         ▼
-┌────────┐ ┌─────────────┐
-│Báo lỗi │ │ Thực hiện   │
-│ngày    │ │ CRUD        │
-└───┬────┘ └──────┬──────┘
-    │             ▼
-    ▼       ┌─────────────┐
-(Nhập lại)  │ HOÀN THÀNH  │
-            └─────────────┘
+```mermaid
+flowchart TD
+    A([MENU QUẢN LÝ HỌC KỲ]) --> B[/Nhập: Mã học kỳ, Tên học kỳ,<br/>Ngày bắt đầu, Ngày kết thúc/]
+    B --> C{Ngày hợp lệ?<br/>bắt đầu < kết thúc}
+    C -->|Không| D[/Báo lỗi ngày/]
+    D --> B
+    C -->|Có| E[Thực hiện CRUD]
+    E --> F([HOÀN THÀNH])
 ```
 
 ---
 
 ## 16. Flowchart Thống Kê
 
-```
-┌─────────────┐
-│  MENU THỐNG │
-│     KÊ      │
-└──────┬──────┘
-       ▼
-┌─────────────────┐
-│ 1. TK SV theo   │
-│    lớp          │
-│ 2. TK điểm số   │
-│ 3. TK điểm danh │
-│ 0. Quay lại     │
-└────────┬────────┘
-       ▼
-  ◇──────────────◇
- /    Option?     \
- ────────┬────────
-    1    │    2    │    3
-    ▼         ▼         ▼
-┌──────────┐┌──────────┐┌──────────┐
-│Đếm SV    ││Tính TB   ││Tính tỷ lệ│
-│theo từng ││điểm, tìm ││chuyên cần│
-│lớp       ││max/min   ││          │
-└────┬─────┘└────┬─────┘└────┬─────┘
-     │           │           │
-     ▼           ▼           ▼
-┌──────────┐┌──────────┐┌──────────┐
-│Hiển thị  ││Phân loại ││Hiển thị  │
-│bảng đếm  ││học lực   ││% có mặt  │
-└────┬─────┘└────┬─────┘└────┬─────┘
-     │           │           │
-     └─────┬─────┴─────┬─────┘
-           ▼
-     ┌───────────┐
-     │ IN THỐNG  │
-     │ KÊ RA MÀN │
-     │ HÌNH      │
-     └───────────┘
+```mermaid
+flowchart TD
+    A([MENU THỐNG KÊ]) --> B[/"1.TK SV theo lớp<br/>2.TK điểm số<br/>3.TK điểm danh<br/>0.Quay lại"/]
+    B --> C{Option?}
+    C -->|1| D[Đếm SV theo từng lớp]
+    C -->|2| E[Tính TB điểm, tìm max/min]
+    C -->|3| F[Tính tỷ lệ chuyên cần]
+    C -->|0| G([QUAY LẠI])
+    D --> H[/Hiển thị bảng đếm/]
+    E --> I[Phân loại học lực]
+    I --> J[/Hiển thị kết quả/]
+    F --> K[/Hiển thị % có mặt/]
+    H --> L[/IN THỐNG KÊ RA MÀN HÌNH/]
+    J --> L
+    K --> L
+    L --> B
 ```
 
 ---
 
 ## 17. Flowchart Lưu/Đọc File
 
-```
-┌─────────────────────────────────────────┐
-│              SAVE TO FILE               │
-└────────────────────┬────────────────────┘
-                     ▼
-           ┌─────────────────┐
-           │ Mở BufferedWriter│
-           │ với FILE_NAME   │
-           └────────┬────────┘
-                    ▼
-           ┌─────────────────┐
-           │ for each item   │
-           │ in ArrayList    │
-           └────────┬────────┘
-                    ▼
-           ┌─────────────────┐
-           │ Ghi: field1,    │
-           │ field2,...      │
-           │ (CSV format)    │
-           └────────┬────────┘
-                    ▼
-           ┌─────────────────┐
-           │ Đóng writer     │
-           └────────┬────────┘
-                    ▼
-           ┌─────────────────┐
-           │ "Đã lưu file"   │
-           └─────────────────┘
+### 17.1 Save to File
 
-┌─────────────────────────────────────────┐
-│             LOAD FROM FILE              │
-└────────────────────┬────────────────────┘
-                     ▼
-           ┌─────────────────┐
-           │ Mở BufferedReader│
-           │ với FILE_NAME   │
-           └────────┬────────┘
-                    ▼
-              ◇──────────◇
-             / File tồn   \
-            /   tại?       \
-            ────────┬──────
-               No   │  Yes
-               ▼         ▼
-         ┌─────────┐ ┌─────────────┐
-         │ Bỏ qua  │ │ while có    │
-         │         │ │ dòng mới    │
-         └─────────┘ └──────┬──────┘
-                            ▼
-                     ┌─────────────┐
-                     │ Split by "," │
-                     │ Tạo object   │
-                     │ Add to list  │
-                     └──────┬──────┘
-                            ▼
-                     ┌─────────────┐
-                     │ Đóng reader │
-                     └──────┬──────┘
-                            ▼
-                     ┌─────────────┐
-                     │ "Đã tải     │
-                     │  dữ liệu"   │
-                     └─────────────┘
+```mermaid
+flowchart TD
+    A([SAVE TO FILE]) --> B[Mở BufferedWriter với FILE_NAME]
+    B --> C[for each item in ArrayList]
+    C --> D["Ghi: field1,field2,... - CSV format"]
+    D --> E{Còn item?}
+    E -->|Có| C
+    E -->|Không| F[Đóng writer]
+    F --> G([/Đã lưu file/])
+```
+
+### 17.2 Load from File
+
+```mermaid
+flowchart TD
+    A([LOAD FROM FILE]) --> B[Mở BufferedReader với FILE_NAME]
+    B --> C{File tồn tại?}
+    C -->|Không| D[Bỏ qua]
+    D --> E([KẾT THÚC])
+    C -->|Có| F[while có dòng mới]
+    F --> G["Split by dấu phẩy"]
+    G --> H[Tạo object từ parts]
+    H --> I[Add to ArrayList]
+    I --> J{Còn dòng?}
+    J -->|Có| F
+    J -->|Không| K[Đóng reader]
+    K --> L([/Đã tải dữ liệu/])
 ```
 
 ---
@@ -846,3 +381,13 @@ Hệ thống có **17 Flowcharts** mô tả các chức năng chính:
 | 16 | Thống kê | Báo cáo thống kê |
 | 17 | Lưu/Đọc file | Persistence |
 
+---
+
+## Chú Thích Hình Dạng Chuẩn
+
+| Hình dạng | Mermaid Syntax | Ý nghĩa |
+|-----------|----------------|---------|
+| Hình bầu dục | `([...])` | Bắt đầu / Kết thúc |
+| Hình chữ nhật | `[...]` | Xử lý / Thao tác |
+| Hình bình hành | `[/.../ ]` | Nhập / Xuất dữ liệu |
+| Hình thoi | `{...}` | Điều kiện rẽ nhánh |

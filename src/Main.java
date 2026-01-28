@@ -465,7 +465,11 @@ public class Main {
                     }
                     System.out.print("Nhap ten mon: ");
                     String cname = scanner.nextLine();
-                    int credits = getIntInput("Nhap so tin chi: ");
+                    int credits = getIntInput("Nhap so tin chi : ");
+                    if (!ValidationUtils.isValidCredits(credits)) {
+                        System.out.println("Loi: So tin chi khong hop le");
+                        break;
+                    }
                     System.out.print("Nhap hoc ky: ");
                     String csem = scanner.nextLine();
                     System.out.print("Nhap ma GV phu trach: ");
@@ -481,7 +485,11 @@ public class Main {
                     }
                     System.out.print("Nhap ten moi: ");
                     String newCname = scanner.nextLine();
-                    int newCredits = getIntInput("Nhap so tin chi moi: ");
+                    int newCredits = getIntInput("Nhap so tin chi moi (1-10): ");
+                    if (!ValidationUtils.isValidCredits(newCredits)) {
+                        System.out.println("Loi: So tin chi phai tu 1 den 10!");
+                        break;
+                    }
                     System.out.print("Nhap hoc ky moi: ");
                     String newCsem = scanner.nextLine();
                     System.out.print("Nhap ma GV moi: ");
@@ -655,8 +663,16 @@ public class Main {
                     String gsid = scanner.nextLine();
                     System.out.print("Nhap ma MH: ");
                     String gcid = scanner.nextLine();
-                    double midterm = getDoubleInput("Nhap diem giua ky: ");
-                    double finalExam = getDoubleInput("Nhap diem cuoi ky: ");
+                    double midterm = getDoubleInput("Nhap diem giua ky (0-10): ");
+                    if (!ValidationUtils.isValidScore(midterm)) {
+                        System.out.println("Loi: Diem giua ky phai tu 0 den 10!");
+                        break;
+                    }
+                    double finalExam = getDoubleInput("Nhap diem cuoi ky (0-10): ");
+                    if (!ValidationUtils.isValidScore(finalExam)) {
+                        System.out.println("Loi: Diem cuoi ky phai tu 0 den 10!");
+                        break;
+                    }
                     gradeManager.addGrade(new Grade(gid, gsid, gcid, midterm, finalExam));
                     break;
                 case 2:
@@ -666,8 +682,16 @@ public class Main {
                         System.out.println("Khong tim thay diem!");
                         break;
                     }
-                    double newMidterm = getDoubleInput("Nhap diem giua ky moi: ");
-                    double newFinal = getDoubleInput("Nhap diem cuoi ky moi: ");
+                    double newMidterm = getDoubleInput("Nhap diem giua ky moi (0-10): ");
+                    if (!ValidationUtils.isValidScore(newMidterm)) {
+                        System.out.println("Loi: Diem giua ky phai tu 0 den 10!");
+                        break;
+                    }
+                    double newFinal = getDoubleInput("Nhap diem cuoi ky moi (0-10): ");
+                    if (!ValidationUtils.isValidScore(newFinal)) {
+                        System.out.println("Loi: Diem cuoi ky phai tu 0 den 10!");
+                        break;
+                    }
                     gradeManager.updateGrade(editGid, newMidterm, newFinal);
                     break;
                 case 3:
@@ -776,6 +800,10 @@ public class Main {
                     System.out.print("Nhap ten khoa: ");
                     String dname = scanner.nextLine();
                     int fcount = getIntInput("Nhap so giang vien: ");
+                    if (fcount < 0) {
+                        System.out.println("Loi: So giang vien phai >= 0!");
+                        break;
+                    }
                     departmentManager.addDepartment(new Department(did, dname, fcount));
                     break;
                 case 2:
@@ -788,6 +816,10 @@ public class Main {
                     System.out.print("Nhap ten moi: ");
                     String newDname = scanner.nextLine();
                     int newFcount = getIntInput("Nhap so GV moi: ");
+                    if (newFcount < 0) {
+                        System.out.println("Loi: So giang vien phai >= 0!");
+                        break;
+                    }
                     departmentManager.updateDepartment(editDid, newDname, newFcount);
                     break;
                 case 3:
