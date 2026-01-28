@@ -6,55 +6,6 @@
 > - `[/.../ ]` = Hình bình hành → Nhập/Xuất dữ liệu
 > - `{...}` = Hình thoi → Điều kiện rẽ nhánh
 
-## 2. Flowchart Đăng Nhập
-
-```mermaid
-flowchart TD
-    A([BẮT ĐẦU]) --> B[/Nhập username và password/]
-    B --> C[Tìm user trong danh sách]
-    C --> D{Tìm thấy user?}
-    D -->|Không| E[/Báo lỗi: sai username/]
-    E --> B
-    D -->|Có| F{Tài khoản bị khóa?}
-    F -->|Có| G[/Báo lỗi: TK bị khóa/]
-    G --> B
-    F -->|Không| H[Verify password]
-    H --> I{Password đúng?}
-    I -->|Có| J[Reset loginAttempts = 0]
-    J --> K([ĐĂNG NHẬP THÀNH CÔNG])
-    I -->|Không| L[loginAttempts += 1]
-    L --> M{loginAttempts >= 5?}
-    M -->|Có| N[Khóa tài khoản]
-    N --> B
-    M -->|Không| O[/Báo lỗi: sai mật khẩu/]
-    O --> B
-```
-
----
-
-## 3. Flowchart Đăng Ký Tài Khoản
-
-```mermaid
-flowchart TD
-    A([BẮT ĐẦU]) --> B[/Nhập username, email, password/]
-    B --> C{Username hợp lệ?<br/>chữ, số, gạch dưới}
-    C -->|Không| D[/Báo lỗi format/]
-    D --> B
-    C -->|Có| E{Username đã tồn tại?}
-    E -->|Có| F[/Báo lỗi trùng username/]
-    F --> B
-    E -->|Không| G{Email đã tồn tại?}
-    G -->|Có| H[/Báo lỗi trùng email/]
-    H --> B
-    G -->|Không| I{Password đủ mạnh?}
-    I -->|Không| J[/Báo lỗi mật khẩu yếu/]
-    J --> B
-    I -->|Có| K[Tạo salt, hash password]
-    K --> L[Thêm vào danh sách]
-    L --> M([ĐĂNG KÝ THÀNH CÔNG])
-```
-
----
 
 ## 4. Flowchart CRUD
 
