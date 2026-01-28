@@ -247,7 +247,27 @@ flowchart TD
 
 ---
 
-## 13. Flowchart Quản Lý Điểm Danh
+## 13. Flowchart Quản Lý Điểm Số
+
+```mermaid
+flowchart TD
+    A([MENU QUẢN LÝ ĐIỂM SỐ]) --> B[/"1.Thêm 2.Sửa 3.Xóa<br/>4.Xem điểm SV 5.Tất cả<br/>0.Quay lại"/]
+    B --> C{Option?}
+    
+    C -->|1, 2| D[/"Nhập dữ liệu điểm<br/>(GK, CK)"/]
+    D --> E{"Điểm hợp lệ (0-10)?"}
+    E -->|Không| F[/Báo lỗi/] --> D
+    E -->|Có| G[Lưu/Cập nhật] --> H([THÀNH CÔNG]) --> B
+    
+    C -->|3| I[/Nhập ID xóa/] --> J[Xóa điểm] --> H
+    
+    C -->|4, 5| K[/Hiển thị danh sách/] --> B
+    C -->|0| L([QUAY LẠI])
+```
+
+---
+
+## 14. Flowchart Quản Lý Điểm Danh
 
 ```mermaid
 flowchart TD
@@ -261,7 +281,7 @@ flowchart TD
 
 ---
 
-## 14. Flowchart Quản Lý Khoa
+## 15. Flowchart Quản Lý Khoa
 
 ```mermaid
 flowchart TD
@@ -275,7 +295,7 @@ flowchart TD
 
 ---
 
-## 15. Flowchart Quản Lý Học Kỳ
+## 16. Flowchart Quản Lý Học Kỳ
 
 ```mermaid
 flowchart TD
@@ -289,7 +309,26 @@ flowchart TD
 
 ---
 
-## 16. Flowchart Thống Kê
+## 17. Flowchart Quản Lý Tài Khoản
+
+```mermaid
+flowchart TD
+    A([MENU QUẢN LÝ TÀI KHOAN]) --> B[/"1.Hiển thị 2.Mở khóa<br/>3.Xóa 0.Quay lại"/]
+    B --> C{Option?}
+    C -->|1| D[/Hiển thị DS/] --> B
+    
+    C -->|2| E[/Nhập ID cần mở/] --> F[Set locked = false] --> G([THÀNH CÔNG]) --> B
+    
+    C -->|3| H[/Nhập ID cần xóa/] --> I{Là chính mình?}
+    I -->|Có| J[/Báo lỗi/] --> B
+    I -->|Không| K[Xóa User] --> G
+    
+    C -->|0| L([QUAY LẠI])
+```
+
+---
+
+## 18. Flowchart Thống Kê
 
 ```mermaid
 flowchart TD
@@ -311,9 +350,9 @@ flowchart TD
 
 ---
 
-## 17. Flowchart Lưu/Đọc File
+## 19. Flowchart Lưu/Đọc File
 
-### 17.1 Save to File
+### 19.1 Save to File
 
 ```mermaid
 flowchart TD
@@ -326,7 +365,7 @@ flowchart TD
     F --> G([/Đã lưu file/])
 ```
 
-### 17.2 Load from File
+### 19.2 Load from File
 
 ```mermaid
 flowchart TD
@@ -348,7 +387,7 @@ flowchart TD
 
 ## Tổng Kết
 
-Hệ thống có **17 Flowcharts** mô tả các chức năng chính:
+Hệ thống có **19 Flowcharts** mô tả các chức năng chính:
 
 | # | Flowchart | Mô tả |
 |---|-----------|-------|
@@ -364,11 +403,13 @@ Hệ thống có **17 Flowcharts** mô tả các chức năng chính:
 | 10 | Quản lý môn | CRUD môn học |
 | 11 | Quản lý lớp | CRUD lớp học |
 | 12 | Đăng ký môn | CRUD enrollment |
-| 13 | Điểm danh | CRUD attendance |
-| 14 | Quản lý khoa | CRUD department |
-| 15 | Quản lý học kỳ | CRUD semester |
-| 16 | Thống kê | Báo cáo thống kê |
-| 17 | Lưu/Đọc file | Persistence |
+| 13 | Quản lý điểm số | CRUD grades |
+| 14 | Điểm danh | CRUD attendance |
+| 15 | Quản lý khoa | CRUD department |
+| 16 | Quản lý học kỳ | CRUD semester |
+| 17 | Quản lý tài khoản | CRUD user accounts |
+| 18 | Thống kê | Báo cáo thống kê |
+| 19 | Lưu/Đọc file | Persistence |
 
 ---
 
