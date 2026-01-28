@@ -102,31 +102,7 @@ flowchart TD
 
 ---
 
-## 8. Flowchart Quản Lý Sinh Viên
 
-```mermaid
-flowchart TD
-    A([MENU QUẢN LÝ SINH VIÊN]) --> B[/"Hiển thị menu:<br/>1.Thêm 2.Sửa 3.Xóa<br/>4.Tìm 5.Hiển thị 0.Quay lại"/]
-    B --> C{Chọn option?}
-    C -->|1| D[/Nhập ID, Tên, DOB, Giới tính, Email, SĐT, Mã lớp/]
-    C -->|2| E[/Nhập ID cần sửa + thông tin mới/]
-    C -->|3| F[/Nhập ID cần xóa/]
-    C -->|4| G[/Nhập tên cần tìm/]
-    C -->|5| H[Hiển thị danh sách]
-    C -->|0| I([QUAY LẠI MENU CHÍNH])
-    D --> J{Validate dữ liệu?}
-    E --> J
-    F --> J
-    G --> J
-    H --> B
-    J -->|Không| K[/Báo lỗi cụ thể/]
-    K --> B
-    J -->|Có| L[Thực hiện thao tác]
-    L --> M[/THÀNH CÔNG/]
-    M --> B
-```
-
----
 
 ## 9. Flowchart Quản Lý Giảng Viên
 
