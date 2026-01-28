@@ -177,24 +177,16 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    A([MENU QUẢN LÝ SINH VIÊN]) --> B[/"Hiển thị menu:<br/>1.Thêm 2.Sửa 3.Xóa<br/>4.Tìm 5.Hiển thị 0.Quay lại"/]
-    B --> C{Chọn option?}
-    C -->|1| D[/Nhập ID, Tên, DOB, Giới tính, Email, SĐT, Mã lớp/]
-    C -->|2| E[/Nhập ID cần sửa + thông tin mới/]
-    C -->|3| F[/Nhập ID cần xóa/]
-    C -->|4| G[/Nhập tên cần tìm/]
-    C -->|5| H[Hiển thị danh sách]
-    C -->|0| I([QUAY LẠI MENU CHÍNH])
-    D --> J{Validate dữ liệu?}
-    E --> J
-    F --> J
-    G --> J
-    H --> B
-    J -->|Không| K[/Báo lỗi cụ thể/]
-    K --> B
-    J -->|Có| L[Thực hiện thao tác]
-    L --> M[/THÀNH CÔNG/]
-    M --> B
+    A([MENU QUẢN LÝ SINH VIÊN]) --> B[/"1.Thêm 2.Sửa 3.Xóa<br/>4.Tìm 5.Hiển thị 0.Quay lại"/]
+    B --> C[/Nhập lựa chọn/]
+    C --> D{Lựa chọn = 0?}
+    D -->|Yes| E([QUAY LẠI])
+    D -->|No| F{Lựa chọn hợp lệ (1-5)?}
+    F -->|No| G[/Báo lỗi lựa chọn/]
+    G --> B
+    F -->|Yes| H[/Nhập thông tin & Xử lý/]
+    H --> I[/Thông báo kết quả/]
+    I --> B
 ```
 
 ---
