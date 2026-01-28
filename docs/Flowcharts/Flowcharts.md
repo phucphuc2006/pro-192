@@ -1,331 +1,393 @@
-# Flowcharts - So Do Luong He Thong
+# Flowcharts - Sơ Đồ Luồng Hệ Thống
 
-## 1. Flowchart Tong Quan He Thong
+> **Chú thích các hình dạng chuẩn:**
+> - `([...])` = Hình bầu dục → Bắt đầu/Kết thúc
+> - `[...]` = Hình chữ nhật → Xử lý/Thao tác
+> - `[/.../ ]` = Hình bình hành → Nhập/Xuất dữ liệu
+> - `{...}` = Hình thoi → Điều kiện rẽ nhánh
+
+---
+
+## 1. Flowchart Tổng Quan Hệ Thống
 
 ```mermaid
 flowchart TD
-    A(["KHOI DONG"]) --> B["Load du lieu tu file"]
-    B --> C["Hien thi Menu Dang nhap"]
-    C --> D{"Dang nhap thanh cong?"}
-    D -->|Khong| E["Thu lai hoac dang ky"]
+    A([KHỞI ĐỘNG CHƯƠNG TRÌNH]) --> B[Load dữ liệu từ file]
+    B --> C[/Hiển thị Menu Đăng nhập/Đăng ký/]
+    C --> D{Đăng nhập thành công?}
+    D -->|Không| E[Thử lại hoặc đăng ký]
     E --> C
-    D -->|Co| F["Hien thi MENU CHINH"]
-    F --> G["Chon chuc nang"]
-    G --> H["Xu ly va hien thi ket qua"]
-    H --> I{"Thoat?"}
-    I -->|Khong| F
-    I -->|Co| J["Luu du lieu xuong file"]
-    J --> K(["KET THUC"])
+    D -->|Có| F[/Hiển thị MENU CHÍNH/]
+    F --> G[/Chọn chức năng 1-14/]
+    G --> H[Xử lý và hiển thị kết quả]
+    H --> I{Thoát? - option 0}
+    I -->|Không| F
+    I -->|Có| J[Lưu dữ liệu xuống file]
+    J --> K([KẾT THÚC])
 ```
 
-## 2. Flowchart Dang Nhap
+---
+
+## 2. Flowchart Đăng Nhập
 
 ```mermaid
 flowchart TD
-    A(["BAT DAU"]) --> B["Nhap username va password"]
-    B --> C["Tim user trong danh sach"]
-    C --> D{"Tim thay user?"}
-    D -->|Khong| E["Bao loi sai username"]
+    A([BẮT ĐẦU]) --> B[/Nhập username và password/]
+    B --> C[Tìm user trong danh sách]
+    C --> D{Tìm thấy user?}
+    D -->|Không| E[/Báo lỗi: sai username/]
     E --> B
-    D -->|Co| F{"Tai khoan bi khoa?"}
-    F -->|Co| G["Bao loi TK bi khoa"]
+    D -->|Có| F{Tài khoản bị khóa?}
+    F -->|Có| G[/Báo lỗi: TK bị khóa/]
     G --> B
-    F -->|Khong| H["Verify password"]
-    H --> I{"Password dung?"}
-    I -->|Co| J["Reset loginAttempts"]
-    J --> K(["DANG NHAP THANH CONG"])
-    I -->|Khong| L["Tang loginAttempts"]
-    L --> M{"Sai qua 5 lan?"}
-    M -->|Co| N["Khoa tai khoan"]
+    F -->|Không| H[Verify password]
+    H --> I{Password đúng?}
+    I -->|Có| J[Reset loginAttempts = 0]
+    J --> K([ĐĂNG NHẬP THÀNH CÔNG])
+    I -->|Không| L[loginAttempts += 1]
+    L --> M{loginAttempts >= 5?}
+    M -->|Có| N[Khóa tài khoản]
     N --> B
-    M -->|Khong| O["Bao loi sai mat khau"]
+    M -->|Không| O[/Báo lỗi: sai mật khẩu/]
     O --> B
 ```
 
-## 3. Flowchart Dang Ky Tai Khoan
+---
+
+## 3. Flowchart Đăng Ký Tài Khoản
 
 ```mermaid
 flowchart TD
-    A(["BAT DAU"]) --> B["Nhap username email password"]
-    B --> C{"Username hop le?"}
-    C -->|Khong| D["Bao loi format"]
+    A([BẮT ĐẦU]) --> B[/Nhập username, email, password/]
+    B --> C{Username hợp lệ?<br/>chữ, số, gạch dưới}
+    C -->|Không| D[/Báo lỗi format/]
     D --> B
-    C -->|Co| E{"Username da ton tai?"}
-    E -->|Co| F["Bao loi trung username"]
+    C -->|Có| E{Username đã tồn tại?}
+    E -->|Có| F[/Báo lỗi trùng username/]
     F --> B
-    E -->|Khong| G{"Email da ton tai?"}
-    G -->|Co| H["Bao loi trung email"]
+    E -->|Không| G{Email đã tồn tại?}
+    G -->|Có| H[/Báo lỗi trùng email/]
     H --> B
-    G -->|Khong| I{"Password du manh?"}
-    I -->|Khong| J["Bao loi mat khau yeu"]
+    G -->|Không| I{Password đủ mạnh?}
+    I -->|Không| J[/Báo lỗi mật khẩu yếu/]
     J --> B
-    I -->|Co| K["Tao salt va hash password"]
-    K --> L["Them vao danh sach"]
-    L --> M(["DANG KY THANH CONG"])
+    I -->|Có| K[Tạo salt, hash password]
+    K --> L[Thêm vào danh sách]
+    L --> M([ĐĂNG KÝ THÀNH CÔNG])
 ```
+
+---
 
 ## 4. Flowchart CRUD
 
-### 4.1 Them moi
+### 4.1 Thêm mới (Add)
 
 ```mermaid
 flowchart TD
-    A(["BAT DAU"]) --> B["Nhap thong tin"]
-    B --> C{"Du lieu hop le?"}
-    C -->|Khong| D["Bao loi"]
+    A([BẮT ĐẦU]) --> B[/Nhập thông tin đối tượng mới/]
+    B --> C{Dữ liệu hợp lệ?}
+    C -->|Không| D[/Báo lỗi/]
     D --> B
-    C -->|Co| E["Them vao ArrayList"]
-    E --> F(["THEM THANH CONG"])
+    C -->|Có| E[Thêm vào ArrayList]
+    E --> F([THÊM THÀNH CÔNG])
 ```
 
-### 4.2 Sua
+### 4.2 Sửa (Update)
 
 ```mermaid
 flowchart TD
-    A(["BAT DAU"]) --> B["Nhap ID can sua"]
-    B --> C{"Tim thay ID?"}
-    C -->|Khong| D["Bao khong tim thay"]
-    D --> E(["QUAY LAI"])
-    C -->|Co| F["Nhap thong tin moi"]
-    F --> G["Cap nhat doi tuong"]
-    G --> H(["SUA THANH CONG"])
+    A([BẮT ĐẦU]) --> B[/Nhập ID cần sửa/]
+    B --> C{Tìm thấy ID?}
+    C -->|Không| D[/Báo không tìm thấy/]
+    D --> E([QUAY LẠI])
+    C -->|Có| F[/Nhập thông tin mới/]
+    F --> G[Cập nhật đối tượng]
+    G --> H([SỬA THÀNH CÔNG])
 ```
 
-### 4.3 Xoa
+### 4.3 Xóa (Delete)
 
 ```mermaid
 flowchart TD
-    A(["BAT DAU"]) --> B["Nhap ID can xoa"]
-    B --> C{"Tim thay ID?"}
-    C -->|Khong| D["Bao khong tim thay"]
-    D --> E(["QUAY LAI"])
-    C -->|Co| F["Xoa khoi ArrayList"]
-    F --> G(["XOA THANH CONG"])
+    A([BẮT ĐẦU]) --> B[/Nhập ID cần xóa/]
+    B --> C{Tìm thấy ID?}
+    C -->|Không| D[/Báo không tìm thấy/]
+    D --> E([QUAY LẠI])
+    C -->|Có| F[Xóa khỏi ArrayList]
+    F --> G([XÓA THÀNH CÔNG])
 ```
 
-## 5. Flowchart Doi Mat Khau
+---
+
+## 5. Flowchart Đổi Mật Khẩu
 
 ```mermaid
 flowchart TD
-    A(["BAT DAU"]) --> B["Nhap mat khau cu"]
-    B --> C{"Mat khau cu dung?"}
-    C -->|Khong| D["Bao loi sai MK"]
+    A([BẮT ĐẦU]) --> B[/Nhập mật khẩu cũ/]
+    B --> C{Mật khẩu cũ đúng?}
+    C -->|Không| D[/Báo lỗi sai MK/]
     D --> B
-    C -->|Co| E["Nhap mat khau moi"]
-    E --> F{"MK moi du manh?"}
-    F -->|Khong| G["Bao loi MK yeu"]
+    C -->|Có| E[/Nhập mật khẩu mới/]
+    E --> F{MK mới đủ mạnh?}
+    F -->|Không| G[/Báo lỗi MK yếu/]
     G --> E
-    F -->|Co| H{"Trung MK cu?"}
-    H -->|Co| I["Bao loi trung"]
+    F -->|Có| H{Trùng MK cũ hoặc history?}
+    H -->|Có| I[/Báo lỗi trùng/]
     I --> E
-    H -->|Khong| J["Hash MK moi va Luu"]
-    J --> K(["DOI MK THANH CONG"])
+    H -->|Không| J[Hash MK mới, Lưu history]
+    J --> K([ĐỔI MK THÀNH CÔNG])
 ```
 
-## 6. Flowchart Xuat Bao Cao CSV
+---
+
+## 6. Flowchart Xuất Báo Cáo CSV
 
 ```mermaid
 flowchart TD
-    A(["BAT DAU"]) --> B["Chon loai bao cao"]
-    B --> C["Nhap ten file"]
-    C --> D["Tao thu muc reports"]
-    D --> E["Ghi header CSV"]
-    E --> F["Duyet ArrayList ghi tung dong"]
-    F --> G["Dong file"]
-    G --> H(["XUAT THANH CONG"])
+    A([BẮT ĐẦU]) --> B[/Chọn loại báo cáo 1-4/]
+    B --> C[/Nhập tên file/]
+    C --> D[Tạo thư mục reports/ nếu chưa có]
+    D --> E[Ghi header CSV]
+    E --> F[Duyệt ArrayList ghi từng dòng]
+    F --> G[Đóng file]
+    G --> H([XUẤT THÀNH CÔNG<br/>reports/xxx.csv])
 ```
 
-## 7. Flowchart Tinh Diem Tong
+---
+
+## 7. Flowchart Tính Điểm Tổng
 
 ```mermaid
 flowchart TD
-    A(["BAT DAU"]) --> B["Nhap diem giua ky GK"]
-    B --> C{"GK tu 0 den 10?"}
-    C -->|Khong| D["Bao loi"]
+    A([BẮT ĐẦU]) --> B[/Nhập điểm giữa kỳ GK/]
+    B --> C{0 <= GK <= 10?}
+    C -->|Không| D[/Báo lỗi điểm không hợp lệ/]
     D --> B
-    C -->|Co| E["Nhap diem cuoi ky CK"]
-    E --> F{"CK tu 0 den 10?"}
-    F -->|Khong| G["Bao loi"]
+    C -->|Có| E[/Nhập điểm cuối kỳ CK/]
+    E --> F{0 <= CK <= 10?}
+    F -->|Không| G[/Báo lỗi điểm không hợp lệ/]
     G --> E
-    F -->|Co| H["Tinh tong GK x 0.4 + CK x 0.6"]
-    H --> I(["LUU DIEM THANH CONG"])
+    F -->|Có| H["Tính tổng: GK*0.4 + CK*0.6"]
+    H --> I([LƯU ĐIỂM THÀNH CÔNG])
 ```
 
-## 8. Flowchart Quan Ly Sinh Vien
+---
+
+## 8. Flowchart Quản Lý Sinh Viên
 
 ```mermaid
 flowchart TD
-    A(["MENU SINH VIEN"]) --> B["Hien thi menu"]
-    B --> C{"Chon option?"}
-    C -->|1| D["Nhap thong tin SV moi"]
-    C -->|2| E["Nhap ID can sua"]
-    C -->|3| F["Nhap ID can xoa"]
-    C -->|4| G["Nhap ten can tim"]
-    C -->|5| H["Hien thi danh sach"]
-    C -->|0| I(["QUAY LAI"])
-    D --> J{"Validate?"}
+    A([MENU QUẢN LÝ SINH VIÊN]) --> B[/"Hiển thị menu:<br/>1.Thêm 2.Sửa 3.Xóa<br/>4.Tìm 5.Hiển thị 0.Quay lại"/]
+    B --> C{Chọn option?}
+    C -->|1| D[/Nhập ID, Tên, DOB, Giới tính, Email, SĐT, Mã lớp/]
+    C -->|2| E[/Nhập ID cần sửa + thông tin mới/]
+    C -->|3| F[/Nhập ID cần xóa/]
+    C -->|4| G[/Nhập tên cần tìm/]
+    C -->|5| H[Hiển thị danh sách]
+    C -->|0| I([QUAY LẠI MENU CHÍNH])
+    D --> J{Validate dữ liệu?}
     E --> J
     F --> J
     G --> J
     H --> B
-    J -->|Khong| K["Bao loi"]
+    J -->|Không| K[/Báo lỗi cụ thể/]
     K --> B
-    J -->|Co| L["Thuc hien thao tac"]
-    L --> B
+    J -->|Có| L[Thực hiện thao tác]
+    L --> M[/THÀNH CÔNG/]
+    M --> B
 ```
 
-## 9. Flowchart Quan Ly Giang Vien
+---
+
+## 9. Flowchart Quản Lý Giảng Viên
 
 ```mermaid
 flowchart TD
-    A(["MENU GIANG VIEN"]) --> B["Hien thi menu"]
-    B --> C{"Option?"}
-    C -->|1-5| D["Nhap du lieu GV"]
-    C -->|0| E(["QUAY LAI"])
-    D --> F["Xu ly theo option"]
-    F --> G["Thong bao ket qua"]
+    A([MENU QUẢN LÝ GIẢNG VIÊN]) --> B[/"1.Thêm GV 2.Sửa GV<br/>3.Xóa GV 4.Tìm kiếm<br/>5.Hiển thị DS 0.Quay lại"/]
+    B --> C{Option?}
+    C -->|1-5| D[/Nhập dữ liệu GV:<br/>ID, Tên, Khoa, Email, SĐT/]
+    C -->|0| E([QUAY LẠI])
+    D --> F[Xử lý theo option]
+    F --> G[/Thông báo kết quả/]
     G --> B
 ```
 
-## 10. Flowchart Quan Ly Mon Hoc
+---
+
+## 10. Flowchart Quản Lý Môn Học
 
 ```mermaid
 flowchart TD
-    A(["MENU MON HOC"]) --> B["Hien thi menu"]
-    B --> C["Nhap Ma mon Ten mon Tin chi"]
-    C --> D{"Tin chi tu 1 den 10?"}
-    D -->|Khong| E["Bao loi tin chi"]
+    A([MENU QUẢN LÝ MÔN HỌC]) --> B[/"1.Thêm môn 2.Sửa môn<br/>3.Xóa môn 4.Tìm kiếm<br/>5.Hiển thị 0.Quay lại"/]
+    B --> C[/Nhập: Mã môn, Tên môn,<br/>Số tín chỉ, Học kỳ, Mã GV/]
+    C --> D{Tín chỉ 1-10?}
+    D -->|Không| E[/Báo lỗi tín chỉ không hợp lệ/]
     E --> C
-    D -->|Co| F["Thuc hien CRUD"]
-    F --> G(["HOAN THANH"])
+    D -->|Có| F[Thực hiện CRUD]
+    F --> G([HOÀN THÀNH])
 ```
 
-## 11. Flowchart Quan Ly Lop Hoc
+---
+
+## 11. Flowchart Quản Lý Lớp Học
 
 ```mermaid
 flowchart TD
-    A(["MENU LOP HOC"]) --> B["Nhap Ma lop Ten lop Ma GV"]
-    B --> C["Thuc hien CRUD"]
-    C --> D["Hien thi ket qua"]
-    D --> E(["HOAN THANH"])
+    A([MENU QUẢN LÝ LỚP HỌC]) --> B[/Nhập: Mã lớp, Tên lớp,<br/>Mã GV chủ nhiệm, Mã môn chính/]
+    B --> C[Thực hiện CRUD]
+    C --> D[/Hiển thị kết quả/]
+    D --> E([HOÀN THÀNH])
 ```
 
-## 12. Flowchart Quan Ly Dang Ky Mon
+---
+
+## 12. Flowchart Quản Lý Đăng Ký Môn
 
 ```mermaid
 flowchart TD
-    A(["MENU DANG KY MON"]) --> B["Nhap Ma DK Ma SV Ma mon"]
-    B --> C{"SV ton tai?"}
-    C -->|Khong| D["Bao loi SV khong ton tai"]
+    A([MENU ĐĂNG KÝ MÔN HỌC]) --> B[/Nhập: Mã đăng ký, Mã SV,<br/>Mã môn học, Học kỳ/]
+    B --> C{SV tồn tại?}
+    C -->|Không| D[/Báo lỗi SV không tồn tại/]
     D --> B
-    C -->|Co| E{"Mon ton tai?"}
-    E -->|Khong| F["Bao loi mon khong ton tai"]
+    C -->|Có| E{Môn tồn tại?}
+    E -->|Không| F[/Báo lỗi môn không tồn tại/]
     F --> B
-    E -->|Co| G["Tao dang ky"]
-    G --> H(["THANH CONG"])
+    E -->|Có| G[Tạo đăng ký]
+    G --> H([THÀNH CÔNG])
 ```
 
-## 13. Flowchart Quan Ly Diem Danh
+---
+
+## 13. Flowchart Quản Lý Điểm Danh
 
 ```mermaid
 flowchart TD
-    A(["MENU DIEM DANH"]) --> B["Nhap Ma DD Ma SV Ma lop Ngay"]
-    B --> C{"Trang thai hop le?"}
-    C -->|Khong| D["Bao loi trang thai"]
+    A([MENU ĐIỂM DANH]) --> B[/Nhập: Mã điểm danh, Mã SV,<br/>Mã lớp, Ngày, Trạng thái/]
+    B --> C{Trạng thái hợp lệ?<br/>Co mat/Vang/Co phep}
+    C -->|Không| D[/Báo lỗi trạng thái/]
     D --> B
-    C -->|Co| E["Luu diem danh"]
-    E --> F(["THANH CONG"])
+    C -->|Có| E[Lưu điểm danh]
+    E --> F([THÀNH CÔNG])
 ```
 
-## 14. Flowchart Quan Ly Khoa
+---
+
+## 14. Flowchart Quản Lý Khoa
 
 ```mermaid
 flowchart TD
-    A(["MENU KHOA"]) --> B["Nhap Ma khoa Ten khoa So GV"]
-    B --> C{"So GV lon hon hoac bang 0?"}
-    C -->|Khong| D["Bao loi so GV"]
+    A([MENU QUẢN LÝ KHOA]) --> B[/Nhập: Mã khoa, Tên khoa, Số GV/]
+    B --> C{Số GV >= 0?}
+    C -->|Không| D[/Báo lỗi số GV không hợp lệ/]
     D --> B
-    C -->|Co| E["Thuc hien CRUD"]
-    E --> F(["HOAN THANH"])
+    C -->|Có| E[Thực hiện CRUD]
+    E --> F([HOÀN THÀNH])
 ```
 
-## 15. Flowchart Quan Ly Hoc Ky
+---
+
+## 15. Flowchart Quản Lý Học Kỳ
 
 ```mermaid
 flowchart TD
-    A(["MENU HOC KY"]) --> B["Nhap Ma HK Ten HK Ngay BD KT"]
-    B --> C{"Ngay hop le?"}
-    C -->|Khong| D["Bao loi ngay"]
+    A([MENU QUẢN LÝ HỌC KỲ]) --> B[/Nhập: Mã học kỳ, Tên học kỳ,<br/>Ngày bắt đầu, Ngày kết thúc/]
+    B --> C{Ngày hợp lệ?<br/>bắt đầu < kết thúc}
+    C -->|Không| D[/Báo lỗi ngày/]
     D --> B
-    C -->|Co| E["Thuc hien CRUD"]
-    E --> F(["HOAN THANH"])
+    C -->|Có| E[Thực hiện CRUD]
+    E --> F([HOÀN THÀNH])
 ```
 
-## 16. Flowchart Thong Ke
+---
+
+## 16. Flowchart Thống Kê
 
 ```mermaid
 flowchart TD
-    A(["MENU THONG KE"]) --> B["Hien thi menu"]
-    B --> C{"Option?"}
-    C -->|1| D["Dem SV theo lop"]
-    C -->|2| E["Tinh TB diem"]
-    C -->|3| F["Tinh ty le chuyen can"]
-    C -->|0| G(["QUAY LAI"])
-    D --> H["Hien thi ket qua"]
-    E --> H
-    F --> H
-    H --> B
+    A([MENU THỐNG KÊ]) --> B[/"1.TK SV theo lớp<br/>2.TK điểm số<br/>3.TK điểm danh<br/>0.Quay lại"/]
+    B --> C{Option?}
+    C -->|1| D[Đếm SV theo từng lớp]
+    C -->|2| E[Tính TB điểm, tìm max/min]
+    C -->|3| F[Tính tỷ lệ chuyên cần]
+    C -->|0| G([QUAY LẠI])
+    D --> H[/Hiển thị bảng đếm/]
+    E --> I[Phân loại học lực]
+    I --> J[/Hiển thị kết quả/]
+    F --> K[/Hiển thị % có mặt/]
+    H --> L[/IN THỐNG KÊ RA MÀN HÌNH/]
+    J --> L
+    K --> L
+    L --> B
 ```
 
-## 17. Flowchart Luu Doc File
+---
+
+## 17. Flowchart Lưu/Đọc File
 
 ### 17.1 Save to File
 
 ```mermaid
 flowchart TD
-    A(["SAVE TO FILE"]) --> B["Mo BufferedWriter"]
-    B --> C["For each item in ArrayList"]
-    C --> D["Ghi CSV format"]
-    D --> E{"Con item?"}
-    E -->|Co| C
-    E -->|Khong| F["Dong writer"]
-    F --> G(["Da luu file"])
+    A([SAVE TO FILE]) --> B[Mở BufferedWriter với FILE_NAME]
+    B --> C[for each item in ArrayList]
+    C --> D["Ghi: field1,field2,... - CSV format"]
+    D --> E{Còn item?}
+    E -->|Có| C
+    E -->|Không| F[Đóng writer]
+    F --> G([/Đã lưu file/])
 ```
 
 ### 17.2 Load from File
 
 ```mermaid
 flowchart TD
-    A(["LOAD FROM FILE"]) --> B["Mo BufferedReader"]
-    B --> C{"File ton tai?"}
-    C -->|Khong| D(["KET THUC"])
-    C -->|Co| E["While co dong moi"]
-    E --> F["Split va tao object"]
-    F --> G["Add to ArrayList"]
-    G --> H{"Con dong?"}
-    H -->|Co| E
-    H -->|Khong| I["Dong reader"]
-    I --> J(["Da tai du lieu"])
+    A([LOAD FROM FILE]) --> B[Mở BufferedReader với FILE_NAME]
+    B --> C{File tồn tại?}
+    C -->|Không| D[Bỏ qua]
+    D --> E([KẾT THÚC])
+    C -->|Có| F[while có dòng mới]
+    F --> G["Split by dấu phẩy"]
+    G --> H[Tạo object từ parts]
+    H --> I[Add to ArrayList]
+    I --> J{Còn dòng?}
+    J -->|Có| F
+    J -->|Không| K[Đóng reader]
+    K --> L([/Đã tải dữ liệu/])
 ```
 
-## Tong Ket
+---
 
-| # | Flowchart | Mo ta |
+## Tổng Kết
+
+Hệ thống có **17 Flowcharts** mô tả các chức năng chính:
+
+| # | Flowchart | Mô tả |
 |---|-----------|-------|
-| 1 | Tong quan | Luong chinh |
-| 2 | Dang nhap | Xac thuc |
-| 3 | Dang ky | Tao TK moi |
-| 4 | CRUD | Them Sua Xoa |
-| 5 | Doi MK | Thay doi MK |
-| 6 | Xuat CSV | Tao bao cao |
-| 7 | Tinh diem | Cong thuc |
-| 8 | QL Sinh vien | CRUD SV |
-| 9 | QL Giang vien | CRUD GV |
-| 10 | QL Mon hoc | CRUD mon |
-| 11 | QL Lop hoc | CRUD lop |
-| 12 | Dang ky mon | CRUD enrollment |
-| 13 | Diem danh | CRUD attendance |
-| 14 | QL Khoa | CRUD department |
-| 15 | QL Hoc ky | CRUD semester |
-| 16 | Thong ke | Bao cao |
-| 17 | Luu Doc file | Persistence |
+| 1 | Tổng quan | Luồng chính của chương trình |
+| 2 | Đăng nhập | Xác thực người dùng |
+| 3 | Đăng ký | Tạo tài khoản mới |
+| 4 | CRUD chung | Thêm/Sửa/Xóa |
+| 5 | Đổi mật khẩu | Thay đổi mật khẩu |
+| 6 | Xuất CSV | Tạo báo cáo |
+| 7 | Tính điểm | Công thức tính tổng |
+| 8 | Quản lý SV | CRUD sinh viên |
+| 9 | Quản lý GV | CRUD giảng viên |
+| 10 | Quản lý môn | CRUD môn học |
+| 11 | Quản lý lớp | CRUD lớp học |
+| 12 | Đăng ký môn | CRUD enrollment |
+| 13 | Điểm danh | CRUD attendance |
+| 14 | Quản lý khoa | CRUD department |
+| 15 | Quản lý học kỳ | CRUD semester |
+| 16 | Thống kê | Báo cáo thống kê |
+| 17 | Lưu/Đọc file | Persistence |
+
+---
+
+## Chú Thích Hình Dạng Chuẩn
+
+| Hình dạng | Mermaid Syntax | Ý nghĩa |
+|-----------|----------------|---------|
+| Hình bầu dục | `([...])` | Bắt đầu / Kết thúc |
+| Hình chữ nhật | `[...]` | Xử lý / Thao tác |
+| Hình bình hành | `[/.../ ]` | Nhập / Xuất dữ liệu |
+| Hình thoi | `{...}` | Điều kiện rẽ nhánh |
