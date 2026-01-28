@@ -126,24 +126,3 @@ flowchart TD
 
 ---
 
-## 16. Flowchart Thống Kê
-
-```mermaid
-flowchart TD
-    A([MENU THỐNG KÊ]) --> B[/"1.TK SV theo lớp<br/>2.TK điểm số<br/>3.TK điểm danh<br/>0.Quay lại"/]
-    B --> C{Option?}
-    C -->|1| D[Đếm SV theo từng lớp]
-    C -->|2| E[Tính TB điểm, tìm max/min]
-    C -->|3| F[Tính tỷ lệ chuyên cần]
-    C -->|0| G([QUAY LẠI])
-    D --> H[/Hiển thị bảng đếm/]
-    E --> I[Phân loại học lực]
-    I --> J[/Hiển thị kết quả/]
-    F --> K[/Hiển thị % có mặt/]
-    H --> L[/IN THỐNG KÊ RA MÀN HÌNH/]
-    J --> L
-    K --> L
-    L --> B
-```
-
----
