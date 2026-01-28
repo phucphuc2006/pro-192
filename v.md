@@ -6,28 +6,6 @@
 > - `[/.../ ]` = Hình bình hành → Nhập/Xuất dữ liệu
 > - `{...}` = Hình thoi → Điều kiện rẽ nhánh
 
----
-
-## 1. Flowchart Tổng Quan Hệ Thống
-
-```mermaid
-flowchart TD
-    A([KHỞI ĐỘNG CHƯƠNG TRÌNH]) --> B[Load dữ liệu từ file]
-    B --> C[/Hiển thị Menu Đăng nhập/Đăng ký/]
-    C --> D{Đăng nhập thành công?}
-    D -->|Không| E[Thử lại hoặc đăng ký]
-    E --> C
-    D -->|Có| F[/Hiển thị MENU CHÍNH/]
-    F --> G[/Chọn chức năng 1-14/]
-    G --> H[Xử lý và hiển thị kết quả]
-    H --> I{Thoát? - option 0}
-    I -->|Không| F
-    I -->|Có| J[Lưu dữ liệu xuống file]
-    J --> K([KẾT THÚC])
-```
-
----
-
 ## 2. Flowchart Đăng Nhập
 
 ```mermaid
@@ -243,37 +221,3 @@ flowchart TD
 
 
 
-## Tổng Kết
-
-Hệ thống có **17 Flowcharts** mô tả các chức năng chính:
-
-| # | Flowchart | Mô tả |
-|---|-----------|-------|
-| 1 | Tổng quan | Luồng chính của chương trình |
-| 2 | Đăng nhập | Xác thực người dùng |
-| 3 | Đăng ký | Tạo tài khoản mới |
-| 4 | CRUD chung | Thêm/Sửa/Xóa |
-| 5 | Đổi mật khẩu | Thay đổi mật khẩu |
-| 6 | Xuất CSV | Tạo báo cáo |
-| 7 | Tính điểm | Công thức tính tổng |
-| 8 | Quản lý SV | CRUD sinh viên |
-| 9 | Quản lý GV | CRUD giảng viên |
-| 10 | Quản lý môn | CRUD môn học |
-| 11 | Quản lý lớp | CRUD lớp học |
-| 12 | Đăng ký môn | CRUD enrollment |
-| 13 | Điểm danh | CRUD attendance |
-| 14 | Quản lý khoa | CRUD department |
-| 15 | Quản lý học kỳ | CRUD semester |
-| 16 | Thống kê | Báo cáo thống kê |
-| 17 | Lưu/Đọc file | Persistence |
-
----
-
-## Chú Thích Hình Dạng Chuẩn
-
-| Hình dạng | Mermaid Syntax | Ý nghĩa |
-|-----------|----------------|---------|
-| Hình bầu dục | `([...])` | Bắt đầu / Kết thúc |
-| Hình chữ nhật | `[...]` | Xử lý / Thao tác |
-| Hình bình hành | `[/.../ ]` | Nhập / Xuất dữ liệu |
-| Hình thoi | `{...}` | Điều kiện rẽ nhánh |
