@@ -139,21 +139,3 @@ StudentManagement_NhomXX/
 
 ---
 
-## 7. Đội Phát Triển (Development Team)
-
-| Thành viên | MSSV | Email |
-|------------|------|-------|
-| Trương Gia Huy | QE190139 | - |
-| Trần Văn Phúc | QE200141 | - |
-
----
-
-## 8. Kết Luận (Conclusion)
-
-Hệ thống Quản lý Sinh viên đã được xây dựng hoàn chỉnh với:
-- ✅ 25 classes phân chia rõ ràng
-- ✅ Đầy đủ chức năng CRUD cho 10 loại đối tượng
-- ✅ Bảo mật mạnh mẽ với SHA-256
-- ✅ Thống kê và xuất báo cáo CSV
-- ✅ 900 dòng dữ liệu mẫu
-- ✅ Tài liệu chi tiết
