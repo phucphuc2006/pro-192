@@ -327,12 +327,4 @@ Chú thích:
 
 ---
 
-## 6. Bảng Tổng Kết
 
-| Package | Số Class | Danh sách |
-|---------|----------|-----------|
-| models | 10 | Student, Teacher, Course, ClassRoom, Enrollment, Grade, Attendance, Department, Semester, UserAccount |
-| managers | 10 | StudentManager, TeacherManager, CourseManager, ClassRoomManager, EnrollmentManager, GradeManager, AttendanceManager, DepartmentManager, SemesterManager, UserAccountManager |
-| utils | 4 | PasswordUtils, ValidationUtils, StatisticsUtils, ReportUtils |
-| (root) | 1 | Main |
-| **TỔNG** | **25** | |
