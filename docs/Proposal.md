@@ -5,7 +5,7 @@
 
 ## 1. Giới Thiệu (Introduction)
 
-Hệ thống Quản lý Sinh viên là ứng dụng console được phát triển bằng Java, hỗ trợ quản lý toàn diện các hoạt động đào tạo bao gồm: quản lý sinh viên, giảng viên, môn học, điểm số, điểm danh và bảo mật người dùng.
+Hệ thống Quản lý Sinh viên là ứng dụng Desktop GUI được phát triển bằng Java Swing, hỗ trợ quản lý toàn diện các hoạt động đào tạo bao gồm: quản lý sinh viên, giảng viên, môn học, điểm số, điểm danh, người dùng và báo cáo thống kê.
 
 Dự án được xây dựng áp dụng các nguyên lý Lập trình Hướng Đối tượng (OOP) và kiến trúc phân tầng rõ ràng.
 
@@ -13,9 +13,16 @@ Dự án được xây dựng áp dụng các nguyên lý Lập trình Hướng 
 
 ## 2. Kiến Trúc Hệ Thống (System Architecture)
 
-Hệ thống bao gồm **25 Classes** được tổ chức thành 4 packages:
+Hệ thống được tổ chức thành 4 packages chính theo mô hình MVC (Model-View-Controller) cải tiến:
 
-### A. Package `models` (10 Classes - Thực thể dữ liệu)
+### A. Package `views` (Giao diện người dùng)
+
+| Class | Mô tả |
+|-------|-------|
+| LoginUI | Màn hình đăng nhập, xác thực người dùng |
+| StudentManagementUI | Giao diện chính, chứa Menu và các màn hình quản lý chức năng |
+
+### B. Package `models` (10 Classes - Thực thể dữ liệu)
 
 | Class | Mô tả | Thuộc tính chính |
 |-------|-------|------------------|
@@ -30,7 +37,7 @@ Hệ thống bao gồm **25 Classes** được tổ chức thành 4 packages:
 | Semester | Học kỳ | semesterID, semesterName, startDate, endDate |
 | UserAccount | Tài khoản | userID, username, email, salt, hashedPassword, passwordHistory, loginAttempts, isLocked |
 
-### B. Package `managers` (10 Classes - Xử lý nghiệp vụ)
+### C. Package `managers` (10 Classes - Xử lý nghiệp vụ)
 
 **Chức năng chung của tất cả Managers:**
 - Thêm mới (add)
@@ -56,7 +63,7 @@ Hệ thống bao gồm **25 Classes** được tổ chức thành 4 packages:
 | UserAccountManager | Tài khoản | register(), login(), changePassword(), unlockAccount() |
 
 
-### C. Package `utils` (4 Classes - Tiện ích)
+### D. Package `utils` (4 Classes - Tiện ích)
 
 | Class | Mô tả | Phương thức static |
 |-------|-------|-------------------|
@@ -65,7 +72,7 @@ Hệ thống bao gồm **25 Classes** được tổ chức thành 4 packages:
 | StatisticsUtils | Thống kê | calculateAverageGrade(), calculateAttendanceRate(), classifyGrade() |
 | ReportUtils | Xuất báo cáo | exportStudentsToCSV(), exportGradesToCSV(), exportSummaryReport() |
 
-### D. Main Class (1 Class - Điểm khởi đầu)
+### E. Main Class (Entry Point)
 
 | Class | Mô tả |
 |-------|-------|
@@ -118,6 +125,7 @@ Hệ thống bao gồm **25 Classes** được tổ chức thành 4 packages:
 StudentManagement_NhomXX/
 ├── src/
 │   ├── Main.java
+│   ├── views/           (GUI Classes)
 │   ├── models/          (10 files)
 │   ├── managers/        (10 files)
 │   └── utils/           (4 files)
@@ -133,6 +141,7 @@ StudentManagement_NhomXX/
 | Công nghệ | Phiên bản |
 |-----------|-----------|
 | Ngôn ngữ | Java JDK 8+ |
+| Giao diện | Java Swing / AWT |
 | Lưu trữ | File-based (text files) |
 | Bảo mật | SHA-256 + Salt |
 | Encoding | UTF-8 |
