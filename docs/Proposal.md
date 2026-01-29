@@ -26,8 +26,10 @@ Hệ thống được tổ chức thành 4 packages chính theo mô hình MVC (M
 
 | Class | Mô tả | Thuộc tính chính |
 |-------|-------|------------------|
-| Student | Sinh viên | studentID, fullName, dob, gender, email, phone, classID |
-| Teacher | Giảng viên | teacherID, fullName, department, email, phone |
+| Identifiable | Interface chung | getId(), setId(), getName(), setName() |
+| Person | Lớp cha (Abstract) | id, fullName, email, phone |
+| Student | Sinh viên | (Kế thừa User) dob, gender, classID |
+| Teacher | Giảng viên | (Kế thừa User) department |
 | Course | Môn học | courseID, courseName, credits, semester, teacherID |
 | ClassRoom | Lớp học | classID, className, teacherID, courseID |
 | Enrollment | Đăng ký môn | enrollmentID, studentID, courseID, semester |
@@ -51,6 +53,7 @@ Hệ thống được tổ chức thành 4 packages chính theo mô hình MVC (M
 
 | Class | Quản lý | Chức năng bổ sung |
 |-------|---------|-------------------|
+| BaseManager | Generic Manager | Lớp cha xử lý chung CRUD cho mọi manager |
 | StudentManager | Sinh viên | getAll(), sortByName(), sortById(), sortByClass(), getCount() |
 | TeacherManager | Giảng viên | Chức năng cơ bản |
 | CourseManager | Môn học | Chức năng cơ bản |
