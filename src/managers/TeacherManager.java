@@ -2,101 +2,78 @@ package managers;
 
 import models.Teacher;
 import java.io.*;
-import java.util.*;
 
 /**
  * Quản lý giảng viên
  */
-public class TeacherManager {
-    private ArrayList<Teacher> teachers = new ArrayList<>();
-    private final String FILE_NAME = "data/teachers.txt";
+public class TeacherManager extends BaseManager<Teacher> {
 
-    // Thêm giảng viên
+    public TeacherManager() {
+        super("data/teachers.txt");
+    }
+
+    // Wrapper cho add
     public void addTeacher(Teacher t) {
-        teachers.add(t);
-        System.out.println("-> Thêm giảng viên thành công!");
+        super.add(t);
+    }
+
+    // Wrapper cho delete
+    public void deleteTeacher(String id) {
+        super.delete(id);
+    }
+
+    // Wrapper cho find
+    public Teacher findTeacherById(String id) {
+        return super.findById(id);
     }
 
     // Sửa giảng viên theo ID
-    public void updateTeacher(String id, String newName, String newDepartment, String newEmail, String newPhone) {
-        Teacher t = findTeacherById(id);
+    public void updateTeacher(String id, String newName, String newDept, String newEmail, String newPhone) {
+        Teacher t = findById(id);
         if (t != null) {
-            t.setFullName(newName);
-            t.setDepartment(newDepartment);
+            t.setName(newName);
+            t.setDepartment(newDept);
             t.setEmail(newEmail);
             t.setPhone(newPhone);
-            System.out.println("-> Cập nhật giảng viên thành công!");
+            System.out.println("-> Update giao vien thanh cong!");
         } else {
-            System.out.println("-> Không tìm thấy giảng viên.");
+            System.out.println("-> Khong tim thay giao vien.");
         }
-    }
-
-    // Xóa giảng viên
-    public void deleteTeacher(String id) {
-        Teacher t = findTeacherById(id);
-        if (t != null) {
-            teachers.remove(t);
-            System.out.println("-> Đã xóa giảng viên có ID: " + id);
-        } else {
-            System.out.println("-> Không tìm thấy giảng viên để xóa.");
-        }
-    }
-
-    // Tìm kiếm theo tên
-    public void searchByName(String keyword) {
-        System.out.println("--- KẾT QUẢ TÌM KIẾM GIẢNG VIÊN ---");
-        boolean found = false;
-        for (Teacher t : teachers) {
-            if (t.getFullName().toLowerCase().contains(keyword.toLowerCase())) {
-                System.out.println(t);
-                found = true;
-            }
-        }
-        if (!found)
-            System.out.println("-> Không tìm thấy giảng viên nào: " + keyword);
     }
 
     // Hiển thị danh sách
     public void displayAll() {
-        if (teachers.isEmpty()) {
-            System.out.println("-> Danh sách giảng viên trống!");
+        if (list.isEmpty()) {
+            System.out.println("-> Danh sach trong.");
             return;
         }
         System.out.println(
-                "| Mã GV      | Họ tên               | Khoa              | Email                  | SĐT          |");
+                "| Mã GV      | Họ tên               | Khoa            | Email                | SĐT          |");
         System.out.println(
                 "------------------------------------------------------------------------------------------------");
-        for (Teacher t : teachers) {
-            System.out.printf("| %-10s | %-20s | %-17s | %-22s | %-12s |\n",
-                    t.getTeacherID(), t.getFullName(), t.getDepartment(), t.getEmail(), t.getPhone());
+        for (Teacher t : list) {
+            System.out.printf("| %-10s | %-20s | %-15s | %-20s | %-12s |\n",
+                    t.getId(), t.getName(), t.getDepartment(), t.getEmail(), t.getPhone());
         }
-    }
-
-    // Tìm giảng viên theo ID
-    public Teacher findTeacherById(String id) {
-        for (Teacher t : teachers) {
-            if (t.getTeacherID().equalsIgnoreCase(id)) {
-                return t;
-            }
-        }
-        return null;
     }
 
     // Lưu file
+    @Override
     public void saveToFile() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME))) {
-            for (Teacher t : teachers) {
-                writer.write(t.getTeacherID() + "," + t.getFullName() + "," +
+            for (Teacher t : list) {
+                writer.write(t.getId() + "," + t.getName() + "," +
                         t.getDepartment() + "," + t.getEmail() + "," + t.getPhone());
                 writer.newLine();
             }
-            System.out.println("-> Đã lưu dữ liệu giảng viên vào " + FILE_NAME);
+            System.out.println("-> Da luu file.");
         } catch (IOException e) {
-            System.out.println("-> Lỗi khi lưu file giảng viên: " + e.getMessage());
+            System.out.println("Loi ghi file: " + e.getMessage());
         }
     }
 
     // Đọc file
+    @Override
     public void loadFromFile() {
         File file = new File(FILE_NAME);
         if (!file.exists())
@@ -104,12 +81,12 @@ public class TeacherManager {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
             String line;
-            teachers.clear();
+            list.clear();
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 if (parts.length == 5) {
                     Teacher t = new Teacher(parts[0], parts[1], parts[2], parts[3], parts[4]);
-                    teachers.add(t);
+                    list.add(t);
                 }
             }
         } catch (IOException e) {

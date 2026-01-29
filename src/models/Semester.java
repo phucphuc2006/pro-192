@@ -3,7 +3,7 @@ package models;
 /**
  * Lớp Semester đại diện cho một học kỳ
  */
-public class Semester {
+public class Semester implements Identifiable {
     private String semesterID; // Mã học kỳ
     private String semesterName; // Tên học kỳ (Ví dụ: HK1, HK2)
     private String startDate; // Ngày bắt đầu học kỳ
@@ -21,23 +21,27 @@ public class Semester {
         this.endDate = endDate;
     }
 
-    // Getters và Setters
-    public String getSemesterID() {
+    @Override
+    public String getId() {
         return semesterID;
     }
 
-    public void setSemesterID(String semesterID) {
-        this.semesterID = semesterID;
+    @Override
+    public void setId(String id) {
+        this.semesterID = id;
     }
 
-    public String getSemesterName() {
+    @Override
+    public String getName() {
         return semesterName;
     }
 
-    public void setSemesterName(String semesterName) {
-        this.semesterName = semesterName;
+    @Override
+    public void setName(String name) {
+        this.semesterName = name;
     }
 
+    // Getters và Setters
     public String getStartDate() {
         return startDate;
     }

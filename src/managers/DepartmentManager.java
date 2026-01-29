@@ -2,96 +2,71 @@ package managers;
 
 import models.Department;
 import java.io.*;
-import java.util.*;
 
 /**
  * Quản lý khoa
  */
-public class DepartmentManager {
-    private ArrayList<Department> departments = new ArrayList<>();
-    private final String FILE_NAME = "data/departments.txt";
+public class DepartmentManager extends BaseManager<Department> {
 
-    // Thêm khoa
+    public DepartmentManager() {
+        super("data/departments.txt");
+    }
+
+    // Wrapper cho add
     public void addDepartment(Department d) {
-        departments.add(d);
-        System.out.println("-> Thêm khoa thành công!");
+        super.add(d);
+    }
+
+    // Wrapper cho delete
+    public void deleteDepartment(String id) {
+        super.delete(id);
+    }
+
+    // Wrapper cho find
+    public Department findDepartmentById(String id) {
+        return super.findById(id);
     }
 
     // Sửa khoa theo ID
-    public void updateDepartment(String id, String newName, int newFacultyCount) {
-        Department d = findDepartmentById(id);
+    public void update(String id, String newName, int newCount) {
+        Department d = findById(id);
         if (d != null) {
-            d.setDepartmentName(newName);
-            d.setFacultyCount(newFacultyCount);
-            System.out.println("-> Cập nhật khoa thành công!");
+            d.setName(newName);
+            d.setFacultyCount(newCount);
+            System.out.println("-> Update khoa thanh cong!");
         } else {
-            System.out.println("-> Không tìm thấy khoa.");
+            System.out.println("-> Khong tim thay khoa.");
         }
     }
 
-    // Xóa khoa
-    public void deleteDepartment(String id) {
-        Department d = findDepartmentById(id);
-        if (d != null) {
-            departments.remove(d);
-            System.out.println("-> Đã xóa khoa có ID: " + id);
-        } else {
-            System.out.println("-> Không tìm thấy khoa để xóa.");
-        }
-    }
-
-    // Tìm kiếm theo tên
-    public void searchByName(String keyword) {
-        System.out.println("--- KẾT QUẢ TÌM KIẾM KHOA ---");
-        boolean found = false;
-        for (Department d : departments) {
-            if (d.getDepartmentName().toLowerCase().contains(keyword.toLowerCase())) {
-                System.out.println(d);
-                found = true;
-            }
-        }
-        if (!found)
-            System.out.println("-> Không tìm thấy khoa nào: " + keyword);
-    }
-
-    // Hiển thị danh sách
     public void displayAll() {
-        if (departments.isEmpty()) {
-            System.out.println("-> Danh sách khoa trống!");
+        if (list.isEmpty()) {
+            System.out.println("-> Danh sach khoa trong.");
             return;
         }
-        System.out.println("| Mã khoa    | Tên khoa                     | Số GV  |");
-        System.out.println("------------------------------------------------------");
-        for (Department d : departments) {
-            System.out.printf("| %-10s | %-28s | %-6d |\n",
-                    d.getDepartmentID(), d.getDepartmentName(), d.getFacultyCount());
+        System.out.println("| Mã Khoa    | Tên Khoa             | SL GV |");
+        System.out.println("---------------------------------------------");
+        for (Department d : list) {
+            System.out.printf("| %-10s | %-20s | %-5d |\n",
+                    d.getId(), d.getName(), d.getFacultyCount());
         }
     }
 
-    // Tìm khoa theo ID
-    public Department findDepartmentById(String id) {
-        for (Department d : departments) {
-            if (d.getDepartmentID().equalsIgnoreCase(id)) {
-                return d;
-            }
-        }
-        return null;
-    }
-
-    // Lưu file
+    @Override
     public void saveToFile() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME))) {
-            for (Department d : departments) {
-                writer.write(d.getDepartmentID() + "," + d.getDepartmentName() + "," + d.getFacultyCount());
+            for (Department d : list) {
+                writer.write(d.getId() + "," + d.getName() + "," + d.getFacultyCount());
                 writer.newLine();
             }
-            System.out.println("-> Đã lưu dữ liệu khoa vào " + FILE_NAME);
+            System.out.println("-> Da luu file.");
         } catch (IOException e) {
-            System.out.println("-> Lỗi khi lưu file khoa: " + e.getMessage());
+            System.out.println("Loi ghi file: " + e.getMessage());
         }
     }
 
     // Đọc file
+    @Override
     public void loadFromFile() {
         File file = new File(FILE_NAME);
         if (!file.exists())
@@ -99,12 +74,12 @@ public class DepartmentManager {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
             String line;
-            departments.clear();
+            list.clear();
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 if (parts.length == 3) {
                     Department d = new Department(parts[0], parts[1], Integer.parseInt(parts[2]));
-                    departments.add(d);
+                    list.add(d);
                 }
             }
         } catch (IOException e) {

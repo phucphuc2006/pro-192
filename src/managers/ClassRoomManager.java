@@ -2,98 +2,73 @@ package managers;
 
 import models.ClassRoom;
 import java.io.*;
-import java.util.*;
 
 /**
  * Quản lý lớp học
  */
-public class ClassRoomManager {
-    private ArrayList<ClassRoom> classRooms = new ArrayList<>();
-    private final String FILE_NAME = "data/classrooms.txt";
+public class ClassRoomManager extends BaseManager<ClassRoom> {
 
-    // Thêm lớp học
+    public ClassRoomManager() {
+        super("data/classrooms.txt");
+    }
+
+    // Wrapper cho add
     public void addClassRoom(ClassRoom c) {
-        classRooms.add(c);
-        System.out.println("-> Thêm lớp học thành công!");
+        super.add(c);
+    }
+
+    // Wrapper cho delete
+    public void deleteClassRoom(String id) {
+        super.delete(id);
+    }
+
+    // Wrapper cho find
+    public ClassRoom findClassRoomById(String id) {
+        return super.findById(id);
     }
 
     // Sửa lớp học theo ID
-    public void updateClassRoom(String id, String newName, String newTeacherID, String newCourseID) {
-        ClassRoom c = findClassRoomById(id);
+    public void update(String id, String newName, String newTeacherID, String newCourseID) {
+        ClassRoom c = findById(id);
         if (c != null) {
-            c.setClassName(newName);
+            c.setName(newName);
             c.setTeacherID(newTeacherID);
             c.setCourseID(newCourseID);
-            System.out.println("-> Cập nhật lớp học thành công!");
+            System.out.println("-> Update lop hoc phan thanh cong!");
         } else {
-            System.out.println("-> Không tìm thấy lớp học.");
+            System.out.println("-> Khong tim thay lop hoc phan.");
         }
     }
 
-    // Xóa lớp học
-    public void deleteClassRoom(String id) {
-        ClassRoom c = findClassRoomById(id);
-        if (c != null) {
-            classRooms.remove(c);
-            System.out.println("-> Đã xóa lớp học có ID: " + id);
-        } else {
-            System.out.println("-> Không tìm thấy lớp học để xóa.");
-        }
-    }
-
-    // Tìm kiếm theo tên
-    public void searchByName(String keyword) {
-        System.out.println("--- KẾT QUẢ TÌM KIẾM LỚP HỌC ---");
-        boolean found = false;
-        for (ClassRoom c : classRooms) {
-            if (c.getClassName().toLowerCase().contains(keyword.toLowerCase())) {
-                System.out.println(c);
-                found = true;
-            }
-        }
-        if (!found)
-            System.out.println("-> Không tìm thấy lớp học nào: " + keyword);
-    }
-
-    // Hiển thị danh sách
     public void displayAll() {
-        if (classRooms.isEmpty()) {
-            System.out.println("-> Danh sách lớp học trống!");
+        if (list.isEmpty()) {
+            System.out.println("-> Danh sach lop hoc phan trong.");
             return;
         }
-        System.out.println("| Mã lớp     | Tên lớp              | Mã GV      | Mã MH      |");
-        System.out.println("--------------------------------------------------------------");
-        for (ClassRoom c : classRooms) {
+        System.out.println("| Mã Lớp     | Tên Lớp              | Mã GV      | Mã MH      |");
+        System.out.println("-------------------------------------------------------------");
+        for (ClassRoom c : list) {
             System.out.printf("| %-10s | %-20s | %-10s | %-10s |\n",
-                    c.getClassID(), c.getClassName(), c.getTeacherID(), c.getCourseID());
+                    c.getId(), c.getName(), c.getTeacherID(), c.getCourseID());
         }
     }
 
-    // Tìm lớp học theo ID
-    public ClassRoom findClassRoomById(String id) {
-        for (ClassRoom c : classRooms) {
-            if (c.getClassID().equalsIgnoreCase(id)) {
-                return c;
-            }
-        }
-        return null;
-    }
-
-    // Lưu file
+    @Override
     public void saveToFile() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME))) {
-            for (ClassRoom c : classRooms) {
-                writer.write(c.getClassID() + "," + c.getClassName() + "," +
+            for (ClassRoom c : list) {
+                writer.write(c.getId() + "," + c.getName() + "," +
                         c.getTeacherID() + "," + c.getCourseID());
                 writer.newLine();
             }
-            System.out.println("-> Đã lưu dữ liệu lớp học vào " + FILE_NAME);
+            System.out.println("-> Da luu file.");
         } catch (IOException e) {
-            System.out.println("-> Lỗi khi lưu file lớp học: " + e.getMessage());
+            System.out.println("Loi ghi file: " + e.getMessage());
         }
     }
 
     // Đọc file
+    @Override
     public void loadFromFile() {
         File file = new File(FILE_NAME);
         if (!file.exists())
@@ -101,12 +76,12 @@ public class ClassRoomManager {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
             String line;
-            classRooms.clear();
+            list.clear();
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 if (parts.length == 4) {
                     ClassRoom c = new ClassRoom(parts[0], parts[1], parts[2], parts[3]);
-                    classRooms.add(c);
+                    list.add(c);
                 }
             }
         } catch (IOException e) {

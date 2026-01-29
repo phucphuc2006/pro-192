@@ -3,7 +3,7 @@ package models;
 /**
  * Lớp Department đại diện cho một khoa trong trường
  */
-public class Department {
+public class Department implements Identifiable {
     private String departmentID; // Mã khoa
     private String departmentName; // Tên khoa
     private int facultyCount; // Số lượng giảng viên trong khoa
@@ -19,23 +19,27 @@ public class Department {
         this.facultyCount = facultyCount;
     }
 
-    // Getters và Setters
-    public String getDepartmentID() {
+    @Override
+    public String getId() {
         return departmentID;
     }
 
-    public void setDepartmentID(String departmentID) {
-        this.departmentID = departmentID;
+    @Override
+    public void setId(String id) {
+        this.departmentID = id;
     }
 
-    public String getDepartmentName() {
+    @Override
+    public String getName() {
         return departmentName;
     }
 
-    public void setDepartmentName(String departmentName) {
-        this.departmentName = departmentName;
+    @Override
+    public void setName(String name) {
+        this.departmentName = name;
     }
 
+    // Getters và Setters
     public int getFacultyCount() {
         return facultyCount;
     }

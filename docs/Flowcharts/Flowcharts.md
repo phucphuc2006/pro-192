@@ -13,14 +13,14 @@
 ```mermaid
 flowchart TD
     A([KHỞI ĐỘNG CHƯƠNG TRÌNH]) --> B[Load dữ liệu từ file]
-    B --> C[/Hiển thị Menu Đăng nhập/Đăng ký/]
+    B --> C[/Hiển thị Form Đăng Nhập/]
     C --> D{Đăng nhập thành công?}
-    D -->|Không| E[Thử lại hoặc đăng ký]
+    D -->|Không| E[Hiển thị thông báo lỗi]
     E --> C
-    D -->|Có| F[/Hiển thị MENU CHÍNH/]
-    F --> G[/Chọn chức năng 1-14/]
-    G --> H[Xử lý và hiển thị kết quả]
-    H --> I{Thoát? - option 0}
+    D -->|Có| F[/Hiển thị Dashboard chính/]
+    F --> G[Người dùng chọn chức năng trên Menu/Toolbar]
+    G --> H[Mở màn hình quản lý tương ứng]
+    H --> I{Đóng phần mềm?}
     I -->|Không| F
     I -->|Có| J[Lưu dữ liệu xuống file]
     J --> K([KẾT THÚC])
@@ -32,24 +32,16 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    A([BẮT ĐẦU]) --> B[/Nhập username và password/]
-    B --> C[Tìm user trong danh sách]
-    C --> D{Tìm thấy user?}
-    D -->|Không| E[/Báo lỗi: sai username/]
+    A([BẮT ĐẦU]) --> B[/Nhập Username, Password vào Form/]
+    B --> C[Click nút Login]
+    C --> D{Validate Input?}
+    D -->|Rỗng| E[/Hiển thị Dialog báo lỗi/]
     E --> B
-    D -->|Có| F{Tài khoản bị khóa?}
-    F -->|Có| G[/Báo lỗi: TK bị khóa/]
-    G --> B
-    F -->|Không| H[Verify password]
-    H --> I{Password đúng?}
-    I -->|Có| J[Reset loginAttempts = 0]
-    J --> K([ĐĂNG NHẬP THÀNH CÔNG])
-    I -->|Không| L[loginAttempts += 1]
-    L --> M{loginAttempts >= 5?}
-    M -->|Có| N[Khóa tài khoản]
-    N --> B
-    M -->|Không| O[/Báo lỗi: sai mật khẩu/]
-    O --> B
+    D -->|Hợp lệ| F[Gọi UserAccountManager.login]
+    F --> G{User tồn tại & Pass đúng?}
+    G -->|Không| H[/Hiển thị Dialog lỗi sai TK/MK/]
+    H --> B
+    G -->|Có| K([ĐĂNG NHẬP THÀNH CÔNG -> Open MainUI])
 ```
 
 ---
@@ -177,13 +169,32 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    A([MENU QUẢN LÝ SINH VIÊN]) --> B[/"1.Thêm SV 2.Sửa SV<br/>3.Xóa SV 4.Tìm kiếm<br/>5.Hiển thị DS 0.Quay lại"/]
-    B --> C{Option?}
-    C -->|1-5| D[/Nhập dữ liệu SV:<br/>ID, Tên, DOB, Email, SĐT.../]
-    C -->|0| E([QUAY LẠI])
-    D --> F[Xử lý theo option]
-    F --> G[/Thông báo kết quả/]
-    G --> B
+    A([MÀN HÌNH QUẢN LÝ SINH VIÊN]) --> B[/Hiển thị Table Danh sách SV/]
+    A --> C[/Form Nhập liệu (Left Panel)/]
+    
+    C --> D[/Nhập: ID, Tên, DOB, Email, SĐT, ClassID.../]
+    D --> E[Chọn hành động (Buttons)]
+    
+    E -->|Add| F{Validate Data / Check ID?}
+    F -->|Lỗi| G[/Hiện Dialog Báo lỗi/]
+    G --> D
+    F -->|OK| H[StudentManager.addStudent]
+    H --> I[Cập nhật Table & Lưu File]
+    
+    E -->|Update| J{Đã chọn dòng trong Table?}
+    J -->|Chưa| K[/Báo chọn sinh viên cần sửa/]
+    J -->|Rồi| L[StudentManager.updateStudent]
+    L --> I
+    
+    E -->|Delete| M{Confirm Dialog?}
+    M -->|No| N[Hủy]
+    M -->|Yes| P[StudentManager.deleteStudent]
+    P --> I
+    
+    E -->|Search| Q[/Nhập từ khóa & Click Search/]
+    Q --> R[Lọc danh sách & Refresh Table]
+    
+    E -->|Clear| S[Xóa trắng Form nhập liệu]
 ```
 
 ---

@@ -3,12 +3,8 @@ package models;
 /**
  * Lớp Teacher đại diện cho một giảng viên trong hệ thống
  */
-public class Teacher {
-    private String teacherID; // Mã giảng viên
-    private String fullName; // Họ và tên
+public class Teacher extends Person {
     private String department; // Khoa
-    private String email; // Địa chỉ email
-    private String phone; // Số điện thoại
 
     // Constructor mặc định
     public Teacher() {
@@ -17,30 +13,11 @@ public class Teacher {
     // Constructor đầy đủ tham số
     public Teacher(String teacherID, String fullName, String department,
             String email, String phone) {
-        this.teacherID = teacherID;
-        this.fullName = fullName;
+        super(teacherID, fullName, email, phone);
         this.department = department;
-        this.email = email;
-        this.phone = phone;
     }
 
-    // Getters và Setters
-    public String getTeacherID() {
-        return teacherID;
-    }
-
-    public void setTeacherID(String teacherID) {
-        this.teacherID = teacherID;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
+    // Getters và Setters riêng
     public String getDepartment() {
         return department;
     }
@@ -49,30 +26,11 @@ public class Teacher {
         this.department = department;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
     @Override
     public String toString() {
         return "Teacher{" +
-                "teacherID='" + teacherID + '\'' +
-                ", fullName='" + fullName + '\'' +
+                super.toString() +
                 ", department='" + department + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
                 '}';
     }
 }

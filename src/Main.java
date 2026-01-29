@@ -21,97 +21,20 @@ public class Main {
     private static UserAccount currentUser = null; // User dang dang nhap
 
     public static void main(String[] args) {
-        // Thiet lap UTF-8 cho console Windows
-        try {
-            System.setOut(new PrintStream(System.out, true, "UTF-8"));
-            if (System.getProperty("os.name").toLowerCase().contains("win")) {
-                new ProcessBuilder("cmd", "/c", "chcp 65001").inheritIO().start().waitFor();
-            }
-        } catch (Exception e) {
-            // Bo qua neu khong thiet lap duoc
-        }
-
         // Tai du lieu tu file
         loadAllData();
 
-        // Hien thi menu dang nhap truoc
-        while (currentUser == null) {
-            if (!showAuthMenu()) {
-                // User chon thoat
-                System.out.println("Tam biet!");
-                scanner.close();
-                System.exit(0);
-            }
+        // Kiem tra data user, neu khong co thi tao admin mac dinh
+        if (!userManager.hasUsers()) {
+            System.out.println("No users found. Creating default admin.");
+            userManager.register("admin", "admin@example.com", "Admin123");
+            userManager.saveToFile();
         }
 
-        // Sau khi dang nhap thanh cong, hien thi menu chinh
-        while (true) {
-            showMainMenu();
-            int choice = getIntInput("Chon chuc nang: ");
-
-            switch (choice) {
-                case 1:
-                    studentMenu();
-                    break;
-                case 2:
-                    teacherMenu();
-                    break;
-                case 3:
-                    courseMenu();
-                    break;
-                case 4:
-                    classRoomMenu();
-                    break;
-                case 5:
-                    enrollmentMenu();
-                    break;
-                case 6:
-                    gradeMenu();
-                    break;
-                case 7:
-                    attendanceMenu();
-                    break;
-                case 8:
-                    departmentMenu();
-                    break;
-                case 9:
-                    semesterMenu();
-                    break;
-                case 10:
-                    userAccountMenu();
-                    break;
-                case 11:
-                    changePasswordMenu();
-                    break;
-                case 12:
-                    statisticsMenu();
-                    break;
-                case 13:
-                    reportMenu();
-                    break;
-                case 14:
-                    // Dang xuat
-                    System.out.println("-> Da dang xuat!");
-                    currentUser = null;
-                    while (currentUser == null) {
-                        if (!showAuthMenu()) {
-                            saveAllData();
-                            System.out.println("Tam biet!");
-                            scanner.close();
-                            System.exit(0);
-                        }
-                    }
-                    break;
-                case 0:
-                    saveAllData();
-                    System.out.println("Dang thoat chuong trinh...");
-                    scanner.close();
-                    System.exit(0);
-                    break;
-                default:
-                    System.out.println("Lua chon khong hop le!");
-            }
-        }
+        // Run Login UI
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            new views.LoginUI(userManager, studentManager).setVisible(true);
+        });
     }
 
     // ==================== MENU DANG NHAP/DANG KY ====================
@@ -494,7 +417,7 @@ public class Main {
                     String newCsem = scanner.nextLine();
                     System.out.print("Nhap ma GV moi: ");
                     String newCteacher = scanner.nextLine();
-                    courseManager.updateCourse(editCid, newCname, newCredits, newCsem, newCteacher);
+                    courseManager.update(editCid, newCname, newCredits, newCsem, newCteacher);
                     break;
                 case 3:
                     System.out.print("Nhap ma MH can xoa: ");
@@ -544,32 +467,31 @@ public class Main {
                     classRoomManager.addClassRoom(new ClassRoom(clid, clname, clteacher, clcourse));
                     break;
                 case 2:
-                    System.out.print("Nhap ma lop can sua: ");
-                    String editClid = scanner.nextLine();
-                    if (classRoomManager.findClassRoomById(editClid) == null) {
-                        System.out.println("Khong tim thay lop hoc!");
-                        break;
-                    }
-                    System.out.print("Nhap ten moi: ");
-                    String newClname = scanner.nextLine();
-                    System.out.print("Nhap ma GV moi: ");
-                    String newClteacher = scanner.nextLine();
-                    System.out.print("Nhap ma MH moi: ");
-                    String newClcourse = scanner.nextLine();
-                    classRoomManager.updateClassRoom(editClid, newClname, newClteacher, newClcourse);
-                    break;
-                case 3:
-                    System.out.print("Nhap ma lop can xoa: ");
-                    classRoomManager.deleteClassRoom(scanner.nextLine());
-                    break;
-                case 4:
-                    System.out.print("Nhap ten can tim: ");
-                    classRoomManager.searchByName(scanner.nextLine());
-                    break;
-                case 5:
                     classRoomManager.displayAll();
                     break;
-                case 0:
+                case 3:
+                    System.out.print("Nhap ID lop hoc phan can sua: ");
+                    String editId = scanner.nextLine();
+                    System.out.print("Nhap Ten lop moi: ");
+                    String newName = scanner.nextLine();
+                    System.out.print("Nhap ID Giang Vien moi: ");
+                    String newTID = scanner.nextLine();
+                    System.out.print("Nhap ID Mon Hoc moi: ");
+                    String newCID = scanner.nextLine();
+                    classRoomManager.update(editId, newName, newTID, newCID);
+                    break;
+                case 4:
+                    System.out.print("Nhap ID lop hoc phan can xoa: ");
+                    String delId = scanner.nextLine();
+                    classRoomManager.delete(delId);
+                    break;
+                case 5:
+                    System.out.print("Nhap ten lop can tim: ");
+                    String keyword = scanner.nextLine();
+                    classRoomManager.searchByName(keyword);
+                    break;
+                case 6:
+                    classRoomManager.saveToFile();
                     return;
                 default:
                     System.out.println("Lua chon khong hop le!");
@@ -820,7 +742,7 @@ public class Main {
                         System.out.println("Loi: So giang vien phai >= 0!");
                         break;
                     }
-                    departmentManager.updateDepartment(editDid, newDname, newFcount);
+                    departmentManager.update(editDid, newDname, newFcount);
                     break;
                 case 3:
                     System.out.print("Nhap ma khoa can xoa: ");
@@ -881,7 +803,7 @@ public class Main {
                     String newSstart = scanner.nextLine();
                     System.out.print("Nhap ngay ket thuc moi: ");
                     String newSend = scanner.nextLine();
-                    semesterManager.updateSemester(editSid, newSname, newSstart, newSend);
+                    semesterManager.update(editSid, newSname, newSstart, newSend);
                     break;
                 case 3:
                     System.out.print("Nhap ma HK can xoa: ");

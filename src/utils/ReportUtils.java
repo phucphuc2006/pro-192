@@ -43,7 +43,7 @@ public class ReportUtils {
             // Data
             for (Student s : students) {
                 writer.printf("%s,%s,%s,%s,%s,%s,%s\n",
-                        s.getStudentID(), s.getFullName(), s.getDob(), s.getGender(),
+                        s.getId(), s.getName(), s.getDob(), s.getGender(),
                         s.getEmail(), s.getPhone(), s.getClassID());
             }
 
@@ -71,7 +71,7 @@ public class ReportUtils {
 
             for (Teacher t : teachers) {
                 writer.printf("%s,%s,%s,%s,%s\n",
-                        t.getTeacherID(), t.getFullName(), t.getDepartment(),
+                        t.getId(), t.getName(), t.getDepartment(),
                         t.getEmail(), t.getPhone());
             }
 
@@ -156,7 +156,7 @@ public class ReportUtils {
 
             for (Course c : courses) {
                 writer.printf("%s,%s,%d,%s,%s\n",
-                        c.getCourseID(), c.getCourseName(), c.getCredits(),
+                        c.getId(), c.getName(), c.getCredits(),
                         c.getSemester(), c.getTeacherID());
             }
 

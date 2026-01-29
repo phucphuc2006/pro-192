@@ -8,13 +8,9 @@ package models;
  * @version 1.0
  * @since 2024
  */
-public class Student {
-    private String studentID; // Mã sinh viên
-    private String fullName; // Họ và tên
+public class Student extends Person {
     private String dob; // Ngày sinh
     private String gender; // Giới tính
-    private String email; // Địa chỉ email
-    private String phone; // Số điện thoại
     private String classID; // Mã lớp học
 
     // Constructor mặc định
@@ -24,32 +20,13 @@ public class Student {
     // Constructor đầy đủ tham số
     public Student(String studentID, String fullName, String dob, String gender,
             String email, String phone, String classID) {
-        this.studentID = studentID;
-        this.fullName = fullName;
+        super(studentID, fullName, email, phone);
         this.dob = dob;
         this.gender = gender;
-        this.email = email;
-        this.phone = phone;
         this.classID = classID;
     }
 
-    // Getters và Setters
-    public String getStudentID() {
-        return studentID;
-    }
-
-    public void setStudentID(String studentID) {
-        this.studentID = studentID;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
+    // Getters và Setters riêng của Student
     public String getDob() {
         return dob;
     }
@@ -66,22 +43,6 @@ public class Student {
         this.gender = gender;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
     public String getClassID() {
         return classID;
     }
@@ -93,12 +54,9 @@ public class Student {
     @Override
     public String toString() {
         return "Student{" +
-                "studentID='" + studentID + '\'' +
-                ", fullName='" + fullName + '\'' +
+                super.toString() +
                 ", dob='" + dob + '\'' +
                 ", gender='" + gender + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
                 ", classID='" + classID + '\'' +
                 '}';
     }

@@ -3,7 +3,7 @@ package models;
 /**
  * Lớp Course đại diện cho một môn học trong hệ thống
  */
-public class Course {
+public class Course implements Identifiable {
     private String courseID; // Mã môn học
     private String courseName; // Tên môn học
     private int credits; // Số tín chỉ
@@ -24,23 +24,27 @@ public class Course {
         this.teacherID = teacherID;
     }
 
-    // Getters và Setters
-    public String getCourseID() {
+    @Override
+    public String getId() {
         return courseID;
     }
 
-    public void setCourseID(String courseID) {
-        this.courseID = courseID;
+    @Override
+    public void setId(String id) {
+        this.courseID = id;
     }
 
-    public String getCourseName() {
+    @Override
+    public String getName() {
         return courseName;
     }
 
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
+    @Override
+    public void setName(String name) {
+        this.courseName = name;
     }
 
+    // Getters và Setters
     public int getCredits() {
         return credits;
     }
