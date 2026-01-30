@@ -1,6 +1,8 @@
 package managers;
 
 import models.UserAccount;
+import models.UserAccount.UserRole;
+import models.UserAccount.UserStatus;
 import utils.PasswordUtils;
 import java.io.*;
 import java.util.*;
@@ -13,11 +15,20 @@ public class UserAccountManager {
     private final String FILE_NAME = "data/users.txt";
 
     /**
-     * Dang ky tai khoan moi
+     * Dang ky tai khoan moi (mac dinh la STUDENT)
      * 
      * @return UserAccount neu thanh cong, null neu that bai
      */
     public UserAccount register(String username, String email, String password) {
+        return register(username, email, password, UserRole.STUDENT);
+    }
+
+    /**
+     * Dang ky tai khoan moi voi role
+     * 
+     * @return UserAccount neu thanh cong, null neu that bai
+     */
+    public UserAccount register(String username, String email, String password, UserRole role) {
         // Kiem tra username hop le
         if (!PasswordUtils.isValidUsername(username)) {
             System.out.println("-> Loi: Username chi duoc chua chu, so va gach duoi, toi thieu 3 ky tu");
@@ -57,12 +68,39 @@ public class UserAccountManager {
         String salt = PasswordUtils.generateSalt();
         String hashedPassword = PasswordUtils.hashPassword(password, salt);
 
-        UserAccount newUser = new UserAccount(userID, username, email, salt, hashedPassword);
+        UserAccount newUser = new UserAccount(userID, username, email, salt, hashedPassword, role);
         newUser.addToPasswordHistory(hashedPassword);
         users.add(newUser);
 
-        System.out.println("-> Dang ky thanh cong! Ma tai khoan: " + userID);
+        System.out.println("-> Dang ky thanh cong! Ma tai khoan: " + userID + ", Role: " + role.getDisplayName());
         return newUser;
+    }
+
+    /**
+     * Lay thong bao loi dang ky (cho GUI)
+     */
+    public String getRegisterError(String username, String email, String password) {
+        if (!PasswordUtils.isValidUsername(username)) {
+            return "Username chi duoc chua chu, so va gach duoi, toi thieu 3 ky tu";
+        }
+        if (findUserByUsername(username) != null) {
+            return "Username '" + username + "' da ton tai!";
+        }
+        if (!PasswordUtils.isValidEmail(email)) {
+            return "Email khong hop le!";
+        }
+        if (findUserByEmail(email) != null) {
+            return "Email '" + email + "' da duoc su dung!";
+        }
+        List<String> passwordErrors = PasswordUtils.validatePasswordStrength(password, username);
+        if (!passwordErrors.isEmpty()) {
+            StringBuilder sb = new StringBuilder("Mat khau qua yeu:\n");
+            for (String error : passwordErrors) {
+                sb.append("- ").append(error).append("\n");
+            }
+            return sb.toString();
+        }
+        return null; // Khong loi
     }
 
     /**
@@ -78,7 +116,16 @@ public class UserAccountManager {
             return null;
         }
 
-        // Kiem tra tai khoan bi khoa
+        // Check status
+        if (user.getStatus() == UserStatus.PENDING) {
+            System.out.println("-> Loi: Tai khoan dang cho duyet boi quan tri vien!");
+            return null;
+        } else if (user.getStatus() == UserStatus.BANNED) {
+            System.out.println("-> Loi: Tai khoan da bi cam!");
+            return null;
+        }
+
+        // Kiem tra tai khoan bi khoa (do dang nhap sai)
         if (user.isLocked()) {
             System.out.println("-> Loi: Tai khoan da bi khoa do dang nhap sai qua " +
                     UserAccount.MAX_LOGIN_ATTEMPTS + " lan!");
@@ -179,6 +226,19 @@ public class UserAccountManager {
     }
 
     /**
+     * Duyet tai khoan (cho admin)
+     */
+    public void approveUser(String userID) {
+        UserAccount user = findUserById(userID);
+        if (user != null) {
+            user.setStatus(UserStatus.ACTIVE);
+            System.out.println("-> Da duyet tai khoan: " + user.getUsername());
+        } else {
+            System.out.println("-> Khong tim thay tai khoan!");
+        }
+    }
+
+    /**
      * Xoa tai khoan
      */
     public void deleteUser(String id) {
@@ -250,15 +310,17 @@ public class UserAccountManager {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME))) {
             for (UserAccount u : users) {
                 // Format:
-                // userID,username,email,salt,hashedPassword,passwordHistory,loginAttempts,isLocked
+                // userID,username,email,salt,hashedPassword,role,passwordHistory,loginAttempts,isLocked,status
                 writer.write(u.getUserID() + "," +
                         u.getUsername() + "," +
                         u.getEmail() + "," +
                         u.getSalt() + "," +
                         u.getHashedPassword() + "," +
+                        u.getRole().name() + "," +
                         u.getPasswordHistoryAsString() + "," +
                         u.getLoginAttempts() + "," +
-                        u.isLocked());
+                        u.isLocked() + "," +
+                        u.getStatus().name());
                 writer.newLine();
             }
             System.out.println("-> Da luu du lieu tai khoan vao " + FILE_NAME);
@@ -280,13 +342,64 @@ public class UserAccountManager {
             users.clear();
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length >= 8) {
+                if (parts.length >= 10) {
+                    // Newest format with status
                     UserAccount u = new UserAccount();
                     u.setUserID(parts[0]);
                     u.setUsername(parts[1]);
                     u.setEmail(parts[2]);
                     u.setSalt(parts[3]);
                     u.setHashedPassword(parts[4]);
+                    try {
+                        u.setRole(UserRole.valueOf(parts[5]));
+                    } catch (IllegalArgumentException e) {
+                        u.setRole(UserRole.STUDENT);
+                    }
+                    u.setPasswordHistoryFromString(parts[6]);
+                    u.setLoginAttempts(Integer.parseInt(parts[7]));
+                    u.setLocked(Boolean.parseBoolean(parts[8]));
+                    try {
+                        u.setStatus(UserStatus.valueOf(parts[9]));
+                    } catch (IllegalArgumentException e) {
+                        u.setStatus(UserStatus.ACTIVE);
+                    }
+                    users.add(u);
+                } else if (parts.length >= 9) {
+                    // Previous format with role
+                    UserAccount u = new UserAccount();
+                    u.setUserID(parts[0]);
+                    u.setUsername(parts[1]);
+                    u.setEmail(parts[2]);
+                    u.setSalt(parts[3]);
+                    u.setHashedPassword(parts[4]);
+                    try {
+                        u.setRole(UserRole.valueOf(parts[5]));
+                    } catch (IllegalArgumentException e) {
+                        u.setRole(UserRole.STUDENT);
+                    }
+                    u.setPasswordHistoryFromString(parts[6]);
+                    u.setLoginAttempts(Integer.parseInt(parts[7]));
+                    u.setLocked(Boolean.parseBoolean(parts[8]));
+                    // Default status based on role
+                    if (u.getRole() == UserRole.TEACHER) {
+                        u.setStatus(UserStatus.PENDING); // Old teachers might be pending? Or assume active if existing?
+                        // Let's assume existing teachers are ACTIVE to avoid locking out current users.
+                        // Actually, requirement says "newly created". Existing ones should probably be
+                        // ACTIVE.
+                        u.setStatus(UserStatus.ACTIVE);
+                    } else {
+                        u.setStatus(UserStatus.ACTIVE);
+                    }
+                    users.add(u);
+                } else if (parts.length >= 8) {
+                    // Old format without role (backward compatible)
+                    UserAccount u = new UserAccount();
+                    u.setUserID(parts[0]);
+                    u.setUsername(parts[1]);
+                    u.setEmail(parts[2]);
+                    u.setSalt(parts[3]);
+                    u.setHashedPassword(parts[4]);
+                    u.setRole(UserRole.STUDENT); // Default to student
                     u.setPasswordHistoryFromString(parts[5]);
                     u.setLoginAttempts(Integer.parseInt(parts[6]));
                     u.setLocked(Boolean.parseBoolean(parts[7]));
@@ -303,5 +416,56 @@ public class UserAccountManager {
      */
     public boolean hasUsers() {
         return !users.isEmpty();
+    }
+
+    /**
+     * Lay danh sach tat ca user
+     */
+    public ArrayList<UserAccount> getAll() {
+        return users;
+    }
+
+    /**
+     * Tao tai khoan Admin mac dinh neu chua co admin nao
+     * Username: admin
+     * Password: Admin@123
+     */
+    public void createDefaultAdmin() {
+        // Kiem tra da co admin chua
+        for (UserAccount u : users) {
+            if (u.getRole() == UserRole.ADMIN) {
+                return; // Da co admin, khong can tao
+            }
+        }
+
+        // Tao tai khoan admin mac dinh
+        String userID = "ADMIN001";
+        String username = "admin";
+        String email = "admin@school.edu";
+        String password = "Admin@123";
+
+        String salt = PasswordUtils.generateSalt();
+        String hashedPassword = PasswordUtils.hashPassword(password, salt);
+
+        UserAccount admin = new UserAccount(userID, username, email, salt, hashedPassword, UserRole.ADMIN);
+        admin.addToPasswordHistory(hashedPassword);
+        users.add(admin);
+
+        saveToFile();
+        System.out.println("--> Da tao tai khoan Admin mac dinh:");
+        System.out.println("    Username: admin");
+        System.out.println("    Password: Admin@123");
+    }
+
+    /**
+     * Thay doi role cua user (chi admin moi co quyen)
+     */
+    public boolean changeUserRole(String userID, UserRole newRole) {
+        UserAccount user = findUserById(userID);
+        if (user != null) {
+            user.setRole(newRole);
+            return true;
+        }
+        return false;
     }
 }

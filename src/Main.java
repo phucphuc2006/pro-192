@@ -24,12 +24,8 @@ public class Main {
         // Tai du lieu tu file
         loadAllData();
 
-        // Kiem tra data user, neu khong co thi tao admin mac dinh
-        if (!userManager.hasUsers()) {
-            System.out.println("No users found. Creating default admin.");
-            userManager.register("admin", "admin@example.com", "Admin123");
-            userManager.saveToFile();
-        }
+        // Kiem tra va tao admin mac dinh neu chua co
+        userManager.createDefaultAdmin();
 
         // Run Login UI
         javax.swing.SwingUtilities.invokeLater(() -> {

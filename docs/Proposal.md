@@ -26,7 +26,6 @@ Hệ thống được tổ chức thành 4 packages chính theo mô hình MVC (M
 
 | Class | Mô tả | Thuộc tính chính |
 |-------|-------|------------------|
-| Identifiable | Interface chung | getId(), setId(), getName(), setName() |
 | Person | Lớp cha (Abstract) | id, fullName, email, phone |
 | Student | Sinh viên | (Kế thừa User) dob, gender, classID |
 | Teacher | Giảng viên | (Kế thừa User) department |
@@ -74,14 +73,6 @@ Hệ thống được tổ chức thành 4 packages chính theo mô hình MVC (M
 | ValidationUtils | Kiểm tra dữ liệu | isValidEmail(), isValidPhone(), isValidDate(), isValidScore() |
 | StatisticsUtils | Thống kê | calculateAverageGrade(), calculateAttendanceRate(), classifyGrade() |
 | ReportUtils | Xuất báo cáo | exportStudentsToCSV(), exportGradesToCSV(), exportSummaryReport() |
-
-### E. Main Class (Entry Point)
-
-| Class | Mô tả |
-|-------|-------|
-| Main | Chứa hàm main(), quản lý menu và điều phối chương trình |
-
----
 
 ## 3. Các Tính Năng Chính (Key Features)
 

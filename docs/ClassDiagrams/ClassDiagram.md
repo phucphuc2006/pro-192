@@ -4,13 +4,7 @@
 
 ```mermaid
 classDiagram
-    class Identifiable {
-        <<interface>>
-        +getId() String
-        +setId(String) void
-        +getName() String
-        +setName(String) void
-    }
+
 
     class Person {
         -id String
@@ -44,7 +38,7 @@ classDiagram
         +toString() String
     }
 
-    Identifiable <|.. Person
+
     Person <|-- Student
     Person <|-- Teacher
 
@@ -75,8 +69,7 @@ classDiagram
         +toString() String
     }
 
-    Identifiable <|.. Course
-    Identifiable <|.. ClassRoom
+
 
     class Enrollment {
         -enrollmentID String
@@ -157,8 +150,7 @@ classDiagram
         +toString() String
     }
 
-    Identifiable <|.. Department
-    Identifiable <|.. Semester
+
 
     class UserAccount {
         -username String

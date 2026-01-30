@@ -1,1 +1,3 @@
-U001,phucphuc,phucvantran012@gmail.com,wEc4lU94iAHg5NWaxlPFeg==,TrgyXQQzqq7jwt5UtQANfa/+0ZiuQffu7krcspWGkHw=,TrgyXQQzqq7jwt5UtQANfa/+0ZiuQffu7krcspWGkHw=,0,false
+ADMIN001,admin,admin@school.edu,VXJ9DTZ8v9Gp9k6bHB5V+A==,dFes5Cqt/XK3EBveOxWLbq3IRmqAdIsVbdGCDXkaQ6o=,ADMIN,dFes5Cqt/XK3EBveOxWLbq3IRmqAdIsVbdGCDXkaQ6o=,0,false,ACTIVE
+U002,phuc1,1sdsadsad@gmail.com,EsAEUWQqOmZpucWGS87p+Q==,w9zxmBicpd0EnrF2x0UAf4L8T7GfEnBbr4tkZT3p3Lc=,TEACHER,w9zxmBicpd0EnrF2x0UAf4L8T7GfEnBbr4tkZT3p3Lc=,0,false,ACTIVE
+U004,phuc3,phu@gmail.com,WxnmzZq6T2KdHH9cBrAbCQ==,CKi6ymKj5tIlScBfxnF+jEY+vCwEYaAB+ALrjOayWHU=,TEACHER,CKi6ymKj5tIlScBfxnF+jEY+vCwEYaAB+ALrjOayWHU=,0,false,ACTIVE
