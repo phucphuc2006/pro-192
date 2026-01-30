@@ -4,22 +4,20 @@
 
 ```mermaid
 classDiagram
-    class Person {
+
+
+    class Student {
         -id: String
         -fullName: String
         -email: String
         -phone: String
+        -dob: String
+        -gender: String
+        -classID: String
         +getEmail() String
         +setEmail(String) void
         +getPhone() String
         +setPhone(String) void
-        +toString() String
-    }
-
-    class Student {
-        -dob: String
-        -gender: String
-        -classID: String
         +getDob() String
         +setDob(String) void
         +getGender() String
@@ -30,14 +28,21 @@ classDiagram
     }
 
     class Teacher {
+        -id: String
+        -fullName: String
+        -email: String
+        -phone: String
         -department: String
+        +getEmail() String
+        +setEmail(String) void
+        +getPhone() String
+        +setPhone(String) void
         +getDepartment() String
         +setDepartment(String) void
         +toString() String
     }
 
-    Person <|-- Student
-    Person <|-- Teacher
+
 
     class Course {
         -courseID: String
