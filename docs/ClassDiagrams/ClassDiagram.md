@@ -86,7 +86,7 @@ classDiagram
         +setSemester(String) void
         +toString() String
     }
-
+ 
     class Grade {
         -gradeID: String
         -studentID: String
