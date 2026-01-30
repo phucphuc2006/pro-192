@@ -4,8 +4,6 @@
 
 ```mermaid
 classDiagram
-
-
     class Person {
         -id: String
         -fullName: String
@@ -38,7 +36,6 @@ classDiagram
         +toString(): String
     }
 
-
     Person <|-- Student
     Person <|-- Teacher
 
@@ -68,8 +65,6 @@ classDiagram
         +setCourseID(String): void
         +toString(): String
     }
-
-
 
     class Enrollment {
         -enrollmentID: String
@@ -149,8 +144,6 @@ classDiagram
         +setEndDate(String): void
         +toString(): String
     }
-
-
 
     class UserAccount {
         -username: String
