@@ -15,14 +15,8 @@ Dự án được xây dựng áp dụng các nguyên lý Lập trình Hướng 
 
 Hệ thống được tổ chức thành 4 packages chính theo mô hình MVC (Model-View-Controller) cải tiến:
 
-### A. Package `views` (Giao diện người dùng)
 
-| Class | Mô tả |
-|-------|-------|
-| LoginUI | Màn hình đăng nhập, xác thực người dùng |
-| StudentManagementUI | Giao diện chính, chứa Menu và các màn hình quản lý chức năng |
-
-### B. Package `models` (10 Classes - Thực thể dữ liệu)
+### A. Package `models` (10 Classes - Thực thể dữ liệu)
 
 | Class | Mô tả | Thuộc tính chính |
 |-------|-------|------------------|
@@ -38,7 +32,7 @@ Hệ thống được tổ chức thành 4 packages chính theo mô hình MVC (M
 | Semester | Học kỳ | semesterID, semesterName, startDate, endDate |
 | UserAccount | Tài khoản | userID, username, email, salt, hashedPassword, passwordHistory, loginAttempts, isLocked |
 
-### C. Package `managers` (10 Classes - Xử lý nghiệp vụ)
+### B. Package `managers` (10 Classes - Xử lý nghiệp vụ)
 
 **Chức năng chung của tất cả Managers:**
 - Thêm mới (add)
@@ -65,7 +59,7 @@ Hệ thống được tổ chức thành 4 packages chính theo mô hình MVC (M
 | UserAccountManager | Tài khoản | register(), login(), changePassword(), unlockAccount() |
 
 
-### D. Package `utils` (4 Classes - Tiện ích)
+### C. Package `utils` (4 Classes - Tiện ích)
 
 | Class | Mô tả | Phương thức static |
 |-------|-------|-------------------|
