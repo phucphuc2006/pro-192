@@ -13,7 +13,7 @@ Dự án được xây dựng áp dụng các nguyên lý Lập trình Hướng 
 
 ## 2. Kiến Trúc Hệ Thống (System Architecture)
 
-Hệ thống được tổ chức thành 4 packages chính theo mô hình MVC (Model-View-Controller) cải tiến:
+Hệ thống được tổ chức thành 3 packages chính theo mô hình MVC (Model-View-Controller) cải tiến:
 
 
 ### A. Package `models` (10 Classes - Thực thể dữ liệu)
