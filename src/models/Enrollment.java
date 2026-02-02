@@ -1,19 +1,11 @@
 package models;
 
-/**
- * Lớp Enrollment đại diện cho việc đăng ký môn học của sinh viên
- */
 public class Enrollment {
-    private String enrollmentID; // Mã đăng ký
-    private String studentID; // Mã sinh viên
-    private String courseID; // Mã môn học
-    private String semester; // Học kỳ đăng ký
+    private String enrollmentID;
+    private String studentID;
+    private String courseID;
+    private String semester;
 
-    // Constructor mặc định
-    public Enrollment() {
-    }
-
-    // Constructor đầy đủ tham số
     public Enrollment(String enrollmentID, String studentID, String courseID, String semester) {
         this.enrollmentID = enrollmentID;
         this.studentID = studentID;
@@ -21,7 +13,6 @@ public class Enrollment {
         this.semester = semester;
     }
 
-    // Getters và Setters
     public String getEnrollmentID() {
         return enrollmentID;
     }

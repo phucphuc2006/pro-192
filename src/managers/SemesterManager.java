@@ -2,90 +2,55 @@ package managers;
 
 import models.Semester;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * Quản lý học kỳ
- */
-public class SemesterManager extends BaseManager<Semester> {
+public class SemesterManager {
+    private List<Semester> semesters;
+    private final String FILE_PATH = "data/semesters.txt";
 
     public SemesterManager() {
-        super("data/semesters.txt");
+        this.semesters = new ArrayList<>();
+        loadFromFile();
     }
 
-    // Wrapper cho add
-    public void addSemester(Semester s) {
-        super.add(s);
+    public void add(Semester s) {
+        semesters.add(s);
+        saveToFile();
     }
 
-    // Wrapper cho delete
-    public void deleteSemester(String id) {
-        super.delete(id);
+    public List<Semester> getAll() {
+        return semesters;
     }
 
-    // Wrapper cho find
-    public Semester findSemesterById(String id) {
-        return super.findById(id);
-    }
-
-    // Sửa học kỳ theo ID
-    public void update(String id, String newName, String newStart, String newEnd) {
-        Semester s = findById(id);
-        if (s != null) {
-            s.setName(newName);
-            s.setStartDate(newStart);
-            s.setEndDate(newEnd);
-            System.out.println("-> Update hoc ky thanh cong!");
-        } else {
-            System.out.println("-> Khong tim thay hoc ky.");
-        }
-    }
-
-    public void displayAll() {
-        if (list.isEmpty()) {
-            System.out.println("-> Danh sach hoc ky trong.");
-            return;
-        }
-        System.out.println("| Mã HK      | Tên Học Kỳ           | Ngày BĐ    | Ngày KT    |");
-        System.out.println("-------------------------------------------------------------");
-        for (Semester s : list) {
-            System.out.printf("| %-10s | %-20s | %-10s | %-10s |\n",
-                    s.getId(), s.getName(), s.getStartDate(), s.getEndDate());
-        }
-    }
-
-    @Override
-    public void saveToFile() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME))) {
-            for (Semester s : list) {
-                writer.write(s.getId() + "," + s.getName() + "," +
-                        s.getStartDate() + "," + s.getEndDate());
-                writer.newLine();
-            }
-            System.out.println("-> Da luu file.");
-        } catch (IOException e) {
-            System.out.println("Loi ghi file: " + e.getMessage());
-        }
-    }
-
-    // Đọc file
-    @Override
-    public void loadFromFile() {
-        File file = new File(FILE_NAME);
+    private void loadFromFile() {
+        File file = new File(FILE_PATH);
         if (!file.exists())
             return;
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
-            list.clear();
-            while ((line = reader.readLine()) != null) {
+            while ((line = br.readLine()) != null) {
+                if (line.isEmpty())
+                    continue;
                 String[] parts = line.split(",");
-                if (parts.length == 4) {
-                    Semester s = new Semester(parts[0], parts[1], parts[2], parts[3]);
-                    list.add(s);
+                if (parts.length >= 4) {
+                    semesters.add(new Semester(parts[0], parts[1], parts[2], parts[3]));
                 }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void saveToFile() {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_PATH))) {
+            for (Semester s : semesters) {
+                bw.write(String.format("%s,%s,%s,%s", s.getSemesterID(), s.getSemesterName(), s.getStartDate(),
+                        s.getEndDate()));
+                bw.newLine();
+            }
         } catch (IOException e) {
-            System.out.println("-> Lỗi khi đọc file học kỳ: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

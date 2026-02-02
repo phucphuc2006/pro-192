@@ -150,32 +150,5 @@ classDiagram
         +toString() String
     }
 
-    class UserAccount {
-        -username: String
-        -email: String
-        -salt: String
-        -hashedPassword: String
-        -passwordHistory: List~String~
-        -loginAttempts: int
-        -isLocked: boolean
-        +validatePassword(String) boolean
-        +addToPasswordHistory(String) void
-        +isPasswordInHistory(String) boolean
-        +incrementLoginAttempts() void
-        +resetLoginAttempts() void
-        +getUsername() String
-        +setUsername(String) void
-        +getEmail() String
-        +setEmail(String) void
-        +getSalt() String
-        +setSalt(String) void
-        +getHashedPassword() String
-        +setHashedPassword(String) void
-        +getPasswordHistory() List~String~
-        +setPasswordHistory(List~String~) void
-        +getLoginAttempts() int
-        +setLoginAttempts(int) void
-        +isLocked() boolean
-        +setLocked(boolean) void
-    }
+   
 ```

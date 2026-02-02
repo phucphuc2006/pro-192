@@ -1,27 +1,13 @@
 package models;
 
-/**
- * Lớp Attendance đại diện cho việc điểm danh sinh viên
- */
 public class Attendance {
-    private String attendanceID; // Mã điểm danh
-    private String studentID; // Mã sinh viên
-    private String classID; // Mã lớp học
-    private String date; // Ngày điểm danh
-    private String status; // Trạng thái (Có mặt, Vắng, Có phép)
+    private String attendanceID;
+    private String studentID;
+    private String classID;
+    private String date;
+    private String status; // Expecting "Present", "Absent", "Excused" or similar codes
 
-    // Các hằng số trạng thái
-    public static final String STATUS_PRESENT = "Có mặt";
-    public static final String STATUS_ABSENT = "Vắng";
-    public static final String STATUS_EXCUSED = "Có phép";
-
-    // Constructor mặc định
-    public Attendance() {
-    }
-
-    // Constructor đầy đủ tham số
-    public Attendance(String attendanceID, String studentID, String classID,
-            String date, String status) {
+    public Attendance(String attendanceID, String studentID, String classID, String date, String status) {
         this.attendanceID = attendanceID;
         this.studentID = studentID;
         this.classID = classID;
@@ -29,7 +15,18 @@ public class Attendance {
         this.status = status;
     }
 
-    // Getters và Setters
+    public boolean isPresent() {
+        return "Present".equalsIgnoreCase(status) || "Co mat".equalsIgnoreCase(status);
+    }
+
+    public boolean isAbsent() {
+        return "Absent".equalsIgnoreCase(status) || "Vang".equalsIgnoreCase(status);
+    }
+
+    public boolean isExcused() {
+        return "Excused".equalsIgnoreCase(status) || "Co phep".equalsIgnoreCase(status);
+    }
+
     public String getAttendanceID() {
         return attendanceID;
     }
@@ -68,21 +65,6 @@ public class Attendance {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    // Kiểm tra sinh viên có mặt không
-    public boolean isPresent() {
-        return STATUS_PRESENT.equals(status);
-    }
-
-    // Kiểm tra sinh viên vắng không
-    public boolean isAbsent() {
-        return STATUS_ABSENT.equals(status);
-    }
-
-    // Kiểm tra sinh viên có phép không
-    public boolean isExcused() {
-        return STATUS_EXCUSED.equals(status);
     }
 
     @Override

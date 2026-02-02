@@ -1,39 +1,14 @@
 package models;
 
-/**
- * Lop Grade dai dien cho diem so cua sinh vien.
- * Chua diem giua ky, cuoi ky va tu dong tinh tong diem theo cong thuc 40%-60%.
- * 
- * @author StudentManagement Team
- * @version 1.0
- * @since 2024
- */
 public class Grade {
-    private String gradeID; // Mã điểm
-    private String studentID; // Mã sinh viên
-    private String courseID; // Mã môn học
-    private double midterm; // Điểm giữa kỳ
-    private double finalExam; // Điểm cuối kỳ
-    private double total; // Tổng điểm
+    private String gradeID;
+    private String studentID;
+    private String courseID;
+    private double midterm;
+    private double finalExam;
+    private double total;
 
-    // Constructor mặc định
-    public Grade() {
-    }
-
-    // Constructor đầy đủ tham số
-    public Grade(String gradeID, String studentID, String courseID,
-            double midterm, double finalExam, double total) {
-        this.gradeID = gradeID;
-        this.studentID = studentID;
-        this.courseID = courseID;
-        this.midterm = midterm;
-        this.finalExam = finalExam;
-        this.total = total;
-    }
-
-    // Constructor tự động tính tổng điểm
-    public Grade(String gradeID, String studentID, String courseID,
-            double midterm, double finalExam) {
+    public Grade(String gradeID, String studentID, String courseID, double midterm, double finalExam) {
         this.gradeID = gradeID;
         this.studentID = studentID;
         this.courseID = courseID;
@@ -42,13 +17,11 @@ public class Grade {
         this.total = calculateTotal();
     }
 
-    // Phương thức tính tổng điểm (có thể tùy chỉnh công thức)
     public double calculateTotal() {
-        // Công thức mặc định: 40% giữa kỳ + 60% cuối kỳ
-        return midterm * 0.4 + finalExam * 0.6;
+        // Formula: 0.4 * Midterm + 0.6 * FinalExam
+        return (midterm * 0.4) + (finalExam * 0.6);
     }
 
-    // Getters và Setters
     public String getGradeID() {
         return gradeID;
     }
@@ -79,6 +52,7 @@ public class Grade {
 
     public void setMidterm(double midterm) {
         this.midterm = midterm;
+        this.total = calculateTotal();
     }
 
     public double getFinalExam() {
@@ -87,14 +61,11 @@ public class Grade {
 
     public void setFinalExam(double finalExam) {
         this.finalExam = finalExam;
+        this.total = calculateTotal();
     }
 
     public double getTotal() {
         return total;
-    }
-
-    public void setTotal(double total) {
-        this.total = total;
     }
 
     @Override

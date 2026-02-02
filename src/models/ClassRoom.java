@@ -1,19 +1,11 @@
 package models;
 
-/**
- * Lớp ClassRoom đại diện cho một lớp học trong hệ thống
- */
-public class ClassRoom implements Identifiable {
-    private String classID; // Mã lớp học
-    private String className; // Tên lớp học
-    private String teacherID; // Mã giảng viên giảng dạy lớp
-    private String courseID; // Mã môn học
+public class ClassRoom {
+    private String classID;
+    private String className;
+    private String teacherID;
+    private String courseID;
 
-    // Constructor mặc định
-    public ClassRoom() {
-    }
-
-    // Constructor đầy đủ tham số
     public ClassRoom(String classID, String className, String teacherID, String courseID) {
         this.classID = classID;
         this.className = className;
@@ -21,27 +13,22 @@ public class ClassRoom implements Identifiable {
         this.courseID = courseID;
     }
 
-    @Override
-    public String getId() {
+    public String getClassID() {
         return classID;
     }
 
-    @Override
-    public void setId(String id) {
-        this.classID = id;
+    public void setClassID(String classID) {
+        this.classID = classID;
     }
 
-    @Override
-    public String getName() {
+    public String getClassName() {
         return className;
     }
 
-    @Override
-    public void setName(String name) {
-        this.className = name;
+    public void setClassName(String className) {
+        this.className = className;
     }
 
-    // Getters và Setters
     public String getTeacherID() {
         return teacherID;
     }

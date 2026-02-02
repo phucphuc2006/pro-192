@@ -2,127 +2,104 @@ package managers;
 
 import models.Student;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * Quan ly sinh vien - Su dung models.Student moi
- */
-public class StudentManager extends BaseManager<Student> {
+public class StudentManager {
+    private List<Student> students;
+    private final String FILE_PATH = "data/students.txt";
 
     public StudentManager() {
-        super("data/students.txt");
+        this.students = new ArrayList<>();
+        loadFromFile();
     }
 
-    // Wrapper cho add (de giu tuong thich neu can, hoac su dung add truc tiep)
-    public void addStudent(Student s) {
-        super.add(s);
+    public void addStudent(Student student) {
+        students.add(student);
+        saveToFile();
     }
 
-    // Wrapper cho delete
-    // Luu y: BaseManager.delete in ra thong bao chung, neu muon giu thong bao cu
-    // thi can override
-    public void deleteStudent(String id) {
-        super.delete(id);
-    }
-
-    // Wrapper cho find
-    public Student findStudentById(String id) {
-        return super.findById(id);
-    }
-
-    // Sua sinh vien theo ID
-    public void updateStudent(String id, String newName, String newDob, String newGender,
-            String newEmail, String newPhone, String newClassID) {
-        Student s = findById(id);
-        if (s != null) {
-            s.setName(newName);
-            s.setDob(newDob);
-            s.setGender(newGender);
-            s.setEmail(newEmail);
-            s.setPhone(newPhone);
-            s.setClassID(newClassID);
-            System.out.println("-> Cap nhat sinh vien thanh cong!");
-        } else {
-            System.out.println("-> Khong tim thay sinh vien.");
-        }
-    }
-
-    // Hien thi danh sach (Grid view rieng biet)
-    public void displayAll() {
-        if (list.isEmpty()) {
-            System.out.println("-> Danh sach sinh vien trong!");
-            return;
-        }
-        System.out.println(
-                "| Ma SV      | Ho ten               | Ngay sinh  | Gioi tinh | Email                | SDT          | Ma lop     |");
-        System.out.println(
-                "----------------------------------------------------------------------------------------------------------------");
-        for (Student s : list) {
-            System.out.printf("| %-10s | %-20s | %-10s | %-9s | %-20s | %-12s | %-10s |\n",
-                    s.getId(), s.getName(), s.getDob(), s.getGender(),
-                    s.getEmail(), s.getPhone(), s.getClassID());
-        }
-    }
-
-    /**
-     * Sap xep theo ten (A-Z).
-     */
-    public void sortByName() {
-        list.sort((s1, s2) -> s1.getName().compareToIgnoreCase(s2.getName()));
-        System.out.println("-> Da sap xep theo Ten.");
-    }
-
-    /**
-     * Sap xep theo ma sinh vien.
-     */
-    public void sortById() {
-        list.sort((s1, s2) -> s1.getId().compareToIgnoreCase(s2.getId()));
-        System.out.println("-> Da sap xep theo ID.");
-    }
-
-    /**
-     * Sap xep theo lop.
-     */
-    public void sortByClass() {
-        list.sort((s1, s2) -> s1.getClassID().compareToIgnoreCase(s2.getClassID()));
-        System.out.println("-> Da sap xep theo lop!");
-    }
-
-    // Luu file
-    @Override
-    public void saveToFile() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME))) {
-            for (Student s : list) {
-                writer.write(s.getId() + "," + s.getName() + "," +
-                        s.getDob() + "," + s.getGender() + "," +
-                        s.getClassID() + "," + s.getEmail() + "," + s.getPhone());
-                writer.newLine();
+    public void updateStudent(String id, Student newStudent) {
+        for (int i = 0; i < students.size(); i++) {
+            if (students.get(i).getId().equals(id)) {
+                students.set(i, newStudent);
+                saveToFile();
+                return;
             }
-            System.out.println("-> Da luu file.");
-        } catch (IOException e) {
-            System.out.println("Loi ghi file: " + e.getMessage());
         }
     }
 
-    // Doc file
-    @Override
-    public void loadFromFile() {
-        File file = new File(FILE_NAME);
+    public void deleteStudent(String id) {
+        students.removeIf(s -> s.getId().equals(id));
+        saveToFile();
+    }
+
+    public Student getStudentById(String id) {
+        for (Student s : students) {
+            if (s.getId().equals(id)) {
+                return s;
+            }
+        }
+        return null;
+    }
+
+    public List<Student> getAllStudents() {
+        return students;
+    }
+
+    public List<Student> searchStudents(String keyword) {
+        List<Student> result = new ArrayList<>();
+        for (Student s : students) {
+            if (s.getFullName().toLowerCase().contains(keyword.toLowerCase()) ||
+                    s.getId().toLowerCase().contains(keyword.toLowerCase())) {
+                result.add(s);
+            }
+        }
+        return result;
+    }
+
+    private void loadFromFile() {
+        File file = new File(FILE_PATH);
         if (!file.exists())
             return;
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
-            list.clear();
-            while ((line = reader.readLine()) != null) {
+            while ((line = br.readLine()) != null) {
+                if (line.trim().isEmpty())
+                    continue;
                 String[] parts = line.split(",");
-                if (parts.length == 7) {
-                    Student s = new Student(parts[0], parts[1], parts[2], parts[3],
-                            parts[4], parts[5], parts[6]);
-                    list.add(s);
+                if (parts.length >= 7) {
+                    students.add(new Student(
+                            parts[0].trim(),
+                            parts[1].trim(),
+                            parts[2].trim(),
+                            parts[3].trim(),
+                            parts[4].trim(),
+                            parts[5].trim(),
+                            parts[6].trim()));
                 }
             }
         } catch (IOException e) {
-            System.out.println("-> Loi khi doc file sinh vien: " + e.getMessage());
+            System.out.println("Error loading students: " + e.getMessage());
+        }
+    }
+
+    private void saveToFile() {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_PATH))) {
+            for (Student s : students) {
+                bw.write(String.format("%s,%s,%s,%s,%s,%s,%s",
+                        s.getId(),
+                        s.getFullName(),
+                        s.getEmail(),
+                        s.getPhone(),
+                        s.getDob(),
+                        s.getGender(),
+                        s.getClassID()));
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println("Error saving students: " + e.getMessage());
         }
     }
 }

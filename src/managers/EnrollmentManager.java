@@ -2,115 +2,69 @@ package managers;
 
 import models.Enrollment;
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * Quản lý đăng ký môn học
- */
 public class EnrollmentManager {
-    private ArrayList<Enrollment> enrollments = new ArrayList<>();
-    private final String FILE_NAME = "data/enrollments.txt";
+    private List<Enrollment> enrollments;
+    private final String FILE_PATH = "data/enrollments.txt";
 
-    // Thêm đăng ký
-    public void addEnrollment(Enrollment e) {
+    public EnrollmentManager() {
+        this.enrollments = new ArrayList<>();
+        loadFromFile();
+    }
+
+    public void add(Enrollment e) {
         enrollments.add(e);
-        System.out.println("-> Đăng ký môn học thành công!");
+        saveToFile();
     }
 
-    // Sửa đăng ký theo ID
-    public void updateEnrollment(String id, String newStudentID, String newCourseID, String newSemester) {
-        Enrollment e = findEnrollmentById(id);
-        if (e != null) {
-            e.setStudentID(newStudentID);
-            e.setCourseID(newCourseID);
-            e.setSemester(newSemester);
-            System.out.println("-> Cập nhật đăng ký thành công!");
-        } else {
-            System.out.println("-> Không tìm thấy đăng ký.");
-        }
+    public void delete(String id) {
+        enrollments.removeIf(e -> e.getEnrollmentID().equals(id));
+        saveToFile();
     }
 
-    // Xóa đăng ký
-    public void deleteEnrollment(String id) {
-        Enrollment e = findEnrollmentById(id);
-        if (e != null) {
-            enrollments.remove(e);
-            System.out.println("-> Đã xóa đăng ký có ID: " + id);
-        } else {
-            System.out.println("-> Không tìm thấy đăng ký để xóa.");
-        }
+    public List<Enrollment> getAll() {
+        return enrollments;
     }
 
-    // Tìm kiếm theo mã sinh viên
-    public void searchByStudentId(String studentId) {
-        System.out.println("--- DANH SÁCH MÔN ĐÃ ĐĂNG KÝ CỦA SINH VIÊN " + studentId + " ---");
-        boolean found = false;
+    public List<Enrollment> getByStudentId(String studentId) {
+        List<Enrollment> result = new ArrayList<>();
         for (Enrollment e : enrollments) {
-            if (e.getStudentID().equalsIgnoreCase(studentId)) {
-                System.out.println(e);
-                found = true;
-            }
+            if (e.getStudentID().equals(studentId))
+                result.add(e);
         }
-        if (!found)
-            System.out.println("-> Sinh viên chưa đăng ký môn nào.");
+        return result;
     }
 
-    // Hiển thị danh sách
-    public void displayAll() {
-        if (enrollments.isEmpty()) {
-            System.out.println("-> Danh sách đăng ký trống!");
-            return;
-        }
-        System.out.println("| Mã ĐK      | Mã SV      | Mã MH      | Học kỳ     |");
-        System.out.println("-----------------------------------------------------");
-        for (Enrollment e : enrollments) {
-            System.out.printf("| %-10s | %-10s | %-10s | %-10s |\n",
-                    e.getEnrollmentID(), e.getStudentID(), e.getCourseID(), e.getSemester());
-        }
-    }
-
-    // Tìm đăng ký theo ID
-    public Enrollment findEnrollmentById(String id) {
-        for (Enrollment e : enrollments) {
-            if (e.getEnrollmentID().equalsIgnoreCase(id)) {
-                return e;
-            }
-        }
-        return null;
-    }
-
-    // Lưu file
-    public void saveToFile() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME))) {
-            for (Enrollment e : enrollments) {
-                writer.write(e.getEnrollmentID() + "," + e.getStudentID() + "," +
-                        e.getCourseID() + "," + e.getSemester());
-                writer.newLine();
-            }
-            System.out.println("-> Đã lưu dữ liệu đăng ký vào " + FILE_NAME);
-        } catch (IOException ex) {
-            System.out.println("-> Lỗi khi lưu file đăng ký: " + ex.getMessage());
-        }
-    }
-
-    // Đọc file
-    public void loadFromFile() {
-        File file = new File(FILE_NAME);
+    private void loadFromFile() {
+        File file = new File(FILE_PATH);
         if (!file.exists())
             return;
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
-            enrollments.clear();
-            while ((line = reader.readLine()) != null) {
+            while ((line = br.readLine()) != null) {
+                if (line.isEmpty())
+                    continue;
                 String[] parts = line.split(",");
-                if (parts.length == 4) {
-                    Enrollment e = new Enrollment(parts[0], parts[1], parts[2], parts[3]);
-                    enrollments.add(e);
+                if (parts.length >= 4) {
+                    enrollments.add(new Enrollment(parts[0], parts[1], parts[2], parts[3]));
                 }
             }
-        } catch (IOException ex) {
-            System.out.println("-> Lỗi khi đọc file đăng ký: " + ex.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void saveToFile() {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_PATH))) {
+            for (Enrollment e : enrollments) {
+                bw.write(String.format("%s,%s,%s,%s", e.getEnrollmentID(), e.getStudentID(), e.getCourseID(),
+                        e.getSemester()));
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

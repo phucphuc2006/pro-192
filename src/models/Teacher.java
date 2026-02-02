@@ -1,23 +1,52 @@
 package models;
 
-/**
- * Lớp Teacher đại diện cho một giảng viên trong hệ thống
- */
-public class Teacher extends Person {
-    private String department; // Khoa
+public class Teacher {
+    private String id;
+    private String fullName;
+    private String email;
+    private String phone;
+    private String department;
 
-    // Constructor mặc định
-    public Teacher() {
-    }
-
-    // Constructor đầy đủ tham số
-    public Teacher(String teacherID, String fullName, String department,
-            String email, String phone) {
-        super(teacherID, fullName, email, phone);
+    public Teacher(String id, String fullName, String email, String phone, String department) {
+        this.id = id;
+        this.fullName = fullName;
+        this.email = email;
+        this.phone = phone;
         this.department = department;
     }
 
-    // Getters và Setters riêng
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public String getDepartment() {
         return department;
     }
@@ -29,7 +58,10 @@ public class Teacher extends Person {
     @Override
     public String toString() {
         return "Teacher{" +
-                super.toString() +
+                "id='" + id + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
                 ", department='" + department + '\'' +
                 '}';
     }

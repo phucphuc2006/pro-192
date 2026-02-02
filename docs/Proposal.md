@@ -5,7 +5,7 @@
 
 ## 1. Giới Thiệu (Introduction)
 
-Hệ thống Quản lý Sinh viên là ứng dụng Desktop GUI được phát triển bằng Java Swing, hỗ trợ quản lý toàn diện các hoạt động đào tạo bao gồm: quản lý sinh viên, giảng viên, môn học, điểm số, điểm danh, người dùng và báo cáo thống kê.
+Hệ thống Quản lý Sinh viên là ứng dụng Console Application (CLI) được phát triển bằng Java, hỗ trợ quản lý toàn diện các hoạt động đào tạo bao gồm: quản lý sinh viên, giảng viên, môn học, điểm số, điểm danh và báo cáo thống kê.
 
 Dự án được xây dựng áp dụng các nguyên lý Lập trình Hướng Đối tượng (OOP) và kiến trúc phân tầng rõ ràng.
 
@@ -13,26 +13,26 @@ Dự án được xây dựng áp dụng các nguyên lý Lập trình Hướng 
 
 ## 2. Kiến Trúc Hệ Thống (System Architecture)
 
-Hệ thống được tổ chức thành 3 packages chính theo mô hình MVC (Model-View-Controller) cải tiến:
+Hệ thống được tổ chức thành 3 packages chính theo mô hình MVC (Model-View-Controller) cải tiến, với View được tích hợp trong Main console:
 
+### A. Console Interface
+- **Main.java**: Chứa hàm main và menu điều hướng người dùng (CLI).
 
-### A. Package `models` (10 Classes - Thực thể dữ liệu)
+### B. Package `models` (9 Classes - Thực thể dữ liệu)
 
 | Class | Mô tả | Thuộc tính chính |
 |-------|-------|------------------|
-| Person | Lớp cha (Abstract) | id, fullName, email, phone |
-| Student | Sinh viên | (Kế thừa User) dob, gender, classID |
-| Teacher | Giảng viên | (Kế thừa User) department |
+| Student | Sinh viên | id, fullName, email, phone, dob, gender, classID |
+| Teacher | Giảng viên | id, fullName, email, phone, department |
 | Course | Môn học | courseID, courseName, credits, semester, teacherID |
 | ClassRoom | Lớp học | classID, className, teacherID, courseID |
 | Enrollment | Đăng ký môn | enrollmentID, studentID, courseID, semester |
 | Grade | Điểm số | gradeID, studentID, courseID, midterm, finalExam, total |
 | Attendance | Điểm danh | attendanceID, studentID, classID, date, status |
-| Department | Khoa | departmentID, departmentName, numberOfTeachers |
+| Department | Khoa | departmentID, departmentName, facultyCount |
 | Semester | Học kỳ | semesterID, semesterName, startDate, endDate |
-| UserAccount | Tài khoản | userID, username, email, salt, hashedPassword, passwordHistory, loginAttempts, isLocked |
 
-### B. Package `managers` (10 Classes - Xử lý nghiệp vụ)
+### C. Package `managers` (9 Classes - Xử lý nghiệp vụ)
 
 **Chức năng chung của tất cả Managers:**
 - Thêm mới (add)
@@ -46,51 +46,41 @@ Hệ thống được tổ chức thành 3 packages chính theo mô hình MVC (M
 
 | Class | Quản lý | Chức năng bổ sung |
 |-------|---------|-------------------|
-| BaseManager | Generic Manager | Lớp cha xử lý chung CRUD cho mọi manager |
-| StudentManager | Sinh viên | getAll(), sortByName(), sortById(), sortByClass(), getCount() |
-| TeacherManager | Giảng viên | Chức năng cơ bản |
-| CourseManager | Môn học | Chức năng cơ bản |
-| ClassRoomManager | Lớp học | Chức năng cơ bản |
-| EnrollmentManager | Đăng ký môn | Chức năng cơ bản |
-| GradeManager | Điểm số | getAll(), sortByTotalDesc(), sortByTotalAsc(), sortByStudentId(), getCount() |
-| AttendanceManager | Điểm danh | getAll(), getCount() |
-| DepartmentManager | Khoa | Chức năng cơ bản |
-| SemesterManager | Học kỳ | Chức năng cơ bản |
-| UserAccountManager | Tài khoản | register(), login(), changePassword(), unlockAccount() |
+| StudentManager | Sinh viên | searchStudents(), getAllStudents() |
+| TeacherManager | Giảng viên | getAll(), getById() |
+| CourseManager | Môn học | getAll(), getById() |
+| ClassRoomManager | Lớp học | getAll(), getById() |
+| EnrollmentManager | Đăng ký môn | getAll(), getByStudentId() |
+| GradeManager | Điểm số | getAll(), getByStudentId() |
+| AttendanceManager | Điểm danh | getAll() |
+| DepartmentManager | Khoa | getAll() |
+| SemesterManager | Học kỳ | getAll() |
 
 
-### C. Package `utils` (4 Classes - Tiện ích)
+### D. Package `utils`
 
 | Class | Mô tả | Phương thức static |
 |-------|-------|-------------------|
-| PasswordUtils | Bảo mật mật khẩu | generateSalt(), hashPassword(), verifyPassword(), isStrongPassword() |
-| ValidationUtils | Kiểm tra dữ liệu | isValidEmail(), isValidPhone(), isValidDate(), isValidScore() |
-| StatisticsUtils | Thống kê | calculateAverageGrade(), calculateAttendanceRate(), classifyGrade() |
-| ReportUtils | Xuất báo cáo | exportStudentsToCSV(), exportGradesToCSV(), exportSummaryReport() |
+| InputHelper | Hỗ trợ nhập liệu | readString(), readInt(), readDouble() |
+| DataGenerator | Tạo dữ liệu mẫu | generateAll() |
 
 ## 3. Các Tính Năng Chính (Key Features)
 
 ### 3.1. Quản lý Đối tượng (CRUD)
 - Sinh viên, Giảng viên, Môn học, Lớp học
 - Đăng ký môn, Điểm số, Điểm danh
-- Khoa, Học kỳ, Tài khoản người dùng
+- Khoa, Học kỳ
 
-### 3.2. Bảo mật Hệ thống
-- Mật khẩu hash SHA-256 với salt
-- Yêu cầu mật khẩu mạnh (8+ ký tự, chữ hoa/thường/số/đặc biệt)
-- Khóa tài khoản sau 5 lần đăng nhập sai
-- Lưu lịch sử 3 mật khẩu gần nhất
+### 3.2. Không yêu cầu xác thực
+- Hệ thống truy cập trực tiếp vào Dashboard quản lý (CLI).
 
-### 3.3. Xử lý Dữ liệu Nâng cao
-- **Sắp xếp:** Theo tên, mã, điểm, lớp
-- **Tìm kiếm:** Theo từ khóa, ID
-- **Thống kê:** Điểm trung bình, tỷ lệ chuyên cần, phân loại học lực
-- **Xuất báo cáo:** File CSV
+### 3.3. Xử lý Dữ liệu
+- **Tìm kiếm:** Theo từ khóa, ID.
+- **Tính toán:** Tự động tính điểm tổng kết dựa trên hệ số 0.4 (giữa kỳ) và 0.6 (cuối kỳ).
 
 ### 3.4. Lưu trữ Dữ liệu
-- Lưu toàn bộ dữ liệu xuống file .txt khi thoát
-- Tự động load dữ liệu khi khởi động
-- Thư mục: `data/`
+- Lưu toàn bộ dữ liệu xuống file .txt.
+- Tự động load dữ liệu khi khởi động từ thư mục: `data/`.
 
 ---
 
@@ -99,11 +89,9 @@ Hệ thống được tổ chức thành 3 packages chính theo mô hình MVC (M
 | Nguyên lý | Áp dụng trong project |
 |-----------|----------------------|
 | **Encapsulation** | Mọi thuộc tính là `private`, truy xuất qua Getter/Setter |
-| **Modularity** | Phân chia rõ ràng: models, managers, utils |
+| **Modularity** | Phân chia rõ ràng: models, managers, utils, ui |
 | **Single Responsibility** | Mỗi class chỉ làm một nhiệm vụ cụ thể |
-| **Static Methods** | PasswordUtils, ValidationUtils, StatisticsUtils, ReportUtils |
 | **File I/O** | BufferedReader/BufferedWriter cho persistence |
-| **Security** | SHA-256 hashing, salt, login attempts limit |
 
 ---
 
@@ -113,12 +101,11 @@ Hệ thống được tổ chức thành 3 packages chính theo mô hình MVC (M
 StudentManagement_NhomXX/
 ├── src/
 │   ├── Main.java
-│   ├── views/           (GUI Classes)
-│   ├── models/          (10 files)
-│   ├── managers/        (10 files)
-│   └── utils/           (4 files)
+│   ├── ui/              (Console Interface)
+│   ├── models/          (9 files)
+│   ├── managers/        (9 files)
+│   └── utils/           (2 files)
 ├── data/                (9 files .txt)
-├── reports/             (Thư mục xuất CSV)
 └── docs/                (Tài liệu)
 ```
 
@@ -129,10 +116,8 @@ StudentManagement_NhomXX/
 | Công nghệ | Phiên bản |
 |-----------|-----------|
 | Ngôn ngữ | Java JDK 8+ |
-| Giao diện | Java Swing / AWT |
+| Giao diện | Console (CLI) |
 | Lưu trữ | File-based (text files) |
-| Bảo mật | SHA-256 + Salt |
 | Encoding | UTF-8 |
 
 ---
-
