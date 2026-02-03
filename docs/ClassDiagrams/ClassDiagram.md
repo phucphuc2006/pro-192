@@ -1,11 +1,17 @@
 # Class Diagram - Sơ Đồ Lớp
 
-## 1. Package MODELS (12 Classes)
+## 1. Tổng quan hệ thống (System Overview)
+
+Hệ thống Quản lý Sinh viên được thiết kế theo mô hình phân lớp đơn giản, bao gồm:
+- **MODELS**: Các lớp thực thể chứa dữ liệu.
+- **MANAGERS**: Các lớp điều khiển, quản lý logic nghiệp vụ và lưu trữ dữ liệu (vào file .txt).
+- **UI**: Giao diện người dùng dòng lệnh (Console).
+- **UTILS**: Các công cụ hỗ trợ (như nhập liệu).
+
+## 2. Package MODELS (9 Classes)
 
 ```mermaid
 classDiagram
-
-
     class Student {
         -id: String
         -fullName: String
@@ -14,6 +20,10 @@ classDiagram
         -dob: String
         -gender: String
         -classID: String
+        +getId() String
+        +setId(String) void
+        +getFullName() String
+        +setFullName(String) void
         +getEmail() String
         +setEmail(String) void
         +getPhone() String
@@ -33,6 +43,10 @@ classDiagram
         -email: String
         -phone: String
         -department: String
+        +getId() String
+        +setId(String) void
+        +getFullName() String
+        +setFullName(String) void
         +getEmail() String
         +setEmail(String) void
         +getPhone() String
@@ -42,14 +56,16 @@ classDiagram
         +toString() String
     }
 
-
-
     class Course {
         -courseID: String
         -courseName: String
         -credits: int
         -semester: String
         -teacherID: String
+        +getCourseID() String
+        +setCourseID(String) void
+        +getCourseName() String
+        +setCourseName(String) void
         +getCredits() int
         +setCredits(int) void
         +getSemester() String
@@ -64,6 +80,10 @@ classDiagram
         -className: String
         -teacherID: String
         -courseID: String
+        +getClassID() String
+        +setClassID(String) void
+        +getClassName() String
+        +setClassName(String) void
         +getTeacherID() String
         +setTeacherID(String) void
         +getCourseID() String
@@ -133,6 +153,10 @@ classDiagram
         -departmentID: String
         -departmentName: String
         -facultyCount: int
+        +getDepartmentID() String
+        +setDepartmentID(String) void
+        +getDepartmentName() String
+        +setDepartmentName(String) void
         +getFacultyCount() int
         +setFacultyCount(int) void
         +toString() String
@@ -143,12 +167,173 @@ classDiagram
         -semesterName: String
         -startDate: String
         -endDate: String
+        +getSemesterID() String
+        +setSemesterID(String) void
+        +getSemesterName() String
+        +setSemesterName(String) void
         +getStartDate() String
         +setStartDate(String) void
         +getEndDate() String
         +setEndDate(String) void
         +toString() String
     }
+```
 
-   
+## 3. Package MANAGERS (9 Classes)
+
+```mermaid
+classDiagram
+    class StudentManager {
+        -students: List~Student~
+        -FILE_PATH: String
+        +addStudent(Student) void
+        +updateStudent(String, Student) void
+        +deleteStudent(String) void
+        +getStudentById(String) Student
+        +getAllStudents() List~Student~
+        +searchStudents(String) List~Student~
+        -loadFromFile() void
+        -saveToFile() void
+    }
+
+    class TeacherManager {
+        -teachers: List~Teacher~
+        +add(Teacher) void
+        +update(String, Teacher) void
+        +delete(String) void
+        +getById(String) Teacher
+        +getAll() List~Teacher~
+        -loadFromFile() void
+        -saveToFile() void
+    }
+
+    class CourseManager {
+        -courses: List~Course~
+        +add(Course) void
+        +update(String, Course) void
+        +delete(String) void
+        +getById(String) Course
+        +getAll() List~Course~
+        -loadFromFile() void
+        -saveToFile() void
+    }
+
+    class ClassRoomManager {
+        -classes: List~ClassRoom~
+        +add(ClassRoom) void
+        +update(String, ClassRoom) void
+        +delete(String) void
+        +getById(String) ClassRoom
+        +getAll() List~ClassRoom~
+        -loadFromFile() void
+        -saveToFile() void
+    }
+
+    class EnrollmentManager {
+        -enrollments: List~Enrollment~
+        +add(Enrollment) void
+        +update(String, Enrollment) void
+        +delete(String) void
+        +getById(String) Enrollment
+        +getAll() List~Enrollment~
+        -loadFromFile() void
+        -saveToFile() void
+    }
+
+    class GradeManager {
+        -grades: List~Grade~
+        +add(Grade) void
+        +update(String, Grade) void
+        +delete(String) void
+        +getById(String) Grade
+        +getAll() List~Grade~
+        -loadFromFile() void
+        -saveToFile() void
+    }
+
+    class AttendanceManager {
+        -attendances: List~Attendance~
+        +add(Attendance) void
+        +update(String, Attendance) void
+        +delete(String) void
+        +getById(String) Attendance
+        +getAll() List~Attendance~
+        -loadFromFile() void
+        -saveToFile() void
+    }
+
+    class DepartmentManager {
+        -departments: List~Department~
+        +add(Department) void
+        +update(String, Department) void
+        +delete(String) void
+        +getById(String) Department
+        +getAll() List~Department~
+        -loadFromFile() void
+        -saveToFile() void
+    }
+
+    class SemesterManager {
+        -semesters: List~Semester~
+        +add(Semester) void
+        +update(String, Semester) void
+        +delete(String) void
+        +getById(String) Semester
+        +getAll() List~Semester~
+        -loadFromFile() void
+        -saveToFile() void
+    }
+
+    StudentManager ..> Student : manages
+    TeacherManager ..> Teacher : manages
+    CourseManager ..> Course : manages
+    ClassRoomManager ..> ClassRoom : manages
+    EnrollmentManager ..> Enrollment : manages
+    GradeManager ..> Grade : manages
+    AttendanceManager ..> Attendance : manages
+    DepartmentManager ..> Department : manages
+    SemesterManager ..> Semester : manages
+```
+
+## 4. Package UI & Main
+
+```mermaid
+classDiagram
+    class Main {
+        +main(args: String[]) void
+    }
+
+    class ConsoleMenu {
+        -studentManager: StudentManager
+        -teacherManager: TeacherManager
+        -courseManager: CourseManager
+        -classRoomManager: ClassRoomManager
+        -enrollmentManager: EnrollmentManager
+        -gradeManager: GradeManager
+        -attendanceManager: AttendanceManager
+        -departmentManager: DepartmentManager
+        -semesterManager: SemesterManager
+        +run() void
+        -showMainMenu() void
+        -manageStudents() void
+        -manageTeachers() void
+        -manageCourses() void
+        -manageClasses() void
+        -manageEnrollments() void
+        -manageGrades() void
+        -manageAttendance() void
+        -manageDepartments() void
+        -manageSemesters() void
+    }
+
+    Main --> ConsoleMenu : creates & runs
+    ConsoleMenu --> StudentManager
+    ConsoleMenu --> TeacherManager
+    ConsoleMenu --> CourseManager
+    ConsoleMenu --> ClassRoomManager
+    ConsoleMenu --> EnrollmentManager
+    ConsoleMenu --> GradeManager
+    ConsoleMenu --> AttendanceManager
+    ConsoleMenu --> DepartmentManager
+    ConsoleMenu --> SemesterManager
 ```
