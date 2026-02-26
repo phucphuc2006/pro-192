@@ -20,8 +20,11 @@ public class DataGenerator {
                 System.out.println("Kết thúc chương trình.");
                 break;
             }
-
-            // Nhập các thông tin chung của Person
+            if (choice !=1 && choice !=2){
+                System.out.println("Lựa chọn không hợp lệ!");
+                continue;
+            
+        }
             System.out.print("Nhập ID: ");
             String id = sc.nextLine();
             System.out.print("Nhập Họ tên: ");
@@ -32,7 +35,6 @@ public class DataGenerator {
             String phone = sc.nextLine();
 
             if (choice == 1) {
-                // Nhập thêm thông tin riêng của Student
                 System.out.print("Nhập Ngày sinh (yyyy-mm-dd): ");
                 String dob = sc.nextLine();
                 System.out.print("Nhập Giới tính: ");
@@ -50,7 +52,6 @@ public class DataGenerator {
                 System.out.println("Lớp: " + classID);
 
             } else if (choice == 2) {
-                // Nhập thêm thông tin riêng của Teacher
                 System.out.print("Nhập Khoa/Phòng ban: ");
                 String department = sc.nextLine();
 
@@ -60,9 +61,7 @@ public class DataGenerator {
                 System.out.println("Email: " + email);
                 System.out.println("SĐT: " + phone);
                 System.out.println("Khoa: " + department);
-            } else {
-                System.out.println("Lựa chọn không hợp lệ!");
-            }
+            } 
         }
         sc.close();
     }
