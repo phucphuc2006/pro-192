@@ -8,18 +8,16 @@ Hệ thống Quản lý Sinh viên được thiết kế theo mô hình phân l�
 - **UI**: Giao diện người dùng dòng lệnh (Console).
 - **UTILS**: Các công cụ hỗ trợ (như nhập liệu).
 
-## 2. Package MODELS (9 Classes)
+## 2. Package MODELS (11 Classes)
 
 ```mermaid
 classDiagram
-    class Student {
-        -id: String
-        -fullName: String
-        -email: String
-        -phone: String
-        -dob: String
-        -gender: String
-        -classID: String
+    class Person {
+        <<abstract>>
+        #id: String
+        #fullName: String
+        #email: String
+        #phone: String
         +getId() String
         +setId(String) void
         +getFullName() String
@@ -28,6 +26,13 @@ classDiagram
         +setEmail(String) void
         +getPhone() String
         +setPhone(String) void
+        +toString()* String
+    }
+
+    class Student {
+        -dob: String
+        -gender: String
+        -classID: String
         +getDob() String
         +setDob(String) void
         +getGender() String
@@ -38,23 +43,30 @@ classDiagram
     }
 
     class Teacher {
-        -id: String
-        -fullName: String
-        -email: String
-        -phone: String
         -department: String
-        +getId() String
-        +setId(String) void
-        +getFullName() String
-        +setFullName(String) void
-        +getEmail() String
-        +setEmail(String) void
-        +getPhone() String
-        +setPhone(String) void
         +getDepartment() String
         +setDepartment(String) void
         +toString() String
     }
+
+    class UserAccount {
+        -userID: String
+        -username: String
+        -password: String
+        -role: String
+        +getUserID() String
+        +setUserID(String) void
+        +getUsername() String
+        +setUsername(String) void
+        +getPassword() String
+        +setPassword(String) void
+        +getRole() String
+        +setRole(String) void
+        +toString() String
+    }
+
+    Person <|-- Student
+    Person <|-- Teacher
 
     class Course {
         -courseID: String
@@ -179,10 +191,20 @@ classDiagram
     }
 ```
 
-## 3. Package MANAGERS (9 Classes)
+## 3. Package MANAGERS (10 Classes)
 
 ```mermaid
 classDiagram
+    class UserAccountManager {
+        -accounts: List~UserAccount~
+        -FILE_PATH: String
+        +addAccount(UserAccount) void
+        +login(String, String) UserAccount
+        +getAllAccounts() List~UserAccount~
+        -loadFromFile() void
+        -saveToFile() void
+    }
+
     class StudentManager {
         -students: List~Student~
         -FILE_PATH: String
@@ -293,6 +315,7 @@ classDiagram
     AttendanceManager ..> Attendance : manages
     DepartmentManager ..> Department : manages
     SemesterManager ..> Semester : manages
+    UserAccountManager ..> UserAccount : manages
 ```
 
 ## 4. Package UI & Main
@@ -304,6 +327,7 @@ classDiagram
     }
 
     class ConsoleMenu {
+        -userAccountManager: UserAccountManager
         -studentManager: StudentManager
         -teacherManager: TeacherManager
         -courseManager: CourseManager
@@ -327,6 +351,7 @@ classDiagram
     }
 
     Main --> ConsoleMenu : creates & runs
+    ConsoleMenu --> UserAccountManager
     ConsoleMenu --> StudentManager
     ConsoleMenu --> TeacherManager
     ConsoleMenu --> CourseManager

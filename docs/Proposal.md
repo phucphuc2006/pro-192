@@ -18,12 +18,14 @@ Hệ thống được tổ chức thành 3 packages chính theo mô hình MVC (M
 ### A. Console Interface
 - **Main.java**: Chứa hàm main và menu điều hướng người dùng (CLI).
 
-### B. Package `models` (9 Classes - Thực thể dữ liệu)
+### B. Package `models` (11 Classes - Thực thể dữ liệu)
 
 | Class | Mô tả | Thuộc tính chính |
 |-------|-------|------------------|
-| Student | Sinh viên | id, fullName, email, phone, dob, gender, classID |
-| Teacher | Giảng viên | id, fullName, email, phone, department |
+| Person | Người (Abstract) | id, fullName, email, phone |
+| Student | Sinh viên | dob, gender, classID (Kế thừa Person) |
+| Teacher | Giảng viên | department (Kế thừa Person) |
+| UserAccount | Tài khoản | userID, username, password, role |
 | Course | Môn học | courseID, courseName, credits, semester, teacherID |
 | ClassRoom | Lớp học | classID, className, teacherID, courseID |
 | Enrollment | Đăng ký môn | enrollmentID, studentID, courseID, semester |
@@ -32,7 +34,7 @@ Hệ thống được tổ chức thành 3 packages chính theo mô hình MVC (M
 | Department | Khoa | departmentID, departmentName, facultyCount |
 | Semester | Học kỳ | semesterID, semesterName, startDate, endDate |
 
-### C. Package `managers` (9 Classes - Xử lý nghiệp vụ)
+### C. Package `managers` (10 Classes - Xử lý nghiệp vụ)
 
 **Chức năng chung của tất cả Managers:**
 - Thêm mới (add)
@@ -46,6 +48,7 @@ Hệ thống được tổ chức thành 3 packages chính theo mô hình MVC (M
 
 | Class | Quản lý | Chức năng bổ sung |
 |-------|---------|-------------------|
+| UserAccountManager | Tài khoản | login(), getAllAccounts() |
 | StudentManager | Sinh viên | searchStudents(), getAllStudents() |
 | TeacherManager | Giảng viên | getAll(), getById() |
 | CourseManager | Môn học | getAll(), getById() |
@@ -63,6 +66,7 @@ Hệ thống được tổ chức thành 3 packages chính theo mô hình MVC (M
 |-------|-------|-------------------|
 | InputHelper | Hỗ trợ nhập liệu | readString(), readInt(), readDouble() |
 | DataGenerator | Tạo dữ liệu mẫu | generateAll() |
+| ValidationUtils | Xác thực dữ liệu | isValidId(), isValidEmail(), isValidGrade(), isStrongPassword() |
 
 ## 3. Các Tính Năng Chính (Key Features)
 
@@ -71,8 +75,9 @@ Hệ thống được tổ chức thành 3 packages chính theo mô hình MVC (M
 - Đăng ký môn, Điểm số, Điểm danh
 - Khoa, Học kỳ
 
-### 3.2. Không yêu cầu xác thực
-- Hệ thống truy cập trực tiếp vào Dashboard quản lý (CLI).
+### 3.2. Xác thực và Phân quyền
+- **Đăng nhập:** Yêu cầu xác thực tài khoản qua `UserAccountManager`.
+- **Phân quyền:** Dựa trên vai trò (`admin`, `student`, `lecturer`) để cấp quyền truy cập các tính năng.
 
 ### 3.3. Xử lý Dữ liệu
 - **Tìm kiếm:** Theo từ khóa, ID.
@@ -102,10 +107,10 @@ StudentManagement_NhomXX/
 ├── src/
 │   ├── Main.java
 │   ├── ui/              (Console Interface)
-│   ├── models/          (9 files)
-│   ├── managers/        (9 files)
-│   └── utils/           (2 files)
-├── data/                (9 files .txt)
+│   ├── models/          (11 files)
+│   ├── managers/        (10 files)
+│   └── utils/           (3 files)
+├── data/                (10 files .txt)
 └── docs/                (Tài liệu)
 ```
 
