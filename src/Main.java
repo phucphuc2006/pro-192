@@ -46,10 +46,9 @@ public class Main {
         System.out.println("7. Manage Attendance");
         System.out.println("8. Manage Departments");
         System.out.println("9. Manage Semesters");
-        System.out.println("10. Show All Persons (Polymorphism Demo)");
         System.out.println("0. Exit");
 
-        int choice = InputHelper.readInt("Choose option", 0, 10);
+        int choice = InputHelper.readInt("Choose option", 0, 9);
         switch (choice) {
             case 0:
                 System.out.println("Goodbye!");
@@ -82,18 +81,8 @@ public class Main {
             case 9:
                 manageSemesters();
                 break;
-            case 10:
-                showAllPersons();
-                break;
             default:
                 System.out.println("Invalid option");
-        }
-    }
-
-    private void showAllPersons() {
-        System.out.println("\n--- ALL PERSONS (POLYMORPHISM DEMO) ---");
-        for (Person p : personManager.getAllPersons()) {
-            System.out.println(p);
         }
     }
 
