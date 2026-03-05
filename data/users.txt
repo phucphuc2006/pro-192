@@ -1,1 +1,3 @@
-admin,admin,admin@school.edu,ADMIN,false
+admin,admin,admin@school.edu,ADMIN
+U2,phuc,Bnmbnm123.,student
+U3,phuc,Bnmbnm123.,admin

@@ -8,7 +8,7 @@ Hệ thống Quản lý Sinh viên được thiết kế theo mô hình phân l�
 - **UI**: Giao diện người dùng dòng lệnh (Console).
 - **UTILS**: Các công cụ hỗ trợ (như nhập liệu).
 
-## 2. Package MODELS (11 Classes)
+## 2. Package MODELS (10 Classes)
 
 ```mermaid
 classDiagram
@@ -46,22 +46,6 @@ classDiagram
         -department: String
         +getDepartment() String
         +setDepartment(String) void
-        +toString() String
-    }
-
-    class UserAccount {
-        -userID: String
-        -username: String
-        -password: String
-        -role: String
-        +getUserID() String
-        +setUserID(String) void
-        +getUsername() String
-        +setUsername(String) void
-        +getPassword() String
-        +setPassword(String) void
-        +getRole() String
-        +setRole(String) void
         +toString() String
     }
 
@@ -191,20 +175,10 @@ classDiagram
     }
 ```
 
-## 3. Package MANAGERS (10 Classes)
+## 3. Package MANAGERS (9 Classes)
 
 ```mermaid
 classDiagram
-    class UserAccountManager {
-        -accounts: List~UserAccount~
-        -FILE_PATH: String
-        +addAccount(UserAccount) void
-        +login(String, String) UserAccount
-        +getAllAccounts() List~UserAccount~
-        -loadFromFile() void
-        -saveToFile() void
-    }
-
     class StudentManager {
         -students: List~Student~
         -FILE_PATH: String
@@ -315,7 +289,6 @@ classDiagram
     AttendanceManager ..> Attendance : manages
     DepartmentManager ..> Department : manages
     SemesterManager ..> Semester : manages
-    UserAccountManager ..> UserAccount : manages
 ```
 
 ## 4. Package UI & Main
@@ -323,11 +296,6 @@ classDiagram
 ```mermaid
 classDiagram
     class Main {
-        +main(args: String[]) void
-    }
-
-    class ConsoleMenu {
-        -userAccountManager: UserAccountManager
         -studentManager: StudentManager
         -teacherManager: TeacherManager
         -courseManager: CourseManager
@@ -337,6 +305,7 @@ classDiagram
         -attendanceManager: AttendanceManager
         -departmentManager: DepartmentManager
         -semesterManager: SemesterManager
+        +main(args: String[]) void
         +run() void
         -showMainMenu() void
         -manageStudents() void
@@ -350,15 +319,13 @@ classDiagram
         -manageSemesters() void
     }
 
-    Main --> ConsoleMenu : creates & runs
-    ConsoleMenu --> UserAccountManager
-    ConsoleMenu --> StudentManager
-    ConsoleMenu --> TeacherManager
-    ConsoleMenu --> CourseManager
-    ConsoleMenu --> ClassRoomManager
-    ConsoleMenu --> EnrollmentManager
-    ConsoleMenu --> GradeManager
-    ConsoleMenu --> AttendanceManager
-    ConsoleMenu --> DepartmentManager
-    ConsoleMenu --> SemesterManager
+    Main --> StudentManager
+    Main --> TeacherManager
+    Main --> CourseManager
+    Main --> ClassRoomManager
+    Main --> EnrollmentManager
+    Main --> GradeManager
+    Main --> AttendanceManager
+    Main --> DepartmentManager
+    Main --> SemesterManager
 ```

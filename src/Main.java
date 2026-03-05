@@ -1,7 +1,6 @@
 import managers.*;
 import models.*;
 import utils.InputHelper;
-import utils.ValidationUtils;
 
 public class Main {
     private StudentManager studentManager;
@@ -13,8 +12,6 @@ public class Main {
     private AttendanceManager attendanceManager;
     private DepartmentManager departmentManager;
     private SemesterManager semesterManager;
-    private UserAccountManager userAccountManager;
-    private UserAccount currentUser;
 
     public Main() {
         this.studentManager = new StudentManager();
@@ -26,7 +23,6 @@ public class Main {
         this.attendanceManager = new AttendanceManager();
         this.departmentManager = new DepartmentManager();
         this.semesterManager = new SemesterManager();
-        this.userAccountManager = new UserAccountManager();
     }
 
     public static void main(String[] args) {
@@ -36,46 +32,13 @@ public class Main {
 
     public void run() {
         System.out.println("Welcome to Student Management System");
-        while (currentUser == null) {
-            showLoginMenu();
-        }
         while (true) {
             showMainMenu();
         }
     }
 
-    private void showLoginMenu() {
-        System.out.println("\n--- ACCESS CONTROL ---");
-        System.out.println("1. Login");
-        System.out.println("2. Register");
-        System.out.println("0. Exit");
-        int choice = InputHelper.readInt("Choose", 0, 2);
-        if (choice == 0)
-            System.exit(0);
-        if (choice == 1) {
-            String user = InputHelper.readString("Username");
-            String pass = InputHelper.readString("Password");
-            currentUser = userAccountManager.login(user, pass);
-            if (currentUser == null)
-                System.out.println("Invalid credentials!");
-            else
-                System.out.println("Login successful! Welcome " + currentUser.getUsername());
-        } else {
-            String user = InputHelper.readString("New Username");
-            String pass = InputHelper.readString("New Password");
-            if (!ValidationUtils.isStrongPassword(pass)) {
-                System.out.println("Password too weak! (Must be 8+ chars, with upper, lower, digit, special)");
-                return;
-            }
-            String role = InputHelper.readString("Role (admin/student/teacher)");
-            userAccountManager.addAccount(
-                    new UserAccount("U" + (userAccountManager.getAllAccounts().size() + 1), user, pass, role));
-            System.out.println("Registered successfully. Please login.");
-        }
-    }
-
     private void showMainMenu() {
-        System.out.println("\n--- MAIN DASHBOARD (" + currentUser.getRole() + ") ---");
+        System.out.println("\n--- MAIN DASHBOARD ---");
         System.out.println("1. Manage Students");
         System.out.println("2. Manage Teachers");
         System.out.println("3. Manage Courses");
@@ -85,18 +48,13 @@ public class Main {
         System.out.println("7. Manage Attendance");
         System.out.println("8. Manage Departments");
         System.out.println("9. Manage Semesters");
-        System.out.println("10. Logout");
         System.out.println("0. Exit");
 
-        int choice = InputHelper.readInt("Choose option", 0, 10);
+        int choice = InputHelper.readInt("Choose option", 0, 9);
         switch (choice) {
             case 0:
                 System.out.println("Goodbye!");
                 System.exit(0);
-                break;
-            case 10:
-                currentUser = null;
-                run();
                 break;
             case 1:
                 manageStudents();
@@ -140,7 +98,7 @@ public class Main {
         int choice = InputHelper.readInt("Choose", 0, 4);
         switch (choice) {
             case 1:
-                studentManager.addStudent(new Student(
+                studentManager.addStudent(new models.Student(
                         InputHelper.readString("ID"),
                         InputHelper.readString("Full Name"),
                         InputHelper.readString("Email"),
@@ -153,7 +111,7 @@ public class Main {
             case 2:
                 String id = InputHelper.readString("Enter Student ID to update");
                 if (studentManager.getStudentById(id) != null) {
-                    studentManager.updateStudent(id, new Student(
+                    studentManager.updateStudent(id, new models.Student(
                             id,
                             InputHelper.readString("New Name"),
                             InputHelper.readString("New Email"),
@@ -170,7 +128,7 @@ public class Main {
                 System.out.println("Deleted.");
                 break;
             case 4:
-                for (Student s : studentManager.getAllStudents())
+                for (models.Student s : studentManager.getAllStudents())
                     System.out.println(s);
                 break;
         }
@@ -183,10 +141,10 @@ public class Main {
         System.out.println("0. Back");
         int c = InputHelper.readInt("Option", 0, 2);
         if (c == 1)
-            for (Teacher t : teacherManager.getAll())
+            for (models.Teacher t : teacherManager.getAll())
                 System.out.println(t);
         else if (c == 2) {
-            teacherManager.add(new Teacher(
+            teacherManager.add(new models.Teacher(
                     InputHelper.readString("ID"),
                     InputHelper.readString("Name"),
                     InputHelper.readString("Email"),
