@@ -3,8 +3,7 @@ import models.*;
 import utils.InputHelper;
 
 public class Main {
-    private StudentManager studentManager;
-    private TeacherManager teacherManager;
+    private PersonManager personManager;
     private CourseManager courseManager;
     private ClassRoomManager classRoomManager;
     private EnrollmentManager enrollmentManager;
@@ -14,8 +13,7 @@ public class Main {
     private SemesterManager semesterManager;
 
     public Main() {
-        this.studentManager = new StudentManager();
-        this.teacherManager = new TeacherManager();
+        this.personManager = new PersonManager();
         this.courseManager = new CourseManager();
         this.classRoomManager = new ClassRoomManager();
         this.enrollmentManager = new EnrollmentManager();
@@ -48,9 +46,10 @@ public class Main {
         System.out.println("7. Manage Attendance");
         System.out.println("8. Manage Departments");
         System.out.println("9. Manage Semesters");
+        System.out.println("10. Show All Persons (Polymorphism Demo)");
         System.out.println("0. Exit");
 
-        int choice = InputHelper.readInt("Choose option", 0, 9);
+        int choice = InputHelper.readInt("Choose option", 0, 10);
         switch (choice) {
             case 0:
                 System.out.println("Goodbye!");
@@ -83,8 +82,18 @@ public class Main {
             case 9:
                 manageSemesters();
                 break;
+            case 10:
+                showAllPersons();
+                break;
             default:
                 System.out.println("Invalid option");
+        }
+    }
+
+    private void showAllPersons() {
+        System.out.println("\n--- ALL PERSONS (POLYMORPHISM DEMO) ---");
+        for (Person p : personManager.getAllPersons()) {
+            System.out.println(p);
         }
     }
 
@@ -98,7 +107,7 @@ public class Main {
         int choice = InputHelper.readInt("Choose", 0, 4);
         switch (choice) {
             case 1:
-                studentManager.addStudent(new models.Student(
+                personManager.addPerson(new models.Student(
                         InputHelper.readString("ID"),
                         InputHelper.readString("Full Name"),
                         InputHelper.readString("Email"),
@@ -110,8 +119,9 @@ public class Main {
                 break;
             case 2:
                 String id = InputHelper.readString("Enter Student ID to update");
-                if (studentManager.getStudentById(id) != null) {
-                    studentManager.updateStudent(id, new models.Student(
+                if (personManager.getPersonById(id) != null
+                        && personManager.getPersonById(id) instanceof models.Student) {
+                    personManager.updatePerson(id, new models.Student(
                             id,
                             InputHelper.readString("New Name"),
                             InputHelper.readString("New Email"),
@@ -121,15 +131,18 @@ public class Main {
                             InputHelper.readString("New Class ID")));
                     System.out.println("Updated.");
                 } else
-                    System.out.println("Not found.");
+                    System.out.println("Not found or not a student.");
                 break;
             case 3:
-                studentManager.deleteStudent(InputHelper.readString("Enter ID to delete"));
+                personManager.deletePerson(InputHelper.readString("Enter ID to delete"));
                 System.out.println("Deleted.");
                 break;
             case 4:
-                for (models.Student s : studentManager.getAllStudents())
-                    System.out.println(s);
+                for (models.Person p : personManager.getAllPersons()) {
+                    if (p instanceof models.Student) {
+                        System.out.println(p);
+                    }
+                }
                 break;
         }
     }
@@ -140,11 +153,14 @@ public class Main {
         System.out.println("2. Add Teacher");
         System.out.println("0. Back");
         int c = InputHelper.readInt("Option", 0, 2);
-        if (c == 1)
-            for (models.Teacher t : teacherManager.getAll())
-                System.out.println(t);
-        else if (c == 2) {
-            teacherManager.add(new models.Teacher(
+        if (c == 1) {
+            for (models.Person p : personManager.getAllPersons()) {
+                if (p instanceof models.Teacher) {
+                    System.out.println(p);
+                }
+            }
+        } else if (c == 2) {
+            personManager.addPerson(new models.Teacher(
                     InputHelper.readString("ID"),
                     InputHelper.readString("Name"),
                     InputHelper.readString("Email"),
