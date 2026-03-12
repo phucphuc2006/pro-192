@@ -1,100 +1,100 @@
-C1,Advanced Math,3,SEM1,T1
-C2,Quantum Physics,4,SEM1,T2
-C3,Organic Chemistry,3,SEM2,T3
-C4,Genetics,3,SEM2,T4
-C5,World History,2,SEM1,T5
-C6,Modern Geography,2,SEM1,T6
-C7,Classic Literature,3,SEM2,T7
-C8,Business English,2,SEM2,T8
-C9,Data Structures,4,SEM1,T9
-C10,Yoga & Wellness,1,SEM1,T10
-C11,Course 11,3,SEM1,T11
-C12,Course 12,3,SEM1,T12
-C13,Course 13,3,SEM1,T13
-C14,Course 14,3,SEM1,T14
-C15,Course 15,3,SEM1,T15
-C16,Course 16,3,SEM1,T16
-C17,Course 17,3,SEM1,T17
-C18,Course 18,3,SEM1,T18
-C19,Course 19,3,SEM1,T19
-C20,Course 20,3,SEM1,T20
-C21,Course 21,3,SEM2,T21
-C22,Course 22,3,SEM2,T22
-C23,Course 23,3,SEM2,T23
-C24,Course 24,3,SEM2,T24
-C25,Course 25,3,SEM2,T25
-C26,Course 26,3,SEM2,T26
-C27,Course 27,3,SEM2,T27
-C28,Course 28,3,SEM2,T28
-C29,Course 29,3,SEM2,T29
-C30,Course 30,3,SEM2,T30
-C31,Course 31,3,SEM1,T31
-C32,Course 32,3,SEM1,T32
-C33,Course 33,3,SEM1,T33
-C34,Course 34,3,SEM1,T34
-C35,Course 35,3,SEM1,T35
-C36,Course 36,3,SEM1,T36
-C37,Course 37,3,SEM1,T37
-C38,Course 38,3,SEM1,T38
-C39,Course 39,3,SEM1,T39
-C40,Course 40,3,SEM1,T40
-C41,Course 41,3,SEM2,T41
-C42,Course 42,3,SEM2,T42
-C43,Course 43,3,SEM2,T43
-C44,Course 44,3,SEM2,T44
-C45,Course 45,3,SEM2,T45
-C46,Course 46,3,SEM2,T46
-C47,Course 47,3,SEM2,T47
-C48,Course 48,3,SEM2,T48
-C49,Course 49,3,SEM2,T49
-C50,Course 50,3,SEM2,T50
-C51,Course 51,3,SEM1,T51
-C52,Course 52,3,SEM1,T52
-C53,Course 53,3,SEM1,T53
-C54,Course 54,3,SEM1,T54
-C55,Course 55,3,SEM1,T55
-C56,Course 56,3,SEM1,T56
-C57,Course 57,3,SEM1,T57
-C58,Course 58,3,SEM1,T58
-C59,Course 59,3,SEM1,T59
-C60,Course 60,3,SEM1,T60
-C61,Course 61,3,SEM2,T61
-C62,Course 62,3,SEM2,T62
-C63,Course 63,3,SEM2,T63
-C64,Course 64,3,SEM2,T64
-C65,Course 65,3,SEM2,T65
-C66,Course 66,3,SEM2,T66
-C67,Course 67,3,SEM2,T67
-C68,Course 68,3,SEM2,T68
-C69,Course 69,3,SEM2,T69
-C70,Course 70,3,SEM2,T70
-C71,Course 71,3,SEM1,T71
-C72,Course 72,3,SEM1,T72
-C73,Course 73,3,SEM1,T73
-C74,Course 74,3,SEM1,T74
-C75,Course 75,3,SEM1,T75
-C76,Course 76,3,SEM1,T76
-C77,Course 77,3,SEM1,T77
-C78,Course 78,3,SEM1,T78
-C79,Course 79,3,SEM1,T79
-C80,Course 80,3,SEM1,T80
-C81,Course 81,3,SEM2,T81
-C82,Course 82,3,SEM2,T82
-C83,Course 83,3,SEM2,T83
-C84,Course 84,3,SEM2,T84
-C85,Course 85,3,SEM2,T85
-C86,Course 86,3,SEM2,T86
-C87,Course 87,3,SEM2,T87
-C88,Course 88,3,SEM2,T88
-C89,Course 89,3,SEM2,T89
-C90,Course 90,3,SEM2,T90
-C91,Course 91,3,SEM1,T91
-C92,Course 92,3,SEM1,T92
-C93,Course 93,3,SEM1,T93
-C94,Course 94,3,SEM1,T94
-C95,Course 95,3,SEM1,T95
-C96,Course 96,3,SEM1,T96
-C97,Course 97,3,SEM1,T97
-C98,Course 98,3,SEM1,T98
-C99,Course 99,3,SEM1,T99
-C100,Course 100,3,SEM1,T100
+PRO001,Programming Course 1,1
+PRO002,Programming Course 2,2
+PRO003,Programming Course 3,2
+PRO004,Programming Course 4,1
+PRO005,Programming Course 5,1
+PRO006,Programming Course 6,1
+PRO007,Programming Course 7,3
+PRO008,Programming Course 8,1
+PRO009,Programming Course 9,2
+PRO010,Programming Course 10,4
+PRO011,Programming Course 11,3
+PRO012,Programming Course 12,4
+PRO013,Programming Course 13,4
+PRO014,Programming Course 14,2
+PRO015,Programming Course 15,3
+PRO016,Programming Course 16,4
+PRO017,Programming Course 17,1
+PRO018,Programming Course 18,1
+PRO019,Programming Course 19,3
+PRO020,Programming Course 20,2
+PRO021,Programming Course 21,2
+PRO022,Programming Course 22,2
+PRO023,Programming Course 23,3
+PRO024,Programming Course 24,1
+PRO025,Programming Course 25,3
+PRO026,Programming Course 26,2
+PRO027,Programming Course 27,3
+PRO028,Programming Course 28,4
+PRO029,Programming Course 29,4
+PRO030,Programming Course 30,2
+PRO031,Programming Course 31,3
+PRO032,Programming Course 32,1
+PRO033,Programming Course 33,1
+PRO034,Programming Course 34,1
+PRO035,Programming Course 35,1
+PRO036,Programming Course 36,1
+PRO037,Programming Course 37,4
+PRO038,Programming Course 38,1
+PRO039,Programming Course 39,2
+PRO040,Programming Course 40,1
+PRO041,Programming Course 41,2
+PRO042,Programming Course 42,1
+PRO043,Programming Course 43,2
+PRO044,Programming Course 44,4
+PRO045,Programming Course 45,1
+PRO046,Programming Course 46,2
+PRO047,Programming Course 47,2
+PRO048,Programming Course 48,3
+PRO049,Programming Course 49,3
+PRO050,Programming Course 50,3
+PRO051,Programming Course 51,4
+PRO052,Programming Course 52,1
+PRO053,Programming Course 53,1
+PRO054,Programming Course 54,2
+PRO055,Programming Course 55,4
+PRO056,Programming Course 56,3
+PRO057,Programming Course 57,3
+PRO058,Programming Course 58,1
+PRO059,Programming Course 59,1
+PRO060,Programming Course 60,2
+PRO061,Programming Course 61,4
+PRO062,Programming Course 62,3
+PRO063,Programming Course 63,4
+PRO064,Programming Course 64,2
+PRO065,Programming Course 65,3
+PRO066,Programming Course 66,4
+PRO067,Programming Course 67,3
+PRO068,Programming Course 68,2
+PRO069,Programming Course 69,1
+PRO070,Programming Course 70,3
+PRO071,Programming Course 71,4
+PRO072,Programming Course 72,1
+PRO073,Programming Course 73,2
+PRO074,Programming Course 74,2
+PRO075,Programming Course 75,3
+PRO076,Programming Course 76,1
+PRO077,Programming Course 77,3
+PRO078,Programming Course 78,3
+PRO079,Programming Course 79,4
+PRO080,Programming Course 80,2
+PRO081,Programming Course 81,3
+PRO082,Programming Course 82,3
+PRO083,Programming Course 83,4
+PRO084,Programming Course 84,2
+PRO085,Programming Course 85,3
+PRO086,Programming Course 86,2
+PRO087,Programming Course 87,4
+PRO088,Programming Course 88,4
+PRO089,Programming Course 89,1
+PRO090,Programming Course 90,4
+PRO091,Programming Course 91,1
+PRO092,Programming Course 92,4
+PRO093,Programming Course 93,3
+PRO094,Programming Course 94,3
+PRO095,Programming Course 95,1
+PRO096,Programming Course 96,3
+PRO097,Programming Course 97,3
+PRO098,Programming Course 98,1
+PRO099,Programming Course 99,4
+PRO100,Programming Course 100,2

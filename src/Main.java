@@ -1,35 +1,34 @@
 import managers.*;
 import models.*;
+import utils.DataGenerator;
 import utils.InputHelper;
+import utils.ValidationUtils;
+
+import java.util.Comparator;
 
 public class Main {
-    private PersonManager personManager;
+    private StudentManager studentManager;
     private CourseManager courseManager;
-    private ClassRoomManager classRoomManager;
     private EnrollmentManager enrollmentManager;
-    private GradeManager gradeManager;
-    private AttendanceManager attendanceManager;
-    private DepartmentManager departmentManager;
-    private SemesterManager semesterManager;
 
     public Main() {
-        this.personManager = new PersonManager();
+        this.studentManager = new StudentManager();
         this.courseManager = new CourseManager();
-        this.classRoomManager = new ClassRoomManager();
         this.enrollmentManager = new EnrollmentManager();
-        this.gradeManager = new GradeManager();
-        this.attendanceManager = new AttendanceManager();
-        this.departmentManager = new DepartmentManager();
-        this.semesterManager = new SemesterManager();
     }
 
     public static void main(String[] args) {
+        System.out.println("Loading databases and generating mock data if empty...");
+        DataGenerator.generateAll();
+
         Main app = new Main();
         app.run();
     }
 
     public void run() {
-        System.out.println("Welcome to Student Management System");
+        System.out.println("==========================================");
+        System.out.println("WELCOME TO STUDENT/COURSE MANAGEMENT SYSTEM");
+        System.out.println("==========================================");
         while (true) {
             showMainMenu();
         }
@@ -38,17 +37,11 @@ public class Main {
     private void showMainMenu() {
         System.out.println("\n--- MAIN DASHBOARD ---");
         System.out.println("1. Manage Students");
-        System.out.println("2. Manage Teachers");
-        System.out.println("3. Manage Courses");
-        System.out.println("4. Manage Classes");
-        System.out.println("5. Manage Enrollments");
-        System.out.println("6. Manage Grades");
-        System.out.println("7. Manage Attendance");
-        System.out.println("8. Manage Departments");
-        System.out.println("9. Manage Semesters");
+        System.out.println("2. Manage Courses");
+        System.out.println("3. Manage Enrollments & Grades");
         System.out.println("0. Exit");
 
-        int choice = InputHelper.readInt("Choose option", 0, 9);
+        int choice = InputHelper.readInt("Choose option", 0, 3);
         switch (choice) {
             case 0:
                 System.out.println("Goodbye!");
@@ -58,28 +51,10 @@ public class Main {
                 manageStudents();
                 break;
             case 2:
-                manageTeachers();
-                break;
-            case 3:
                 manageCourses();
                 break;
-            case 4:
-                manageClasses();
-                break;
-            case 5:
+            case 3:
                 manageEnrollments();
-                break;
-            case 6:
-                manageGrades();
-                break;
-            case 7:
-                manageAttendance();
-                break;
-            case 8:
-                manageDepartments();
-                break;
-            case 9:
-                manageSemesters();
                 break;
             default:
                 System.out.println("Invalid option");
@@ -92,197 +67,219 @@ public class Main {
         System.out.println("2. Update Student");
         System.out.println("3. Delete Student");
         System.out.println("4. List All Students");
+        System.out.println("5. Search Student");
+        System.out.println("6. Sort Students by Name");
         System.out.println("0. Back");
-        int choice = InputHelper.readInt("Choose", 0, 4);
+        int choice = InputHelper.readInt("Choose option", 0, 6);
         switch (choice) {
             case 1:
-                personManager.addPerson(new models.Student(
-                        InputHelper.readString("ID"),
-                        InputHelper.readString("Full Name"),
-                        InputHelper.readString("Email"),
-                        InputHelper.readString("Phone"),
-                        InputHelper.readString("DOB(dd/MM/yyyy)"),
-                        InputHelper.readString("Gender"),
-                        InputHelper.readString("Class ID")));
-                System.out.println("Added successfully.");
+                String id, email;
+                do {
+                    id = InputHelper.readString("ID (Format: S001)");
+                    if (!ValidationUtils.isValidId(id))
+                        System.out.println("Invalid ID form");
+                } while (!ValidationUtils.isValidId(id));
+
+                if (studentManager.getById(id) != null) {
+                    System.out.println("Student ID already exists!");
+                    break;
+                }
+
+                String name = readNonEmptyString("Full Name");
+                do {
+                    email = InputHelper.readString("Email");
+                    if (!ValidationUtils.isValidEmail(email))
+                        System.out.println("Invalid email format");
+                } while (!ValidationUtils.isValidEmail(email));
+
+                studentManager.add(new Student(
+                        id, name, email,
+                        readNonEmptyString("Phone"),
+                        readNonEmptyString("DOB (dd/mm/yyyy)"),
+                        readNonEmptyString("Gender"),
+                        readNonEmptyString("Class ID")));
+                System.out.println("Student added.");
                 break;
             case 2:
-                String id = InputHelper.readString("Enter Student ID to update");
-                if (personManager.getPersonById(id) != null
-                        && personManager.getPersonById(id) instanceof models.Student) {
-                    personManager.updatePerson(id, new models.Student(
-                            id,
-                            InputHelper.readString("New Name"),
-                            InputHelper.readString("New Email"),
-                            InputHelper.readString("New Phone"),
-                            InputHelper.readString("New DOB"),
-                            InputHelper.readString("New Gender"),
-                            InputHelper.readString("New Class ID")));
-                    System.out.println("Updated.");
-                } else
-                    System.out.println("Not found or not a student.");
+                String updateId = InputHelper.readString("Enter Student ID to update");
+                if (studentManager.getById(updateId) != null) {
+                    studentManager.update(updateId, new Student(
+                            updateId,
+                            readNonEmptyString("New Full Name"),
+                            readEmail(),
+                            readNonEmptyString("New Phone"),
+                            readNonEmptyString("New DOB"),
+                            readNonEmptyString("New Gender"),
+                            readNonEmptyString("New Class ID")));
+                    System.out.println("Student updated.");
+                } else {
+                    System.out.println("Student not found.");
+                }
                 break;
             case 3:
-                personManager.deletePerson(InputHelper.readString("Enter ID to delete"));
-                System.out.println("Deleted.");
+                String delId = InputHelper.readString("Enter Student ID to delete");
+                if (studentManager.getById(delId) != null) {
+                    studentManager.delete(delId);
+                    System.out.println("Student deleted.");
+                } else {
+                    System.out.println("Student not found.");
+                }
                 break;
             case 4:
-                for (models.Person p : personManager.getAllPersons()) {
-                    if (p instanceof models.Student) {
-                        System.out.println(p);
-                    }
-                }
+                studentManager.getAll().forEach(System.out::println);
                 break;
-        }
-    }
-
-    private void manageTeachers() {
-        System.out.println("--- TEACHERS ---");
-        System.out.println("1. List All");
-        System.out.println("2. Add Teacher");
-        System.out.println("0. Back");
-        int c = InputHelper.readInt("Option", 0, 2);
-        if (c == 1) {
-            for (models.Person p : personManager.getAllPersons()) {
-                if (p instanceof models.Teacher) {
-                    System.out.println(p);
-                }
-            }
-        } else if (c == 2) {
-            personManager.addPerson(new models.Teacher(
-                    InputHelper.readString("ID"),
-                    InputHelper.readString("Name"),
-                    InputHelper.readString("Email"),
-                    InputHelper.readString("Phone"),
-                    InputHelper.readString("Dept")));
+            case 5:
+                String keyword = readNonEmptyString("Enter keyword (ID or Name)");
+                studentManager.search(keyword).forEach(System.out::println);
+                break;
+            case 6:
+                studentManager.sort(Comparator.comparing(Student::getFullName));
+                System.out.println("Sorted.");
+                studentManager.getAll().forEach(System.out::println);
+                break;
         }
     }
 
     private void manageCourses() {
-        System.out.println("--- COURSES ---");
-        System.out.println("1. List All");
-        System.out.println("2. Add Course");
+        System.out.println("\n--- COURSE MANAGEMENT ---");
+        System.out.println("1. Add Course");
+        System.out.println("2. Update Course");
+        System.out.println("3. Delete Course");
+        System.out.println("4. List All Courses");
+        System.out.println("5. Search Course");
         System.out.println("0. Back");
-        int c = InputHelper.readInt("Option", 0, 2);
-        if (c == 1)
-            for (Course x : courseManager.getAll())
-                System.out.println(x);
-        else if (c == 2) {
-            courseManager.add(new Course(
-                    InputHelper.readString("ID"),
-                    InputHelper.readString("Name"),
-                    InputHelper.readInt("Credits"),
-                    InputHelper.readString("Semester"),
-                    InputHelper.readString("TeacherID")));
+        int choice = InputHelper.readInt("Choose option", 0, 5);
+        switch (choice) {
+            case 1:
+                String id = readNonEmptyString("Course ID");
+                if (courseManager.getById(id) != null) {
+                    System.out.println("Course ID already exists!");
+                    break;
+                }
+                courseManager.add(new Course(
+                        id,
+                        readNonEmptyString("Course Name"),
+                        InputHelper.readInt("Credits")));
+                System.out.println("Course added.");
+                break;
+            case 2:
+                String updateId = InputHelper.readString("Enter Course ID to update");
+                if (courseManager.getById(updateId) != null) {
+                    courseManager.update(updateId, new Course(
+                            updateId,
+                            readNonEmptyString("New Course Name"),
+                            InputHelper.readInt("New Credits")));
+                    System.out.println("Course updated.");
+                } else {
+                    System.out.println("Course not found.");
+                }
+                break;
+            case 3:
+                String delId = InputHelper.readString("Enter Course ID to delete");
+                if (courseManager.getById(delId) != null) {
+                    courseManager.delete(delId);
+                    System.out.println("Course deleted.");
+                } else {
+                    System.out.println("Course not found.");
+                }
+                break;
+            case 4:
+                courseManager.getAll().forEach(System.out::println);
+                break;
+            case 5:
+                String keyword = readNonEmptyString("Enter keyword (ID or Name)");
+                courseManager.search(keyword).forEach(System.out::println);
+                break;
         }
-    }
-
-    private void manageClasses() {
-        System.out.println("--- CLASSES ---");
-        System.out.println("1. List All");
-        System.out.println("2. Add Class");
-        int c = InputHelper.readInt("Option", 0, 2);
-        if (c == 1)
-            for (ClassRoom x : classRoomManager.getAll())
-                System.out.println(x);
-        else if (c == 2)
-            classRoomManager.add(new ClassRoom(InputHelper.readString("ID"), InputHelper.readString("Name"),
-                    InputHelper.readString("TeacherID"), InputHelper.readString("CourseID")));
     }
 
     private void manageEnrollments() {
-        System.out.println("--- ENROLLMENT MANAGEMENT ---");
-        System.out.println("1. List All");
-        System.out.println("2. Add Enrollment");
+        System.out.println("\n--- ENROLLMENT & GRADE MANAGEMENT ---");
+        System.out.println("1. Enroll Student to Course");
+        System.out.println("2. Update Grade");
+        System.out.println("3. Cancel Enrollment");
+        System.out.println("4. List All Enrollments");
+        System.out.println("5. Search Enrollment by Student/Course ID");
         System.out.println("0. Back");
-        int c = InputHelper.readInt("Option", 0, 2);
-        if (c == 1) {
-            for (Enrollment e : enrollmentManager.getAll())
-                System.out.println(e);
-        } else if (c == 2) {
-            enrollmentManager.add(new Enrollment(
-                    InputHelper.readString("Enrollment ID"),
-                    InputHelper.readString("Student ID"),
-                    InputHelper.readString("Course ID"),
-                    InputHelper.readString("Semester")));
-            System.out.println("Enrollment added.");
+        int choice = InputHelper.readInt("Choose option", 0, 5);
+        switch (choice) {
+            case 1:
+                String id = readNonEmptyString("Enrollment ID");
+                if (enrollmentManager.getById(id) != null) {
+                    System.out.println("Enrollment ID already exists!");
+                    break;
+                }
+                String studentId = readNonEmptyString("Student ID");
+                if (studentManager.getById(studentId) == null) {
+                    System.out.println("Student not found!");
+                    break;
+                }
+                String courseId = readNonEmptyString("Course ID");
+                if (courseManager.getById(courseId) == null) {
+                    System.out.println("Course not found!");
+                    break;
+                }
+                double grade = readValidGrade("Grade (0-10)");
+                enrollmentManager.add(new Enrollment(id, studentId, courseId, grade));
+                System.out.println("Enrollment added.");
+                break;
+            case 2:
+                String updateId = InputHelper.readString("Enter Enrollment ID to update grade");
+                Enrollment e = enrollmentManager.getById(updateId);
+                if (e != null) {
+                    e.setGrade(readValidGrade("New Grade"));
+                    enrollmentManager.update(updateId, e);
+                    System.out.println("Grade updated.");
+                } else {
+                    System.out.println("Enrollment not found.");
+                }
+                break;
+            case 3:
+                String delId = InputHelper.readString("Enter Enrollment ID to cancel");
+                if (enrollmentManager.getById(delId) != null) {
+                    enrollmentManager.delete(delId);
+                    System.out.println("Enrollment canceled.");
+                } else {
+                    System.out.println("Enrollment not found.");
+                }
+                break;
+            case 4:
+                enrollmentManager.getAll().forEach(System.out::println);
+                break;
+            case 5:
+                String keyword = readNonEmptyString("Enter Student/Course ID to search");
+                enrollmentManager.search(keyword).forEach(System.out::println);
+                break;
         }
     }
 
-    private void manageGrades() {
-        System.out.println("--- GRADE MANAGEMENT ---");
-        System.out.println("1. List All");
-        System.out.println("2. Add Grade");
-        System.out.println("0. Back");
-        int c = InputHelper.readInt("Option", 0, 2);
-        if (c == 1) {
-            for (Grade g : gradeManager.getAll())
-                System.out.println(g);
-        } else if (c == 2) {
-            gradeManager.add(new Grade(
-                    InputHelper.readString("Grade ID"),
-                    InputHelper.readString("Student ID"),
-                    InputHelper.readString("Course ID"),
-                    InputHelper.readDouble("Midterm Grade"),
-                    InputHelper.readDouble("Final Exam Grade")));
-            System.out.println("Grade added and total calculated.");
-        }
+    private String readNonEmptyString(String prompt) {
+        String input;
+        do {
+            input = InputHelper.readString(prompt);
+            if (!ValidationUtils.isNotEmpty(input))
+                System.out.println("Input cannot be empty.");
+        } while (!ValidationUtils.isNotEmpty(input));
+        return input;
     }
 
-    private void manageAttendance() {
-        System.out.println("--- ATTENDANCE MANAGEMENT ---");
-        System.out.println("1. List All");
-        System.out.println("2. Add Attendance");
-        System.out.println("0. Back");
-        int c = InputHelper.readInt("Option", 0, 2);
-        if (c == 1) {
-            for (Attendance a : attendanceManager.getAll())
-                System.out.println(a);
-        } else if (c == 2) {
-            attendanceManager.add(new Attendance(
-                    InputHelper.readString("Attendance ID"),
-                    InputHelper.readString("Student ID"),
-                    InputHelper.readString("Class ID"),
-                    InputHelper.readString("Date (dd/mm/yyyy)"),
-                    InputHelper.readString("Status (Present/Absent/Excused)")));
-            System.out.println("Attendance recorded.");
-        }
+    private String readEmail() {
+        String email;
+        do {
+            email = InputHelper.readString("Email");
+            if (!ValidationUtils.isValidEmail(email))
+                System.out.println("Invalid email format.");
+        } while (!ValidationUtils.isValidEmail(email));
+        return email;
     }
 
-    private void manageDepartments() {
-        System.out.println("--- DEPARTMENT MANAGEMENT ---");
-        System.out.println("1. List All");
-        System.out.println("2. Add Department");
-        System.out.println("0. Back");
-        int c = InputHelper.readInt("Option", 0, 2);
-        if (c == 1) {
-            for (Department d : departmentManager.getAll())
-                System.out.println(d);
-        } else if (c == 2) {
-            departmentManager.add(new Department(
-                    InputHelper.readString("Department ID"),
-                    InputHelper.readString("Department Name"),
-                    InputHelper.readInt("Faculty Count")));
-            System.out.println("Department added.");
-        }
-    }
-
-    private void manageSemesters() {
-        System.out.println("--- SEMESTER MANAGEMENT ---");
-        System.out.println("1. List All");
-        System.out.println("2. Add Semester");
-        System.out.println("0. Back");
-        int c = InputHelper.readInt("Option", 0, 2);
-        if (c == 1) {
-            for (Semester s : semesterManager.getAll())
-                System.out.println(s);
-        } else if (c == 2) {
-            semesterManager.add(new Semester(
-                    InputHelper.readString("Semester ID"),
-                    InputHelper.readString("Semester Name"),
-                    InputHelper.readString("Start Date (dd/mm/yyyy)"),
-                    InputHelper.readString("End Date (dd/mm/yyyy)")));
-            System.out.println("Semester added.");
-        }
+    private double readValidGrade(String prompt) {
+        double grade;
+        do {
+            grade = InputHelper.readDouble(prompt);
+            if (!ValidationUtils.isValidGrade(grade))
+                System.out.println("Grade must be between 0 and 10.");
+        } while (!ValidationUtils.isValidGrade(grade));
+        return grade;
     }
 }

@@ -4,9 +4,9 @@ import java.util.regex.Pattern;
 
 public class ValidationUtils {
 
-    // Check ID format (e.g., starts with a letter followed by numbers)
+    // Check ID format
     public static boolean isValidId(String id) {
-        return id != null && id.matches("^[A-Z][0-9]+$");
+        return id != null && !id.trim().isEmpty() && id.matches("^[A-Z0-9]+$");
     }
 
     // Check email format
@@ -23,21 +23,8 @@ public class ValidationUtils {
         return grade >= 0 && grade <= 10;
     }
 
-    // Check password strength (8+ chars, upper, lower, digit, special)
-    public static boolean isStrongPassword(String password) {
-        if (password == null || password.length() < 8)
-            return false;
-        boolean hasUpper = false, hasLower = false, hasDigit = false, hasSpecial = false;
-        for (char c : password.toCharArray()) {
-            if (Character.isUpperCase(c))
-                hasUpper = true;
-            else if (Character.isLowerCase(c))
-                hasLower = true;
-            else if (Character.isDigit(c))
-                hasDigit = true;
-            else if ("!@#$%^&*()-_=+[]{}|;:,.<>?".indexOf(c) != -1)
-                hasSpecial = true;
-        }
-        return hasUpper && hasLower && hasDigit && hasSpecial;
+    // Check not empty
+    public static boolean isNotEmpty(String str) {
+        return str != null && !str.trim().isEmpty();
     }
 }

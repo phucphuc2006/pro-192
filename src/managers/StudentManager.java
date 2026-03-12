@@ -3,9 +3,11 @@ package managers;
 import models.Student;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class StudentManager {
+public class StudentManager implements IManager<Student> {
     private List<Student> students;
     private final String FILE_PATH = "data/students.txt";
 
@@ -14,70 +16,69 @@ public class StudentManager {
         loadFromFile();
     }
 
-    public void addStudent(Student student) {
-        students.add(student);
+    @Override
+    public void add(Student item) {
+        students.add(item);
         saveToFile();
     }
 
-    public void updateStudent(String id, Student newStudent) {
+    @Override
+    public void update(String id, Student item) {
         for (int i = 0; i < students.size(); i++) {
             if (students.get(i).getId().equals(id)) {
-                students.set(i, newStudent);
+                students.set(i, item);
                 saveToFile();
                 return;
             }
         }
     }
 
-    public void deleteStudent(String id) {
+    @Override
+    public void delete(String id) {
         students.removeIf(s -> s.getId().equals(id));
         saveToFile();
     }
 
-    public Student getStudentById(String id) {
-        for (Student s : students) {
-            if (s.getId().equals(id)) {
-                return s;
-            }
-        }
-        return null;
+    @Override
+    public Student getById(String id) {
+        return students.stream().filter(s -> s.getId().equals(id)).findFirst().orElse(null);
     }
 
-    public List<Student> getAllStudents() {
+    @Override
+    public List<Student> getAll() {
         return students;
     }
 
-    public List<Student> searchStudents(String keyword) {
-        List<Student> result = new ArrayList<>();
-        for (Student s : students) {
-            if (s.getFullName().toLowerCase().contains(keyword.toLowerCase()) ||
-                    s.getId().toLowerCase().contains(keyword.toLowerCase())) {
-                result.add(s);
-            }
-        }
-        return result;
+    @Override
+    public void sort(Comparator<Student> comparator) {
+        students.sort(comparator);
     }
 
-    private void loadFromFile() {
+    @Override
+    public List<Student> search(String keyword) {
+        return students.stream()
+                .filter(s -> s.getFullName().toLowerCase().contains(keyword.toLowerCase()) ||
+                        s.getId().toLowerCase().contains(keyword.toLowerCase()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void loadFromFile() {
         File file = new File(FILE_PATH);
         if (!file.exists())
             return;
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
+            students.clear();
             while ((line = br.readLine()) != null) {
                 if (line.trim().isEmpty())
                     continue;
                 String[] parts = line.split(",");
                 if (parts.length >= 7) {
                     students.add(new Student(
-                            parts[0].trim(),
-                            parts[1].trim(),
-                            parts[2].trim(),
-                            parts[3].trim(),
-                            parts[4].trim(),
-                            parts[5].trim(),
-                            parts[6].trim()));
+                            parts[0].trim(), parts[1].trim(), parts[2].trim(), parts[3].trim(),
+                            parts[4].trim(), parts[5].trim(), parts[6].trim()));
                 }
             }
         } catch (IOException e) {
@@ -85,17 +86,13 @@ public class StudentManager {
         }
     }
 
-    private void saveToFile() {
+    @Override
+    public void saveToFile() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_PATH))) {
             for (Student s : students) {
                 bw.write(String.format("%s,%s,%s,%s,%s,%s,%s",
-                        s.getId(),
-                        s.getFullName(),
-                        s.getEmail(),
-                        s.getPhone(),
-                        s.getDob(),
-                        s.getGender(),
-                        s.getClassID()));
+                        s.getId(), s.getFullName(), s.getEmail(), s.getPhone(),
+                        s.getDob(), s.getGender(), s.getClassID()));
                 bw.newLine();
             }
         } catch (IOException e) {

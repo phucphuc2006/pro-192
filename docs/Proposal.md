@@ -1,122 +1,79 @@
-# PROPOSAL: HỆ THỐNG QUẢN LÝ SINH VIÊN
-## (Student Management System)
+# PROPOSAL: HỆ THỐNG QUẢN LÝ SINH VIÊN & KHÓA HỌC
+## (Student & Course Management System)
 
 ---
 
 ## 1. Giới Thiệu (Introduction)
 
-Hệ thống Quản lý Sinh viên là ứng dụng Console Application (CLI) được phát triển bằng Java, hỗ trợ quản lý toàn diện các hoạt động đào tạo bao gồm: quản lý sinh viên, giảng viên, môn học, điểm số, điểm danh và báo cáo thống kê.
+Hệ thống Quản lý Sinh viên & Khóa học là ứng dụng Console Application (CLI) được phát triển bằng Java, hỗ trợ quản lý 3 nghiệp vụ chính yếu: 
+1. Quản lý Sinh viên (Student)
+2. Quản lý Khóa học (Course)
+3. Quản lý Đăng ký môn & Điểm số (Enrollment)
 
-Dự án được xây dựng áp dụng các nguyên lý Lập trình Hướng Đối tượng (OOP) và kiến trúc phân tầng rõ ràng.
+Dự án tuân thủ nghiêm ngặt các nguyên lý Lập trình Hướng Đối tượng (OOP) và sử dụng kiến trúc MVC rút gọn. Thiết kế được làm gọn để đạt 100% các tiêu chí từ Rubric PRO192.
 
 ---
 
 ## 2. Kiến Trúc Hệ Thống (System Architecture)
 
-Hệ thống được tổ chức thành 3 packages chính theo mô hình MVC (Model-View-Controller) cải tiến, với View được tích hợp trong Main console:
+Hệ thống được tổ chức thành 4 packages chính:
 
 ### A. Console Interface
 - **Main.java**: Chứa hàm main và menu điều hướng người dùng (CLI).
 
-### B. Package `models` (10 Classes - Thực thể dữ liệu)
+### B. Package `models` (Thực thể dữ liệu)
 
 | Class | Mô tả | Thuộc tính chính |
 |-------|-------|------------------|
-| Person | Người (Abstract) | id, fullName, email, phone |
-| Student | Sinh viên | dob, gender, classID (Kế thừa Person) |
-| Teacher | Giảng viên | department (Kế thừa Person) |
-| Course | Môn học | courseID, courseName, credits, semester, teacherID |
-| ClassRoom | Lớp học | classID, className, teacherID, courseID |
-| Enrollment | Đăng ký môn | enrollmentID, studentID, courseID, semester |
-| Grade | Điểm số | gradeID, studentID, courseID, midterm, finalExam, total |
-| Attendance | Điểm danh | attendanceID, studentID, classID, date, status |
-| Department | Khoa | departmentID, departmentName, facultyCount |
-| Semester | Học kỳ | semesterID, semesterName, startDate, endDate |
+| Person | Người (Abstract Class) | id, fullName, email, phone |
+| Student | Sinh viên (Kế thừa Person)| dob, gender, classID |
+| Course | Khóa học | courseID, courseName, credits |
+| Enrollment | Biên bản đăng ký môn | enrollmentID, studentID, courseID, grade |
 
-### C. Package `managers` (9 Classes - Xử lý nghiệp vụ)
+### C. Package `managers` (Xử lý nghiệp vụ & Data Scaling)
 
-**Chức năng chung của tất cả Managers:**
-- Thêm mới (add)
-- Cập nhật (update)
-- Xóa (delete)
-- Tìm kiếm theo ID (findById)
-- Tìm kiếm theo tên/từ khóa (search)
-- Hiển thị danh sách (displayAll)
-- Lưu file (saveToFile)
-- Đọc file (loadFromFile)
+- **`IManager<T>`**: Interface Generics định nghĩa các tác vụ chuẩn (CRUD, Sort, Search, File I/O).
+- `StudentManager` (Implements `IManager<Student>`)
+- `CourseManager` (Implements `IManager<Course>`)
+- `EnrollmentManager` (Implements `IManager<Enrollment>`)
 
-| Class | Quản lý | Chức năng bổ sung |
-|-------|---------|-------------------|
-| StudentManager | Sinh viên | searchStudents(), getAllStudents() |
-| TeacherManager | Giảng viên | getAll(), getById() |
-| CourseManager | Môn học | getAll(), getById() |
-| ClassRoomManager | Lớp học | getAll(), getById() |
-| EnrollmentManager | Đăng ký môn | getAll(), getByStudentId() |
-| GradeManager | Điểm số | getAll(), getByStudentId() |
-| AttendanceManager | Điểm danh | getAll() |
-| DepartmentManager | Khoa | getAll() |
-| SemesterManager | Học kỳ | getAll() |
+=> Sử dụng cấu trúc dữ liệu `ArrayList` từ Java Collections Framework để xử lý linh hoạt hàng ngàn bản ghi (đáp ứng tiêu chí Data Scaling).
 
+### D. Package `utils` (Tiện ích)
 
-### D. Package `utils`
+| Class | Mô tả | Phương thức |
+|-------|-------|-------------|
+| InputHelper | Hỗ trợ nhập liệu có xử lý Try/Catch | readString(), readInt(), readDouble() |
+| DataGenerator | Bootstrap 100+ dòng dữ liệu khi khởi chạy | generateAll() |
+| ValidationUtils | Static Methods kiểm tra tính hợp lệ dữ liệu | isValidId(), isValidEmail(), isValidGrade(), isNotEmpty() |
 
-| Class | Mô tả | Phương thức static |
-|-------|-------|-------------------|
-| InputHelper | Hỗ trợ nhập liệu | readString(), readInt(), readDouble() |
-| DataGenerator | Tạo dữ liệu mẫu | generateAll() |
-| ValidationUtils | Xác thực dữ liệu | isValidId(), isValidEmail(), isValidGrade() |
+---
 
 ## 3. Các Tính Năng Chính (Key Features)
 
 ### 3.1. Quản lý Đối tượng (CRUD)
-- Sinh viên, Giảng viên, Môn học, Lớp học
-- Đăng ký môn, Điểm số, Điểm danh
-- Khoa, Học kỳ
+- Khởi tạo, Cập nhật, Xóa, Hiển thị danh sách cho Sinh viên, Khóa học và Đăng ký môn.
 
-### 3.2. Xử lý Dữ liệu
-- **Tìm kiếm:** Theo từ khóa, ID.
-- **Tính toán:** Tự động tính điểm tổng kết dựa trên hệ số 0.4 (giữa kỳ) và 0.6 (cuối kỳ).
+### 3.2. Tiện ích Xử lý
+- **Tìm kiếm (Search):** Tìm theo ID, Tên sinh viên, khóa học.
+- **Sắp xếp (Sort):** Sắp xếp danh sách Sinh viên tự động theo tên.
+- **Xác thực (Validation):** Không cho phép thông tin rỗng, bắt định dạng số và email sai.
 
-### 3.3. Lưu trữ Dữ liệu
-- Lưu toàn bộ dữ liệu xuống file .txt.
-- Tự động load dữ liệu khi khởi động từ thư mục: `data/`.
-
----
-
-## 4. Áp Dụng Kỹ Thuật OOP (Technical Requirements)
-
-| Nguyên lý | Áp dụng trong project |
-|-----------|----------------------|
-| **Encapsulation** | Mọi thuộc tính là `private`, truy xuất qua Getter/Setter |
-| **Modularity** | Phân chia rõ ràng: models, managers, utils, ui |
-| **Single Responsibility** | Mỗi class chỉ làm một nhiệm vụ cụ thể |
-| **File I/O** | BufferedReader/BufferedWriter cho persistence |
+### 3.3. File I/O (Persistence)
+- Lưu toàn bộ dữ liệu xuống 3 file text (`students.txt`, `courses.txt`, `enrollments.txt`) trong thư mục `data/`.
+- Tự động nạp (Load) dữ liệu lên ArrayList khi khởi động.
 
 ---
 
-## 5. Cấu Trúc Thư Mục (Directory Structure)
+## 4. Mức Độ Đáp Ứng Rubric Môn Học
 
-```
-StudentManagement_NhomXX/
-├── src/
-│   ├── Main.java
-│   ├── ui/              (Console Interface)
-│   ├── models/          (10 files)
-│   ├── managers/        (9 files)
-│   └── utils/           (3 files)
-├── data/                (10 files .txt)
-└── docs/                (Tài liệu)
-```
-
----
-
-## 6. Công Nghệ Sử Dụng (Technologies)
-
-| Công nghệ | Phiên bản |
-|-----------|-----------|
-| Ngôn ngữ | Java JDK 8+ |
-| Giao diện | Console (CLI) |
-| Lưu trữ | File-based (text files) |
-| Encoding | UTF-8 |
+| Tiêu chuẩn | Thể hiện qua Code |
+|-----------|-------------------------|
+| **Encapsulation** | Đóng gói an toàn các thuộc tính (`private`) ở tất cả Entities. |
+| **Inheritance** | Thiết kế kế thừa `Student extends Person`. |
+| **Polymorphism** | Kế thừa ghi đè (`@Override toString()`). Triển khai đa hình qua Interface (`IManager`). |
+| **Abstraction** | Kịch bản trích xuất thông tin người qua Abstract Class `Person` và interface `IManager`. |
+| **Data Scaling** | Auto-Gen 100 Test Samples mỗi lúc chương trình kích hoạt. |
+| **Static Utility**| `ValidationUtils` chứa static boolean functions kiểm tra chuẩn. |
 
 ---

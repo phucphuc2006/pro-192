@@ -3,9 +3,11 @@ package managers;
 import models.Enrollment;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class EnrollmentManager {
+public class EnrollmentManager implements IManager<Enrollment> {
     private List<Enrollment> enrollments;
     private final String FILE_PATH = "data/enrollments.txt";
 
@@ -14,57 +16,85 @@ public class EnrollmentManager {
         loadFromFile();
     }
 
-    public void add(Enrollment e) {
-        enrollments.add(e);
+    @Override
+    public void add(Enrollment item) {
+        enrollments.add(item);
         saveToFile();
     }
 
+    @Override
+    public void update(String id, Enrollment item) {
+        for (int i = 0; i < enrollments.size(); i++) {
+            if (enrollments.get(i).getEnrollmentID().equals(id)) {
+                enrollments.set(i, item);
+                saveToFile();
+                return;
+            }
+        }
+    }
+
+    @Override
     public void delete(String id) {
         enrollments.removeIf(e -> e.getEnrollmentID().equals(id));
         saveToFile();
     }
 
+    @Override
+    public Enrollment getById(String id) {
+        return enrollments.stream().filter(e -> e.getEnrollmentID().equals(id)).findFirst().orElse(null);
+    }
+
+    @Override
     public List<Enrollment> getAll() {
         return enrollments;
     }
 
-    public List<Enrollment> getByStudentId(String studentId) {
-        List<Enrollment> result = new ArrayList<>();
-        for (Enrollment e : enrollments) {
-            if (e.getStudentID().equals(studentId))
-                result.add(e);
-        }
-        return result;
+    @Override
+    public void sort(Comparator<Enrollment> comparator) {
+        enrollments.sort(comparator);
     }
 
-    private void loadFromFile() {
+    @Override
+    public List<Enrollment> search(String keyword) {
+        return enrollments.stream()
+                .filter(e -> e.getStudentID().toLowerCase().contains(keyword.toLowerCase()) ||
+                        e.getCourseID().toLowerCase().contains(keyword.toLowerCase()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void loadFromFile() {
         File file = new File(FILE_PATH);
         if (!file.exists())
             return;
+
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
+            enrollments.clear();
             while ((line = br.readLine()) != null) {
-                if (line.isEmpty())
+                if (line.trim().isEmpty())
                     continue;
                 String[] parts = line.split(",");
                 if (parts.length >= 4) {
-                    enrollments.add(new Enrollment(parts[0], parts[1], parts[2], parts[3]));
+                    enrollments.add(new Enrollment(
+                            parts[0].trim(), parts[1].trim(), parts[2].trim(), Double.parseDouble(parts[3].trim())));
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException | NumberFormatException e) {
+            System.out.println("Error loading enrollments: " + e.getMessage());
         }
     }
 
-    private void saveToFile() {
+    @Override
+    public void saveToFile() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_PATH))) {
             for (Enrollment e : enrollments) {
-                bw.write(String.format("%s,%s,%s,%s", e.getEnrollmentID(), e.getStudentID(), e.getCourseID(),
-                        e.getSemester()));
+                bw.write(String.format("%s,%s,%s,%.2f",
+                        e.getEnrollmentID(), e.getStudentID(), e.getCourseID(), e.getGrade()));
                 bw.newLine();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Error saving enrollments: " + e.getMessage());
         }
     }
 }

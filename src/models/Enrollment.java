@@ -4,13 +4,13 @@ public class Enrollment {
     private String enrollmentID;
     private String studentID;
     private String courseID;
-    private String semester;
+    private double grade;
 
-    public Enrollment(String enrollmentID, String studentID, String courseID, String semester) {
+    public Enrollment(String enrollmentID, String studentID, String courseID, double grade) {
         this.enrollmentID = enrollmentID;
         this.studentID = studentID;
         this.courseID = courseID;
-        this.semester = semester;
+        this.grade = grade;
     }
 
     public String getEnrollmentID() {
@@ -37,12 +37,12 @@ public class Enrollment {
         this.courseID = courseID;
     }
 
-    public String getSemester() {
-        return semester;
+    public double getGrade() {
+        return grade;
     }
 
-    public void setSemester(String semester) {
-        this.semester = semester;
+    public void setGrade(double grade) {
+        this.grade = grade;
     }
 
     @Override
@@ -51,7 +51,7 @@ public class Enrollment {
                 "enrollmentID='" + enrollmentID + '\'' +
                 ", studentID='" + studentID + '\'' +
                 ", courseID='" + courseID + '\'' +
-                ", semester='" + semester + '\'' +
+                ", grade=" + grade +
                 '}';
     }
 }
