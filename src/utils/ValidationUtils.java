@@ -6,7 +6,7 @@ public class ValidationUtils {
 
     // Check ID format
     public static boolean isValidId(String id) {
-        return id != null && !id.trim().isEmpty() && id.matches("^[A-Z0-9]+$");
+        return id != null && !id.trim().isEmpty() && id.matches("^[A-Z]+\\d{3}$");
     }
 
     // Check email format

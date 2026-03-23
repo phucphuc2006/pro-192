@@ -25,7 +25,7 @@ public class CourseManager implements IManager<Course> {
     @Override
     public void update(String id, Course item) {
         for (int i = 0; i < courses.size(); i++) {
-            if (courses.get(i).getCourseID().equals(id)) {
+            if (courses.get(i).getId().equals(id)) {
                 courses.set(i, item);
                 saveToFile();
                 return;
@@ -35,13 +35,13 @@ public class CourseManager implements IManager<Course> {
 
     @Override
     public void delete(String id) {
-        courses.removeIf(c -> c.getCourseID().equals(id));
+        courses.removeIf(c -> c.getId().equals(id));
         saveToFile();
     }
 
     @Override
     public Course getById(String id) {
-        return courses.stream().filter(c -> c.getCourseID().equals(id)).findFirst().orElse(null);
+        return courses.stream().filter(c -> c.getId().equals(id)).findFirst().orElse(null);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class CourseManager implements IManager<Course> {
     public List<Course> search(String keyword) {
         return courses.stream()
                 .filter(c -> c.getCourseName().toLowerCase().contains(keyword.toLowerCase()) ||
-                        c.getCourseID().toLowerCase().contains(keyword.toLowerCase()))
+                        c.getId().toLowerCase().contains(keyword.toLowerCase()))
                 .collect(Collectors.toList());
     }
 
@@ -88,7 +88,7 @@ public class CourseManager implements IManager<Course> {
     public void saveToFile() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_PATH))) {
             for (Course c : courses) {
-                bw.write(String.format("%s,%s,%d", c.getCourseID(), c.getCourseName(), c.getCredits()));
+                bw.write(String.format("%s,%s,%d", c.getId(), c.getCourseName(), c.getCredits()));
                 bw.newLine();
             }
         } catch (IOException e) {

@@ -1,10 +1,10 @@
 package models;
 
 public abstract class Person {
-    protected String id;
-    protected String fullName;
-    protected String email;
-    protected String phone;
+    private String id;
+    private String fullName;
+    private String email;
+    private String phone;
 
     public Person(String id, String fullName, String email, String phone) {
         this.id = id;

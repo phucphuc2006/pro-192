@@ -16,7 +16,7 @@ public interface IManager<T> {
 
     void sort(Comparator<T> comparator);
 
-    List<T> search(String keyword, String field);
+    List<T> search(String keyword);
 
     void loadFromFile();
 

@@ -1,22 +1,22 @@
 package models;
 
 public class Course {
-    private String courseID;
+    private String id;
     private String courseName;
     private int credits;
 
-    public Course(String courseID, String courseName, int credits) {
-        this.courseID = courseID;
+    public Course(String id, String courseName, int credits) {
+        this.id = id;
         this.courseName = courseName;
         this.credits = credits;
     }
 
-    public String getCourseID() {
-        return courseID;
+    public String getId() {
+        return id;
     }
 
-    public void setCourseID(String courseID) {
-        this.courseID = courseID;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getCourseName() {
@@ -38,7 +38,7 @@ public class Course {
     @Override
     public String toString() {
         return "Course{" +
-                "courseID='" + courseID + '\'' +
+                "id='" + id + '\'' +
                 ", courseName='" + courseName + '\'' +
                 ", credits=" + credits +
                 '}';

@@ -1,24 +1,24 @@
 package models;
 
 public class Enrollment {
-    private String enrollmentID;
+    private String id;
     private String studentID;
     private String courseID;
     private double grade;
 
-    public Enrollment(String enrollmentID, String studentID, String courseID, double grade) {
-        this.enrollmentID = enrollmentID;
+    public Enrollment(String id, String studentID, String courseID, double grade) {
+        this.id = id;
         this.studentID = studentID;
         this.courseID = courseID;
         this.grade = grade;
     }
 
-    public String getEnrollmentID() {
-        return enrollmentID;
+    public String getId() {
+        return id;
     }
 
-    public void setEnrollmentID(String enrollmentID) {
-        this.enrollmentID = enrollmentID;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getStudentID() {
@@ -48,7 +48,7 @@ public class Enrollment {
     @Override
     public String toString() {
         return "Enrollment{" +
-                "enrollmentID='" + enrollmentID + '\'' +
+                "id='" + id + '\'' +
                 ", studentID='" + studentID + '\'' +
                 ", courseID='" + courseID + '\'' +
                 ", grade=" + grade +

@@ -1,7 +1,5 @@
 *.class
-dist/
 .idea/
-*.jar
 *.zip
 *.tmp
 *.bak

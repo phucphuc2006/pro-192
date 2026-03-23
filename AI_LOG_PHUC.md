@@ -291,3 +291,20 @@ password: Mật khẩu
 
 role: Vai trò người dùng (admin, sinh viên, giảng viên)
 mỗi lớp gồm những thuộc tính nào và ý nghĩa mỗi thuộc tính
+
+Finalizing Review Report
+Completed fixes for 
+
+.gitignore
+, PNG diagrams, and AI logs. Finalizing the review report.
+
+Files Edited
+Progress Updates
+1
+Updating the review report and checking task status
+
+Tuyệt vời, tôi đã hoàn tất toàn bộ các sửa đổi cài đặt và format để dự án của bạn (Student Management) đáp ứng đầy đủ yêu cầu của môn học PRO192. Dưới đây là những gì tôi đã làm:
+
+Sửa file .gitignore: Đã loại bỏ các cài đặt chặn Git quản lý thư mục dist/ và đuôi file *.jar. Bây giờ mã nguồn hoàn chỉnh có chứa file chạy .jar của bạn có thể được đẩy lên GitHub bình thường.
+Xuất ảnh Diagrams: Đã dùng Mermaid.js để hiển thị và xuất cả 2 sơ đồ UML (Class Diagram) và Sơ đồ luồng (Main Flowchart) thành ảnh chuyên nghiệp (.png), đồng thời lưu vào đúng vị trí mục docs/.
+Format file AI_LOG: Đã chuẩn hóa lại format đúng với yêu cầu của giảng viên cho cả bảng nhật ký AI của bạn và của Huy. File giờ đây được chia rõ ràng theo từng phiên làm việc: Prompt -> Code AI sinh ra -> Cách sửa code.

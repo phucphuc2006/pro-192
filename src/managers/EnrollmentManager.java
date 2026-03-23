@@ -25,7 +25,7 @@ public class EnrollmentManager implements IManager<Enrollment> {
     @Override
     public void update(String id, Enrollment item) {
         for (int i = 0; i < enrollments.size(); i++) {
-            if (enrollments.get(i).getEnrollmentID().equals(id)) {
+            if (enrollments.get(i).getId().equals(id)) {
                 enrollments.set(i, item);
                 saveToFile();
                 return;
@@ -35,13 +35,13 @@ public class EnrollmentManager implements IManager<Enrollment> {
 
     @Override
     public void delete(String id) {
-        enrollments.removeIf(e -> e.getEnrollmentID().equals(id));
+        enrollments.removeIf(e -> e.getId().equals(id));
         saveToFile();
     }
 
     @Override
     public Enrollment getById(String id) {
-        return enrollments.stream().filter(e -> e.getEnrollmentID().equals(id)).findFirst().orElse(null);
+        return enrollments.stream().filter(e -> e.getId().equals(id)).findFirst().orElse(null);
     }
 
     @Override
@@ -90,7 +90,7 @@ public class EnrollmentManager implements IManager<Enrollment> {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_PATH))) {
             for (Enrollment e : enrollments) {
                 bw.write(String.format("%s,%s,%s,%.2f",
-                        e.getEnrollmentID(), e.getStudentID(), e.getCourseID(), e.getGrade()));
+                        e.getId(), e.getStudentID(), e.getCourseID(), e.getGrade()));
                 bw.newLine();
             }
         } catch (IOException e) {
