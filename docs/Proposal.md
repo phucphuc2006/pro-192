@@ -1,79 +1,79 @@
-# PROPOSAL: HỆ THỐNG QUẢN LÝ SINH VIÊN & KHÓA HỌC
+# PROPOSAL: STUDENT & COURSE MANAGEMENT SYSTEM
 ## (Student & Course Management System)
 
 ---
 
-## 1. Giới Thiệu (Introduction)
+## 1. Introduction
 
-Hệ thống Quản lý Sinh viên & Khóa học là ứng dụng Console Application (CLI) được phát triển bằng Java, hỗ trợ quản lý 3 nghiệp vụ chính yếu: 
-1. Quản lý Sinh viên (Student)
-2. Quản lý Khóa học (Course)
-3. Quản lý Đăng ký môn & Điểm số (Enrollment)
+The Student & Course Management System is a Console Application (CLI) developed in Java, supporting three main business operations:
+1. Student Management
+2. Course Management
+3. Enrollment & Grade Management
 
-Dự án tuân thủ nghiêm ngặt các nguyên lý Lập trình Hướng Đối tượng (OOP) và sử dụng kiến trúc MVC rút gọn. Thiết kế được làm gọn để đạt 100% các tiêu chí từ Rubric PRO192.
+The project strictly complies with Object-Oriented Programming (OOP) principles and implements a simplified MVC architecture. The design is streamlined to achieve 100% of the criteria from the PRO192 Rubric.
 
 ---
 
-## 2. Kiến Trúc Hệ Thống (System Architecture)
+## 2. System Architecture
 
-Hệ thống được tổ chức thành 4 packages chính:
+The system is organized into 4 main packages:
 
 ### A. Console Interface
-- **Main.java**: Chứa hàm main và menu điều hướng người dùng (CLI).
+- **Main.java**: Contains the main method and user navigation menu (CLI).
 
-### B. Package `models` (Thực thể dữ liệu)
+### B. Package `models` (Data Entities)
 
-| Class | Mô tả | Thuộc tính chính |
+| Class | Description | Main Attributes |
 |-------|-------|------------------|
-| Person | Người (Abstract Class) | id, fullName, email, phone |
-| Student | Sinh viên (Kế thừa Person)| dob, gender, classID |
-| Course | Khóa học | courseID, courseName, credits |
-| Enrollment | Biên bản đăng ký môn | enrollmentID, studentID, courseID, grade |
+| Person | Person (Abstract Class) | id, fullName, email, phone |
+| Student | Student (Inherits from Person)| dob, gender, classID |
+| Course | Course | courseID, courseName, credits |
+| Enrollment | Enrollment Record | enrollmentID, studentID, courseID, grade |
 
-### C. Package `managers` (Xử lý nghiệp vụ & Data Scaling)
+### C. Package `managers` (Business Logic & Data Scaling)
 
-- **`IManager<T>`**: Interface Generics định nghĩa các tác vụ chuẩn (CRUD, Sort, Search, File I/O).
+- **`IManager<T>`**: Generics Interface defining standard operations (CRUD, Sort, Search, File I/O).
 - `StudentManager` (Implements `IManager<Student>`)
 - `CourseManager` (Implements `IManager<Course>`)
 - `EnrollmentManager` (Implements `IManager<Enrollment>`)
 
-=> Sử dụng cấu trúc dữ liệu `ArrayList` từ Java Collections Framework để xử lý linh hoạt hàng ngàn bản ghi (đáp ứng tiêu chí Data Scaling).
+=> Utilizes the `ArrayList` data structure from the Java Collections Framework to flexibly handle thousands of records (meeting Data Scaling criteria).
 
-### D. Package `utils` (Tiện ích)
+### D. Package `utils` (Utilities)
 
-| Class | Mô tả | Phương thức |
+| Class | Description | Methods |
 |-------|-------|-------------|
-| InputHelper | Hỗ trợ nhập liệu có xử lý Try/Catch | readString(), readInt(), readDouble() |
-| DataGenerator | Bootstrap 100+ dòng dữ liệu khi khởi chạy | generateAll() |
-| ValidationUtils | Static Methods kiểm tra tính hợp lệ dữ liệu | isValidId(), isValidEmail(), isValidGrade(), isNotEmpty() |
+| InputHelper | Input helper with Try/Catch logic | readString(), readInt(), readDouble() |
+| DataGenerator | Bootstraps 100+ lines of data upon startup | generateAll() |
+| ValidationUtils | Static Methods for data validation | isValidId(), isValidEmail(), isValidGrade(), isNotEmpty() |
 
 ---
 
-## 3. Các Tính Năng Chính (Key Features)
+## 3. Key Features
 
-### 3.1. Quản lý Đối tượng (CRUD)
-- Khởi tạo, Cập nhật, Xóa, Hiển thị danh sách cho Sinh viên, Khóa học và Đăng ký môn.
+### 3.1. Object Management (CRUD)
+- Create, Read/Update, Delete, and Display lists for Students, Courses, and Enrollments.
 
-### 3.2. Tiện ích Xử lý
-- **Tìm kiếm (Search):** Tìm theo ID, Tên sinh viên, khóa học.
-- **Sắp xếp (Sort):** Sắp xếp danh sách Sinh viên tự động theo tên.
-- **Xác thực (Validation):** Không cho phép thông tin rỗng, bắt định dạng số và email sai.
+### 3.2. Processing Utilities
+- **Search:** Find by ID, Student Name, or Course.
+- **Sort:** Automatically sort the Student list by name.
+- **Validation:** Disallows empty information, catches invalid number/email formats.
 
 ### 3.3. File I/O (Persistence)
-- Lưu toàn bộ dữ liệu xuống 3 file text (`students.txt`, `courses.txt`, `enrollments.txt`) trong thư mục `data/`.
-- Tự động nạp (Load) dữ liệu lên ArrayList khi khởi động.
+- Save all data into 3 text files (`students.txt`, `courses.txt`, `enrollments.txt`) inside the `data/` directory.
+- Automatically load data into an ArrayList upon startup.
 
 ---
 
-## 4. Mức Độ Đáp Ứng Rubric Môn Học
+## 4. Course Rubric Fulfillment
 
-| Tiêu chuẩn | Thể hiện qua Code |
+| Standard | Demonstrated in Code |
 |-----------|-------------------------|
-| **Encapsulation** | Đóng gói an toàn các thuộc tính (`private`) ở tất cả Entities. |
-| **Inheritance** | Thiết kế kế thừa `Student extends Person`. |
-| **Polymorphism** | Kế thừa ghi đè (`@Override toString()`). Triển khai đa hình qua Interface (`IManager`). |
-| **Abstraction** | Kịch bản trích xuất thông tin người qua Abstract Class `Person` và interface `IManager`. |
-| **Data Scaling** | Auto-Gen 100 Test Samples mỗi lúc chương trình kích hoạt. |
-| **Static Utility**| `ValidationUtils` chứa static boolean functions kiểm tra chuẩn. |
+| **Encapsulation** | Securely encapsulates attributes (`private`) across all Entities. |
+| **Inheritance** | Implements inheritance: `Student extends Person`. |
+| **Polymorphism** | Method overriding (`@Override toString()`). Polymorphic implementation via Interface (`IManager`). |
+| **Abstraction** | Extracts person information through the Abstract Class `Person` and `IManager` interface. |
+| **Data Scaling** | Auto-generates 100 Test Samples whenever the program is launched. |
+| **Static Utility**| `ValidationUtils` contains static boolean functions for standard data validation. |
 
 ---
