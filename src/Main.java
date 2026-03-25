@@ -130,13 +130,16 @@ public class Main {
                 break;
             case 5:
                 String keyword = readNonEmptyString("Enter keyword (ID or Name)");
-                studentManager.search(keyword).forEach(System.out::println);
+                studentManager.search(s -> s.getFullName().toLowerCase().contains(keyword.toLowerCase()) ||
+                        s.getId().toLowerCase().contains(keyword.toLowerCase()))
+                        .forEach(System.out::println);
                 break;
             case 6:
                 studentManager.sort(Comparator.comparing(Student::getFullName));
                 System.out.println("Sorted.");
                 studentManager.getAll().forEach(System.out::println);
                 break;
+
         }
     }
 
@@ -188,7 +191,9 @@ public class Main {
                 break;
             case 5:
                 String keyword = readNonEmptyString("Enter keyword (ID or Name)");
-                courseManager.search(keyword).forEach(System.out::println);
+                courseManager.search(c -> c.getCourseName().toLowerCase().contains(keyword.toLowerCase()) ||
+                        c.getId().toLowerCase().contains(keyword.toLowerCase()))
+                        .forEach(System.out::println);
                 break;
         }
     }
@@ -248,7 +253,9 @@ public class Main {
                 break;
             case 5:
                 String keyword = readNonEmptyString("Enter Student/Course ID to search");
-                enrollmentManager.search(keyword).forEach(System.out::println);
+                enrollmentManager.search(en -> en.getStudentID().toLowerCase().contains(keyword.toLowerCase()) ||
+                        en.getCourseID().toLowerCase().contains(keyword.toLowerCase()))
+                        .forEach(System.out::println);
                 break;
         }
     }

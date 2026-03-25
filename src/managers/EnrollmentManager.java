@@ -5,6 +5,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class EnrollmentManager implements IManager<Enrollment> {
@@ -55,10 +56,9 @@ public class EnrollmentManager implements IManager<Enrollment> {
     }
 
     @Override
-    public List<Enrollment> search(String keyword) {
+    public List<Enrollment> search(Predicate<Enrollment> condition) {
         return enrollments.stream()
-                .filter(e -> e.getStudentID().toLowerCase().contains(keyword.toLowerCase()) ||
-                        e.getCourseID().toLowerCase().contains(keyword.toLowerCase()))
+                .filter(condition)
                 .collect(Collectors.toList());
     }
 

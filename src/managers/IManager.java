@@ -2,6 +2,7 @@ package managers;
 
 import java.util.List;
 import java.util.Comparator;
+import java.util.function.Predicate;
 
 public interface IManager<T> {
     void add(T item);
@@ -16,7 +17,7 @@ public interface IManager<T> {
 
     void sort(Comparator<T> comparator);
 
-    List<T> search(String keyword);
+    List<T> search(Predicate<T> condition);
 
     void loadFromFile();
 

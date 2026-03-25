@@ -1,11 +1,26 @@
+# Compiled class files
 *.class
+
+# IDE files
 .idea/
+
+# NetBeans project files
+nbproject/
+build.xml
+manifest.mf
+
+# Build output
+build/
+dist/
+bin/
+
+# Temp files
 *.zip
 *.tmp
 *.bak
-/JavaApplication4/nbproject/private/
-/JavaApplication4/build/
-/JavaApplication5/nbproject/private/
-/mavenproject1/target/
-/nbproject/private/
-/build/
+
+# Data files (optional - remove if you want to push data)
+# data/
+
+# Codebaxing index
+.codebaxing/
